@@ -23,7 +23,7 @@ cd MMM-RBB-Weather/
 
 Install dependencies
 ```
-npm install
+npm install --only=prod
 ```
 
 After adding this module to your config (see below) restart your MagicMirror.
@@ -70,6 +70,10 @@ If you have any problems or questions, feel free to open an issue. There are man
 To run all unit tests just fire this command in the module folder
 
 ```
+# Install also dev dependencies
+npm install
+
+# Run tests
 npm test
 ```
 
