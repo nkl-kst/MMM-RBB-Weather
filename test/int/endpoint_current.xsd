@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <element name="data">
+    <complexType>
+      <sequence>
+
+        <element name="city" maxOccurs="unbounded">
+		  <complexType>
+
+            <attribute name="id" use="required"/>
+            <attribute name="temp" use="required">
+			  <simpleType>
+			    <restriction base="string">
+				  <pattern value="[0-9]{1,2}"/>
+			    </restriction>
+			  </simpleType>
+			</attribute>
+            <attribute name="dd" use="required"/>
+            <attribute name="ffkmh" use="required"/>
+            <attribute name="nww" use="required"/>
+            <attribute name="wwtext" use="required"/>
+
+		  </complexType>
+        </element> <!-- city -->
+
+      </sequence>
+    </complexType>
+  </element> <!-- data -->
+
+</schema>

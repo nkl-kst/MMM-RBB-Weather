@@ -1,0 +1,57 @@
+/* Magic Mirror
+ * CSS: MMM-RBB-Weather
+ *
+ * By Nikolai Keist (github.com/nkl-kst)
+ * MIT Licensed.
+ */
+
+/*
+ * #####   Current data  #####
+ */
+
+div.current {
+    margin-bottom: 20px;
+}
+
+img.weather-icon {
+    margin-left: 10px;
+    width: 50px;
+}
+
+
+/*
+ * #####   Table data   #####
+ */
+
+table.weather-table td:not(:last-child) {
+    padding-right: 0.6em;
+}
+
+table.weather-table td.day {
+    text-align: center;
+}
+
+table.weather-table img.weather-icon {
+    padding-top: 0.3em;
+    padding-right: 0.3em;
+    width: 1.2em;
+}
+
+table.weather-table td.wind {
+    padding-top: 0.2em;
+    /* padding-right: 0.4em; */
+}
+
+table.weather-table td.wind > span {
+     font-size: 0.5em;
+     font-style: italic;
+}
+
+
+/*
+ * #####   White icons   #####
+ */
+
+div.white img.weather-icon {
+    filter: brightness(0) invert(1);
+}

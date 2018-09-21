@@ -1,0 +1,44 @@
+{
+  "name": "MMM-RBB-Weather",
+  "version": "1.0.0",
+  "description": "MagicMirror module to display RBB weather data.",
+  "author": "Nikolai Keist",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkl-kast/MMM-RBB-Weather.git"
+  },
+  "main": "MMM-RBB-Weather.js",
+  "scripts": {
+    "test": "nyc mocha \"test/unit/**/*.js\"",
+    "test-int": "mocha \"test/int/**/*.js\""
+  },
+  "dependencies": {
+    "bluebird": "latest",
+    "fast-xml-parser": "latest"
+  },
+  "devDependencies": {
+    "decache": "latest",
+    "jsdom": "latest",
+    "libxmljs": "latest",
+    "mocha": "latest",
+    "moment": "latest",
+    "nyc": "latest",
+    "proxyquire": "latest",
+    "sinon": "latest"
+  },
+  "nyc": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "test",
+      "coverage",
+      "Gruntfile.js",
+      "Logger.js"
+    ],
+    "cache": true,
+    "all": true
+  }
+}
