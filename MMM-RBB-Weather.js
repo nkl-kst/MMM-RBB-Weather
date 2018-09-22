@@ -61,9 +61,6 @@ Module.register("MMM-RBB-Weather", {
 
             // Initial data load
             this.loadData();
-
-            // Schedule module refresh
-            this.scheduleRefresh();
 		}
     },
 
@@ -219,7 +216,7 @@ Module.register("MMM-RBB-Weather", {
     /**
      * loadData - Load weather data via node_helper. This functions sends a socket notification with
      * LOAD_DATA as notification name and the place id (config.id) and day count (config.days) as
-     * payload.
+     * payload and schedules the next refresh.
      */
     loadData: function() {
         Log.info("Send socket notification to load data in node_helper ...");
@@ -227,6 +224,9 @@ Module.register("MMM-RBB-Weather", {
         // Load data via node helper
         let dataConfig = { id: this.config.id, days: this.config.days };
         this.sendSocketNotification('LOAD_DATA', dataConfig);
+
+        // Schedule next refresh
+        this.scheduleRefresh();
     },
 
     /**

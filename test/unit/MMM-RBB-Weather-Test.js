@@ -97,26 +97,12 @@ describe("MMM-RBB-Weather", () => {
 
             // Arrange
             module.loadData = sinon.fake();
-            module.scheduleRefresh = sinon.fake();
 
             // Act
             module.notificationReceived('MODULE_DOM_CREATED');
 
             // Assert
             assert.ok(module.loadData.calledOnce);
-        });
-
-        it("should schedule refresh when dom is created", () => {
-
-            // Arrange
-            module.loadData = sinon.fake();
-            module.scheduleRefresh = sinon.fake();
-
-            // Act
-            module.notificationReceived('MODULE_DOM_CREATED');
-
-            // Assert
-            assert.ok(module.scheduleRefresh.calledOnce);
         });
     });
 
@@ -195,6 +181,7 @@ describe("MMM-RBB-Weather", () => {
 
             // Arrange
             module.sendSocketNotification = sinon.spy();
+            module.scheduleRefresh = sinon.fake();
 
             // Act
             module.loadData();
@@ -202,6 +189,19 @@ describe("MMM-RBB-Weather", () => {
             // Assert
             let options = { id: module.config.id, days: module.config.days };
             assert.ok(module.sendSocketNotification.calledWith('LOAD_DATA', options));
+        });
+
+        it("should schedule next refresh", () => {
+
+            // Arrange
+            module.sendSocketNotification = sinon.spy();
+            module.scheduleRefresh = sinon.fake();
+
+            // Act
+            module.loadData();
+
+            // Assert
+            assert.ok(module.scheduleRefresh.calledWith);
         });
     });
 
