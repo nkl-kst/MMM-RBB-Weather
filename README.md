@@ -1,5 +1,10 @@
 # MMM-RBB-Weather
 
+[![dependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather)
+[![devDependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/dev-status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather?type=dev)
+[![Known Vulnerabilities](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather/badge.svg?targetFile=package.json)](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather?targetFile=package.json)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit)
+
 This is a module for the awesome [MagicMirror²](https://github.com/MichMich/MagicMirror/). It displays local weather data for cities in Berlin and Brandenburg (Germany) based on [RBB weather data](https://www.rbb24.de/wetter/wetterkarte/).
 
 ![Screenshot](.github/screen.png)
