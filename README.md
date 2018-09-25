@@ -1,6 +1,7 @@
 # MMM-RBB-Weather
 
 [![Build Status](https://travis-ci.com/nkl-kst/MMM-RBB-Weather.svg?branch=master)](https://travis-ci.com/nkl-kst/MMM-RBB-Weather)
+[![Coverage Status](https://coveralls.io/repos/github/nkl-kst/MMM-RBB-Weather/badge.svg)](https://coveralls.io/github/nkl-kst/MMM-RBB-Weather)
 [![dependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather)
 [![devDependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/dev-status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather/badge.svg?targetFile=package.json)](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather?targetFile=package.json)
