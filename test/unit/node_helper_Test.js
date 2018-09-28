@@ -62,6 +62,19 @@ describe("node_helper", () => {
             // Assert
             assert.deepEqual(helper.config, { days: 7 });
         });
+
+        it("should do nothing if notification is unknown", () => {
+
+            // Arrange
+            helper.loadData = sinon.fake();
+
+            // Act
+            helper.socketNotificationReceived('UNKNOWN_NOTIFICATION');
+
+            // Assert
+            assert.equal(helper.config, null);
+            assert.ok(helper.loadData.notCalled);
+        });
     });
 
     describe("loadData", () => {
@@ -98,7 +111,22 @@ describe("node_helper", () => {
 
             // Assert
             assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', "cached"));
-        })
+        });
+
+        it("should do nothing when error occurs and no cache is available", async () => {
+
+            // Arrange
+            helper.config = { days: 0 };
+
+            helper.fetchDayData = sinon.fake.throws("test");
+            helper.sendSocketNotification = sinon.fake();
+
+            // Act
+            await helper.loadData({ days: 0 });
+
+            // Assert
+            assert.ok(helper.sendSocketNotification.notCalled);
+        });
     });
 
     describe("fetchDayData", () => {
