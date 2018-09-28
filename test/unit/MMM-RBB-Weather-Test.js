@@ -104,11 +104,23 @@ describe("MMM-RBB-Weather", () => {
             // Assert
             assert.ok(module.loadData.calledOnce);
         });
+
+        it("should do nothing when notification is unknown", () => {
+
+            // Arrange
+            module.loadData = sinon.fake();
+
+            // Act
+            module.notificationReceived('UNKNOWN_NOTIFICATION');
+
+            // Assert
+            assert.ok(module.loadData.notCalled);
+        });
     });
 
     describe("socketNotificationReceived", () => {
 
-        it("should set weather data when data was loaded", () => {
+        it("should set weather data and update dom when data was loaded", () => {
 
             // Arrange
             module.updateDom = sinon.fake();
@@ -118,6 +130,19 @@ describe("MMM-RBB-Weather", () => {
 
             // Assert
             assert.deepEqual(module.weatherData, { test: "data" });
+            assert.ok(module.updateDom.calledOnce);
+        });
+
+        it("should to nothing when notification is unknown", () => {
+
+            // Arrange
+            module.updateDom = sinon.fake();
+
+            // Act
+            module.socketNotificationReceived('UNKNOWN_NOTIFICATION');
+
+            // Assert
+            assert.ok(module.updateDom.notCalled);
         });
     });
 
@@ -156,6 +181,29 @@ describe("MMM-RBB-Weather", () => {
             let expected = '<div class="white"><div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
             assert.equal(dom.outerHTML, expected);
         });
+
+        it("should ignore white icons, windspeed and rain probability if set in config", () => {
+
+            // Arrange
+            module.translate = sinon.fake.returns("translation");
+            module.config.whiteIcons = false;
+            module.config.showRainProbality = false;
+            module.weatherData = {
+                "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
+                "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
+            };
+
+            let timeMock = moment('2018-09-02 10:00');
+            moment = sinon.fake.returns(timeMock);
+
+            // Act
+            let dom = module.getDom();
+
+            // Assert
+            let expected = '<div><div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td></tr></table></div>';
+
+            assert.equal(dom.outerHTML, expected);
+        });
     });
 
     describe("getCurrentDiv", () => {
@@ -171,6 +219,21 @@ describe("MMM-RBB-Weather", () => {
 
             // Assert
             let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div>';
+            assert.equal(div.outerHTML, expected);
+        });
+
+        it("should ignore current wind speed if set in config", () => {
+
+            // Arrange
+            module.translate = sinon.fake.returns("translation");
+            module.config.showCurrentWindspeed = false;
+            let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+
+            // Act
+            let div = module.getCurrentDiv(data);
+
+            // Assert
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div></div>';
             assert.equal(div.outerHTML, expected);
         });
     });
