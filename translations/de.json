@@ -1,5 +1,4 @@
 {
     "TEXT_NODATA": "Keine Daten verfügbar",
-    "TEXT_CURRENT": "Aktuell: {text}",
     "TEXT_WINDSPEED": "Windgeschwindigkeit: {text} km/h"
 }
