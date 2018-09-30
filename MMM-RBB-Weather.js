@@ -199,7 +199,7 @@ Module.register("MMM-RBB-Weather", {
         // Current header text
         let textDiv = document.createElement('div');
         textDiv.className = "medium normal";
-        textDiv.innerHTML = this.translate('TEXT_CURRENT', { text: data.wwtext });
+        textDiv.innerHTML = data.wwtext;
         wrapper.appendChild(textDiv);
 
         // Wind
@@ -235,9 +235,8 @@ Module.register("MMM-RBB-Weather", {
      */
     scheduleRefresh: function() {
 
-        let self = this;
         setTimeout(() => {
-            self.loadData();
+            this.loadData();
         }, this.config.updateInterval * 1000);
     },
 });

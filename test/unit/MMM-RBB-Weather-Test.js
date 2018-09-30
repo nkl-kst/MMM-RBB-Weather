@@ -164,12 +164,13 @@ describe("MMM-RBB-Weather", () => {
         it("should return dom with weather data", () => {
 
             // Arrange
-            module.translate = sinon.fake.returns("translation");
             module.config.showWindspeed = true;
             module.weatherData = {
                 "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
                 "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
             };
+
+            module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -178,14 +179,13 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
+            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
             assert.equal(dom.outerHTML, expected);
         });
 
         it("should ignore white icons, windspeed and rain probability if set in config", () => {
 
             // Arrange
-            module.translate = sinon.fake.returns("translation");
             module.config.whiteIcons = false;
             module.config.showRainProbality = false;
             module.weatherData = {
@@ -193,6 +193,8 @@ describe("MMM-RBB-Weather", () => {
                 "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
             };
 
+            module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
+
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
 
@@ -200,7 +202,7 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div><div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td></tr></table></div>';
+            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td></tr></table></div>';
 
             assert.equal(dom.outerHTML, expected);
         });
@@ -211,21 +213,23 @@ describe("MMM-RBB-Weather", () => {
         it("should return div with current weather data", () => {
 
             // Arrange
-            module.translate = sinon.fake.returns("translation");
             let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+
+            module.translate = sinon.fake((key, data) => {
+                return `${key} ${JSON.stringify(data)}`;
+            });
 
             // Act
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div><div class="small dimmed">translation</div></div>';
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed">TEXT_WINDSPEED {"text":"8"}</div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
         it("should ignore current wind speed if set in config", () => {
 
             // Arrange
-            module.translate = sinon.fake.returns("translation");
             module.config.showCurrentWindspeed = false;
             let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
 
@@ -233,7 +237,7 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">translation</div></div>';
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div></div>';
             assert.equal(div.outerHTML, expected);
         });
     });
