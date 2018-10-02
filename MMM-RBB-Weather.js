@@ -37,7 +37,11 @@ Module.register("MMM-RBB-Weather", {
     },
 
     getStyles: function () {
-        return [ "weather-icons.css", "MMM-RBB-Weather.css" ];
+        return [
+            "weather-icons.css",
+            "weather-icons-wind.css",
+            "MMM-RBB-Weather.css"
+        ];
     },
 
     getTranslations: function() {
@@ -254,7 +258,8 @@ Module.register("MMM-RBB-Weather", {
         if (this.config.showCurrentWindspeed) {
             let wind = document.createElement('div');
             wind.className = "small dimmed";
-            wind.innerHTML = this.translate('TEXT_WINDSPEED', { text: data.ffkmh });
+            wind.innerHTML = `<i class='wi wi-strong-wind'></i> ${data.ffkmh} km/h `
+                + `<i class='wi wi-wind towards-${data.dd}-deg'>`;
             wrapper.appendChild(wind);
         }
 

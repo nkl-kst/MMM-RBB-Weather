@@ -151,14 +151,15 @@ describe("MMM-RBB-Weather", () => {
         it("should show info if no data is available", () => {
 
             // Arrange
-            module.translate = sinon.fake.returns("no data");
+            module.translate = sinon.fake((key) => {
+                return `${key}`;
+            });
 
             // Act
             let dom = module.getDom();
 
             // Assert
-            assert.ok(module.translate.calledWith('TEXT_NODATA'));
-            assert.equal(dom.outerHTML, '<div class="white">no data</div>');
+            assert.equal(dom.outerHTML, '<div class="white">TEXT_NODATA</div>');
         });
 
         it("should return dom with weather data", () => {
@@ -314,15 +315,11 @@ describe("MMM-RBB-Weather", () => {
             // Arrange
             let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
 
-            module.translate = sinon.fake((key, data) => {
-                return `${key} ${JSON.stringify(data)}`;
-            });
-
             // Act
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed">TEXT_WINDSPEED {"text":"8"}</div></div>';
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed"><i class="wi wi-strong-wind"></i> 8 km/h <i class="wi wi-wind towards-50-deg"></i></div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
