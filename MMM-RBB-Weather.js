@@ -153,8 +153,12 @@ Module.register("MMM-RBB-Weather", {
 
             // Rain
             if (this.config.showRainProbality) {
+
+                // Use icons depending on probility
+                let icon = this.getRainProbilityIcon(data.prr);
+
                 let rainCol = document.createElement('td');
-                rainCol.innerHTML = `${data.prr}% <i class='fa fa-fw fa-tint'></i>`;
+                rainCol.innerHTML = `${data.prr}% <i class='fa fa-fw ${icon}'></i>`;
                 row.appendChild(rainCol);
             }
 
@@ -164,6 +168,28 @@ Module.register("MMM-RBB-Weather", {
         // Append table to wrapper and return it
         wrapper.appendChild(table);
         return wrapper;
+    },
+
+    /**
+     * getRainProbilityIcon - Get rain icon depending on rain probility. Standard icon is "fa-tint",
+     * this is dimmed if rain probility is <= 15% and the "fa-umbrella" icon is used when probility is
+     * >= 70%.
+     *
+     * @param  {Number} probility Rain probility
+     * @return {String}           Icon name
+     */
+    getRainProbilityIcon: function(probility) {
+
+        if (probility <= 15) {
+            // TODO: Use "fa-tint-slash" when Font Awesome 5 is available
+            return "fa-tint dimmed";
+        }
+
+        if (probility >= 70) {
+            return "fa-umbrella";
+        }
+
+        return "fa-tint";
     },
 
     /**

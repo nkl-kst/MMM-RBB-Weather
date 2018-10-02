@@ -171,6 +171,7 @@ describe("MMM-RBB-Weather", () => {
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
+            module.getRainProbilityIcon = sinon.fake.returns("fa-tint");
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -205,6 +206,36 @@ describe("MMM-RBB-Weather", () => {
             let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td></tr></table></div>';
 
             assert.equal(dom.outerHTML, expected);
+        });
+    });
+
+    describe("getRainProbilityIcon", () => {
+
+        it("should return 'fa-tint' icon if probility is between low and high", () => {
+
+            // Act
+            let icon = module.getRainProbilityIcon(50);
+
+            // Assert
+            assert.equal(icon, "fa-tint");
+        });
+
+        it("should return 'fa-tint dimmed' icon if probility is under or equal low", () => {
+
+            // Act
+            let icon = module.getRainProbilityIcon(15);
+
+            // Assert
+            assert.equal(icon, "fa-tint dimmed");
+        });
+
+        it("should return 'fa-umbrella' icon if probility is greater or equal high", () => {
+
+            // Act
+            let icon = module.getRainProbilityIcon(75);
+
+            // Assert
+            assert.equal(icon, "fa-umbrella");
         });
     });
 
