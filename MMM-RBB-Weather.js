@@ -132,15 +132,19 @@ Module.register("MMM-RBB-Weather", {
             let maxTemp = data.temp.split(';')[0];
             let minTemp = data.temp.split(';')[1];
 
+            // Use icons depending on temperature value
+            let maxTempIcon = this.getTempIcon(maxTemp);
+            let minTempIcon = this.getTempIcon(minTemp);
+
             // Max temparature
             let maxCol = document.createElement('td');
             maxCol.className = 'title bright';
-            maxCol.innerHTML = `${maxTemp}° <i class='fa fa-fw fa-thermometer-three-quarters'></i>`;
+            maxCol.innerHTML = `${maxTemp}° <i class='fa fa-fw ${maxTempIcon}'></i>`;
             row.appendChild(maxCol);
 
             // Min temparature
             let minCol = document.createElement('td');
-            minCol.innerHTML = `${minTemp}° <i class='fa fa-fw fa-thermometer-quarter'></i>`;
+            minCol.innerHTML = `${minTemp}° <i class='fa fa-fw ${minTempIcon}'></i>`;
             row.appendChild(minCol);
 
             // Wind
@@ -168,6 +172,24 @@ Module.register("MMM-RBB-Weather", {
         // Append table to wrapper and return it
         wrapper.appendChild(table);
         return wrapper;
+    },
+
+    /**
+     * getTempIcon - Get thermometer icon depending on temperature value.
+     *
+     * @param  {Number} temp Temperature value
+     * @return {String}      Icon name
+     */
+    getTempIcon: function(temp) {
+
+        if (temp >= 40) return "fa-umbrella-beach";
+        if (temp >= 32) return "fa-thermometer-full";
+        if (temp >= 24) return "fa-thermometer-three-quarters";
+        if (temp >= 16) return "fa-thermometer-half";
+        if (temp >=  8) return "fa-thermometer-quarter";
+        if (temp >=  0) return "fa-thermometer-empty";
+                        // TODO: Use "fa-snowflake" when Font Awesome 5 is available
+                        return "fa-asterisk";
     },
 
     /**

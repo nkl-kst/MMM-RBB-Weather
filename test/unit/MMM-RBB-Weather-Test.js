@@ -171,6 +171,7 @@ describe("MMM-RBB-Weather", () => {
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
+            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
             module.getRainProbilityIcon = sinon.fake.returns("fa-tint");
 
             let timeMock = moment('2018-09-02 10:00');
@@ -180,7 +181,7 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
+            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
             assert.equal(dom.outerHTML, expected);
         });
 
@@ -195,6 +196,7 @@ describe("MMM-RBB-Weather", () => {
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
+            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -203,9 +205,75 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-three-quarters"></i></td><td>10° <i class="fa fa-fw fa-thermometer-quarter"></i></td></tr></table></div>';
+            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td></tr></table></div>';
 
             assert.equal(dom.outerHTML, expected);
+        });
+    });
+
+    describe("getTempIcon", () => {
+
+        it("should return 'fa-umbrella-beach' icon if temperature is equal 40", () => {
+
+            // Act
+            let icon = module.getTempIcon(40);
+
+            // Assert
+            assert.equal(icon, "fa-umbrella-beach");
+        });
+
+        it("should return 'fa-thermometer-full' icon if temperature is equal 32", () => {
+
+            // Act
+            let icon = module.getTempIcon(32);
+
+            // Assert
+            assert.equal(icon, "fa-thermometer-full");
+        });
+
+        it("should return 'fa-thermometer-three-quarters' icon if temperature is equal 24", () => {
+
+            // Act
+            let icon = module.getTempIcon(24);
+
+            // Assert
+            assert.equal(icon, "fa-thermometer-three-quarters");
+        });
+
+        it("should return 'fa-thermometer-half' icon if temperature is equal 16", () => {
+
+            // Act
+            let icon = module.getTempIcon(16);
+
+            // Assert
+            assert.equal(icon, "fa-thermometer-half");
+        });
+
+        it("should return 'fa-thermometer-quarter' icon if temperature is equal 8", () => {
+
+            // Act
+            let icon = module.getTempIcon(8);
+
+            // Assert
+            assert.equal(icon, "fa-thermometer-quarter");
+        });
+
+        it("should return 'fa-thermometer-empty' icon if temperature is equal 0", () => {
+
+            // Act
+            let icon = module.getTempIcon(0);
+
+            // Assert
+            assert.equal(icon, "fa-thermometer-empty");
+        });
+
+        it("should return 'fa-asterisk' icon if temperature is lower than 0", () => {
+
+            // Act
+            let icon = module.getTempIcon(-1);
+
+            // Assert
+            assert.equal(icon, "fa-asterisk");
         });
     });
 
