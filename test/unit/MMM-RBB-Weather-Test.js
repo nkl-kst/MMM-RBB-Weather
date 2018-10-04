@@ -182,7 +182,7 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
+            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
             assert.equal(dom.outerHTML, expected);
         });
 
@@ -315,11 +315,15 @@ describe("MMM-RBB-Weather", () => {
             // Arrange
             let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
 
+            module.translate = sinon.fake((key) => {
+                return `${key}`;
+            });
+
             // Act
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed"><i class="wi wi-strong-wind"></i> 8 km/h <i class="wi wi-wind from-50-deg"></i></div></div>';
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
@@ -335,6 +339,90 @@ describe("MMM-RBB-Weather", () => {
             // Assert
             let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div></div>';
             assert.equal(div.outerHTML, expected);
+        });
+    });
+
+    describe("getWindDirKey", () => {
+
+        it("should return 'N' if direction degree is equal 22", () => {
+
+            // Act
+            let text = module.getWindDirKey(22);
+
+            // Assert
+            assert.equal(text, "N");
+        });
+
+        it("should return 'NE' if direction degree is equal 67", () => {
+
+            // Act
+            let text = module.getWindDirKey(67);
+
+            // Assert
+            assert.equal(text, "NE");
+        });
+
+        it("should return 'E' if direction degree is equal 112", () => {
+
+            // Act
+            let text = module.getWindDirKey(112);
+
+            // Assert
+            assert.equal(text, "E");
+        });
+
+        it("should return 'SE' if direction degree is equal 157", () => {
+
+            // Act
+            let text = module.getWindDirKey(157);
+
+            // Assert
+            assert.equal(text, "SE");
+        });
+
+        it("should return 'S' if direction degree is equal 202", () => {
+
+            // Act
+            let text = module.getWindDirKey(202);
+
+            // Assert
+            assert.equal(text, "S");
+        });
+
+        it("should return 'SW' if direction degree is equal 247", () => {
+
+            // Act
+            let text = module.getWindDirKey(247);
+
+            // Assert
+            assert.equal(text, "SW");
+        });
+
+        it("should return 'W' if direction degree is equal 292", () => {
+
+            // Act
+            let text = module.getWindDirKey(292);
+
+            // Assert
+            assert.equal(text, "W");
+        });
+
+        it("should return 'NW' if direction degree is equal 337", () => {
+
+            // Act
+            let text = module.getWindDirKey(337);
+
+            // Assert
+            assert.equal(text, "NW");
+        });
+
+        it("should return 'N' if direction degree is greater than 337", () => {
+
+            // Act
+            let text = module.getWindDirKey(338);
+
+            // Assert
+            assert.equal(text, "N");
         });
     });
 

@@ -1,3 +1,12 @@
 {
-    "TEXT_NODATA": "No data available"
+    "TEXT_NODATA": "No data available",
+
+    "WIND_N":   "N",
+    "WIND_NE": "NE",
+    "WIND_E":   "E",
+    "WIND_SE": "SE",
+    "WIND_S":   "S",
+    "WIND_SW": "SW",
+    "WIND_W":   "W",
+    "WIND_NW": "NW"
 }

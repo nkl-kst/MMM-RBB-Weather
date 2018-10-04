@@ -154,7 +154,8 @@ Module.register("MMM-RBB-Weather", {
             // Wind
             if (this.config.showWindspeed) {
                 let windCol = document.createElement('td');
-                windCol.innerHTML = `${data.ffkmh} <span>km/h</span>`;
+                windCol.innerHTML = `${data.ffkmh} <span>km/h</span> `
+                    + `<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
                 windCol.className = 'wind';
                 row.appendChild(windCol);
             }
@@ -258,12 +259,36 @@ Module.register("MMM-RBB-Weather", {
         if (this.config.showCurrentWindspeed) {
             let wind = document.createElement('div');
             wind.className = "small dimmed";
-            wind.innerHTML = `<i class='wi wi-strong-wind'></i> ${data.ffkmh} km/h `
-                + `<i class='wi wi-wind from-${data.dd}-deg'>`;
+
+            // Wind direction text
+            let windDirKey = this.getWindDirKey(data.dd);
+            let windDirText = this.translate(`WIND_${windDirKey}`);
+
+            wind.innerHTML = `${data.ffkmh} km/h <i class='wi wi-strong-wind'></i> `
+                + `${windDirText} <i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
             wrapper.appendChild(wind);
         }
 
         return wrapper;
+    },
+
+    /**
+     * getWindDirKey - Get wind direction short key based on wind direction degrees.
+     *
+     * @param  {Number} deg Wind direction in degrees
+     * @return {String}     Wind direction short text
+     */
+    getWindDirKey(deg) {
+
+        if (deg <=  22) return  "N";
+        if (deg <=  67) return "NE";
+        if (deg <= 112) return  "E";
+        if (deg <= 157) return "SE";
+        if (deg <= 202) return  "S";
+        if (deg <= 247) return "SW";
+        if (deg <= 292) return  "W";
+        if (deg <= 337) return "NW";
+                        return  "N";
     },
 
     /**
