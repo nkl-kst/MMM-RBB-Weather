@@ -7,6 +7,7 @@ const libxml = require('libxmljs');
 
 describe("Endpoints", function() {
 
+    this.slow(1000);
     this.timeout(10000);
 
     describe("availability", () => {
@@ -26,6 +27,20 @@ describe("Endpoints", function() {
                 });
             });
         }
+
+        it("should get no data for day 8", (done) => {
+
+            // Arrange
+            let url = `https://www.rbb24.de/include/wetter/data/data_bb_8.xml`;
+
+            // Act
+            https.get(url, (response) => {
+
+                // Assert
+                assert.equal(response.statusCode, 404);
+                done();
+            });
+        });
     });
 
     describe("content", () => {
