@@ -259,7 +259,7 @@ Module.register("MMM-RBB-Weather", {
             let wind = document.createElement('div');
             wind.className = "small dimmed";
             wind.innerHTML = `<i class='wi wi-strong-wind'></i> ${data.ffkmh} km/h `
-                + `<i class='wi wi-wind towards-${data.dd}-deg'>`;
+                + `<i class='wi wi-wind from-${data.dd}-deg'>`;
             wrapper.appendChild(wind);
         }
 

@@ -319,7 +319,7 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed"><i class="wi wi-strong-wind"></i> 8 km/h <i class="wi wi-wind towards-50-deg"></i></div></div>';
+            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed"><i class="wi wi-strong-wind"></i> 8 km/h <i class="wi wi-wind from-50-deg"></i></div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
