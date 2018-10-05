@@ -233,18 +233,18 @@ Module.register("MMM-RBB-Weather", {
 
         // Data wrapper
         let dataDiv = document.createElement('div');
-        dataDiv.className = "large bright";
-
-        // Temparature
-        let temp = document.createElement('span');
-        temp.innerHTML = data.temp + "°";
-        dataDiv.appendChild(temp);
+        dataDiv.className = "large bright light";
 
         // Icon
         let icon = document.createElement('img');
         icon.className = "weather-icon";
         icon.src = `https://www.rbb24.de/basis/grafik/icons/wetter/${data.nww}.png`;
         dataDiv.appendChild(icon);
+
+        // Temparature
+        let tempDiv = document.createElement('span');
+        tempDiv.innerHTML = `${data.temp}°C`;
+        dataDiv.appendChild(tempDiv);
 
         // Append data div (temp and icon) to wrapper
         wrapper.appendChild(dataDiv);

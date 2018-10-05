@@ -323,7 +323,7 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
+            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
@@ -337,7 +337,7 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright"><span>21°</span><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"></div><div class="medium normal">wolkig</div></div>';
+            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"><span>21°C</span></div><div class="medium normal">wolkig</div></div>';
             assert.equal(div.outerHTML, expected);
         });
     });
