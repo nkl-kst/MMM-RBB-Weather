@@ -6,22 +6,17 @@
       <sequence>
 
         <element name="city" maxOccurs="unbounded">
-		  <complexType>
+          <complexType>
 
-            <attribute name="id" use="required"/>
-            <attribute name="temp" use="required">
-			  <simpleType>
-			    <restriction base="string">
-				  <pattern value="[0-9]{1,2}"/>
-			    </restriction>
-			  </simpleType>
-			</attribute>
-            <attribute name="dd" use="required"/>
-            <attribute name="ffkmh" use="required"/>
-            <attribute name="nww" use="required"/>
-            <attribute name="wwtext" use="required"/>
+            <!-- city attributes -->
+            <attribute name="id" use="required" type="string" />
+            <attribute name="temp" use="required" type="integer" />
+            <attribute name="dd" use="required" type="integer" />
+            <attribute name="ffkmh" use="required" type="integer" />
+            <attribute name="nww" use="required" type="integer" />
+            <attribute name="wwtext" use="required" type="string" />
 
-		  </complexType>
+          </complexType>
         </element> <!-- city -->
 
       </sequence>
