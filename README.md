@@ -9,7 +9,7 @@
 
 This is a module for the awesome [MagicMirror²](https://github.com/MichMich/MagicMirror/). It displays local weather data for cities in Berlin and Brandenburg (Germany) based on [RBB weather data](https://www.rbb24.de/wetter/wetterkarte/).
 
-![Screenshot](.github/screen.png)
+![Screenshot](.github/screen.gif)
 
 ## Install the module
 
