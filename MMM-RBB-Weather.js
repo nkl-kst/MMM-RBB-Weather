@@ -23,6 +23,8 @@ Module.register("MMM-RBB-Weather", {
         showWindspeed: false,
 
         // Styling
+        animateCurrentIcon: true,
+        animateForecastIcon: false,
         tableClass: "small",
         whiteIcons: true,
     },
@@ -33,7 +35,10 @@ Module.register("MMM-RBB-Weather", {
     weatherData: null,
 
     getScripts: function() {
-        return [ "moment.js" ];
+        return [
+            "moment.js",
+            "IconMapper.js"
+        ];
     },
 
     getStyles: function () {
@@ -125,11 +130,15 @@ Module.register("MMM-RBB-Weather", {
 
             // Icon
             let iconCol = document.createElement('td');
-            let icon = document.createElement('img');
-            icon.className = 'weather-icon';
-            icon.src = `https://www.rbb24.de/basis/grafik/icons/wetter/${data.nww}.png`;
+            iconCol.className = 'weather-icon';
 
-            iconCol.appendChild(icon);
+            // Icon path
+            let iconFolder = this.config.animateForecastIcon ? 'animated' : 'static';
+            let iconPath = IconMapper.getIconPath(data.nww, iconFolder);
+
+            // Set icon url
+            let iconUrl = this.file(iconPath);
+            iconCol.style = `background-image: url('${iconUrl}')`;
             row.appendChild(iconCol);
 
             // Split temparatures
@@ -236,10 +245,16 @@ Module.register("MMM-RBB-Weather", {
         dataDiv.className = "large bright light";
 
         // Icon
-        let icon = document.createElement('img');
-        icon.className = "weather-icon";
-        icon.src = `https://www.rbb24.de/basis/grafik/icons/wetter/${data.nww}.png`;
-        dataDiv.appendChild(icon);
+        let iconImg = document.createElement('img');
+        iconImg.className = "weather-icon";
+
+        // Icon path
+        let iconFolder = this.config.animateCurrentIcon ? 'animated' : 'static';
+        let iconPath = IconMapper.getIconPath(data.nww, iconFolder);
+
+        // Set icon as image source
+        iconImg.src = this.file(iconPath);
+        dataDiv.appendChild(iconImg);
 
         // Temparature
         let tempDiv = document.createElement('span');

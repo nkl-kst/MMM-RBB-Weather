@@ -8,7 +8,7 @@ const JSDOM = require('jsdom').JSDOM;
 // Mock module registration
 Module = {}
 Module.definitions = {};
-Module.register = function (name, moduleDefinition) {
+Module.register = function(name, moduleDefinition) {
 
     moduleDefinition.config = moduleDefinition.defaults;
     moduleDefinition.config.language = 'de';
@@ -34,6 +34,11 @@ describe("MMM-RBB-Weather", () => {
         decache('../../MMM-RBB-Weather');
         require('../../MMM-RBB-Weather');
         module = Module.definitions['MMM-RBB-Weather'];
+
+        // Fake file method
+        module.file = sinon.fake((path) => {
+            return `parent/folder/${path}`;
+        });
 
         // Fake DOM
         document = new JSDOM(`<!DOCTYPE html>`).window.document;
@@ -182,7 +187,32 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
+            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
+            assert.equal(dom.outerHTML, expected);
+        });
+
+        it("should use animated icon if set in config", () => {
+
+            // Arrange
+            module.config.showWindspeed = true;
+            module.config.animateForecastIcon = true;
+            module.weatherData = {
+                "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
+                "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
+            };
+
+            module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
+            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
+            module.getRainProbilityIcon = sinon.fake.returns("fa-tint");
+
+            let timeMock = moment('2018-09-02 10:00');
+            moment = sinon.fake.returns(timeMock);
+
+            // Act
+            let dom = module.getDom();
+
+            // Assert
+            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/animated/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
             assert.equal(dom.outerHTML, expected);
         });
 
@@ -206,7 +236,7 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/110000.png"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td></tr></table></div>';
+            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td></tr></table></div>';
 
             assert.equal(dom.outerHTML, expected);
         });
@@ -323,7 +353,25 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
+            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
+            assert.equal(div.outerHTML, expected);
+        });
+
+        it("should use static icon if set in config", () => {
+
+            // Arrange
+            module.config.animateCurrentIcon = false;
+            let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+
+            module.translate = sinon.fake((key) => {
+                return `${key}`;
+            });
+
+            // Act
+            let div = module.getCurrentDiv(data);
+
+            // Assert
+            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/static/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE <i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
             assert.equal(div.outerHTML, expected);
         });
 
@@ -337,7 +385,7 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="https://www.rbb24.de/basis/grafik/icons/wetter/120000.png"><span>21°C</span></div><div class="medium normal">wolkig</div></div>';
+            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div></div>';
             assert.equal(div.outerHTML, expected);
         });
     });

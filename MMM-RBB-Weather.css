@@ -13,15 +13,21 @@ div.current {
     margin-bottom: 10px;
 }
 
-img.weather-icon {
-    margin-left: 10px;
-    width: 50px;
+div.current img.weather-icon {
+    position: relative;
+    top: 20px;
+    left: 10px;
+    width: 100px;
 }
 
 
 /*
  * #####   Table data   #####
  */
+
+table.weather-table td {
+    height: 1.5em;
+}
 
 table.weather-table td:not(:last-child) {
     padding-right: 0.6em;
@@ -31,15 +37,15 @@ table.weather-table td.day {
     text-align: center;
 }
 
-table.weather-table img.weather-icon {
-    padding-top: 0.3em;
-    padding-right: 0.3em;
-    width: 1.2em;
+table.weather-table td.weather-icon {
+    background-position: 0.2em;
+    background-size: 2em;
+    background-repeat: no-repeat;
+    width: 2.2em;
 }
 
 table.weather-table td.wind {
     padding-top: 0.2em;
-    /* padding-right: 0.4em; */
 }
 
 table.weather-table td.wind > span {
@@ -52,6 +58,7 @@ table.weather-table td.wind > span {
  * #####   White icons   #####
  */
 
-div.white img.weather-icon {
+div.white img.weather-icon,
+table.weather-table td.weather-icon  {
     filter: brightness(0) invert(1);
 }
