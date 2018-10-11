@@ -280,7 +280,7 @@ Module.register("MMM-RBB-Weather", {
             let windDirText = this.translate(`WIND_${windDirKey}`);
 
             wind.innerHTML = `${data.ffkmh} km/h <i class='wi wi-strong-wind'></i> `
-                + `${windDirText} <i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
+                + `${windDirText}<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
             wrapper.appendChild(wind);
         }
 
