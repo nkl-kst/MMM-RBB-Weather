@@ -19,7 +19,7 @@ Module.register("MMM-RBB-Weather", {
 
         // Show / hide flags
         showCurrentWindspeed: true,
-        showRainProbality: true,
+        showRainProbability: true,
         showWindspeed: false,
 
         // Styling
@@ -170,10 +170,10 @@ Module.register("MMM-RBB-Weather", {
             }
 
             // Rain
-            if (this.config.showRainProbality) {
+            if (this.config.showRainProbability) {
 
-                // Use icons depending on probility
-                let icon = this.getRainProbilityIcon(data.prr);
+                // Use icons depending on probability
+                let icon = this.getRainProbabilityIcon(data.prr);
 
                 let rainCol = document.createElement('td');
                 rainCol.innerHTML = `${data.prr}% <i class='fa fa-fw ${icon}'></i>`;
@@ -207,21 +207,21 @@ Module.register("MMM-RBB-Weather", {
     },
 
     /**
-     * getRainProbilityIcon - Get rain icon depending on rain probility. Standard icon is "fa-tint",
-     * this is dimmed if rain probility is <= 15% and the "fa-umbrella" icon is used when probility is
-     * >= 70%.
+     * getRainProbabilityIcon - Get rain icon depending on rain probability. Standard icon is
+     * "fa-tint", this is dimmed if rain probability is <= 15% and the "fa-umbrella" icon is used
+     * when probability is >= 70%.
      *
-     * @param  {Number} probility Rain probility
-     * @return {String}           Icon name
+     * @param  {Number} prob Rain probability
+     * @return {String}      Icon name
      */
-    getRainProbilityIcon: function(probility) {
+    getRainProbabilityIcon: function(prob) {
 
-        if (probility <= 15) {
+        if (prob <= 15) {
             // TODO: Use "fa-tint-slash" when Font Awesome 5 is available
             return "fa-tint dimmed";
         }
 
-        if (probility >= 70) {
+        if (prob >= 70) {
             return "fa-umbrella";
         }
 

@@ -63,7 +63,7 @@ All options are optional so the module works out of the box.
 | `animationSpeed`       | Duration of content refresh animation in seconds.<br><br>**Type:** `Number`<br>**Default:** `1`
 | `updateInterval`       | Time between loading new weather data in seconds.<br><br>**Type:** `Number`<br>**Default:** `600` (10 minutes)
 | `showCurrentWindspeed` | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `showRainProbality`    | Flag to display rain probality in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showRainProbability`  | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `animateCurrentIcon`   | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `animateForecastIcon`  | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
