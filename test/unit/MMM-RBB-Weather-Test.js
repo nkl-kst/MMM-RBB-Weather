@@ -178,7 +178,7 @@ describe("MMM-RBB-Weather", () => {
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
             module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
-            module.getRainProbilityIcon = sinon.fake.returns("fa-tint");
+            module.getRainProbabilityIcon = sinon.fake.returns("fa-tint");
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -203,7 +203,7 @@ describe("MMM-RBB-Weather", () => {
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
             module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
-            module.getRainProbilityIcon = sinon.fake.returns("fa-tint");
+            module.getRainProbabilityIcon = sinon.fake.returns("fa-tint");
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -220,7 +220,7 @@ describe("MMM-RBB-Weather", () => {
 
             // Arrange
             module.config.whiteIcons = false;
-            module.config.showRainProbality = false;
+            module.config.showRainProbability = false;
             module.weatherData = {
                 "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
                 "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
@@ -308,30 +308,30 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("getRainProbilityIcon", () => {
+    describe("getRainProbabilityIcon", () => {
 
-        it("should return 'fa-tint' icon if probility is between low and high", () => {
+        it("should return 'fa-tint' icon if probability is between low and high", () => {
 
             // Act
-            let icon = module.getRainProbilityIcon(50);
+            let icon = module.getRainProbabilityIcon(50);
 
             // Assert
             assert.equal(icon, "fa-tint");
         });
 
-        it("should return 'fa-tint dimmed' icon if probility is under or equal low", () => {
+        it("should return 'fa-tint dimmed' icon if probability is under or equal low", () => {
 
             // Act
-            let icon = module.getRainProbilityIcon(15);
+            let icon = module.getRainProbabilityIcon(15);
 
             // Assert
             assert.equal(icon, "fa-tint dimmed");
         });
 
-        it("should return 'fa-umbrella' icon if probility is greater or equal high", () => {
+        it("should return 'fa-umbrella' icon if probability is greater or equal high", () => {
 
             // Act
-            let icon = module.getRainProbilityIcon(75);
+            let icon = module.getRainProbabilityIcon(75);
 
             // Assert
             assert.equal(icon, "fa-umbrella");
