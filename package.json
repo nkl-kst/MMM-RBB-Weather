@@ -15,25 +15,25 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
-    "bluebird": "latest",
-    "fast-xml-parser": "latest"
+    "bluebird": "^3.5.2",
+    "fast-xml-parser": "^3.12.5"
   },
   "devDependencies": {
-    "coveralls": "latest",
-    "decache": "latest",
+    "coveralls": "^3.0.2",
+    "decache": "^4.4.0",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jsdom": "latest",
-    "libxmljs": "latest",
-    "mocha": "latest",
-    "moment": "latest",
-    "nyc": "latest",
-    "proxyquire": "latest",
-    "sinon": "latest"
+    "jsdom": "^12.2.0",
+    "libxmljs": "^0.19.5",
+    "mocha": "^5.2.0",
+    "moment": "^2.22.2",
+    "nyc": "^13.1.0",
+    "proxyquire": "^2.1.0",
+    "sinon": "^7.0.0"
   },
   "nyc": {
     "reporter": [
