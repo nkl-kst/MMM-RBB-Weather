@@ -1,3 +1,5 @@
+/* eslint no-global-assign: "off" */
+
 const decache = require('decache');
 
 const assert = require('assert');
@@ -6,7 +8,7 @@ const sinon = require('sinon');
 const JSDOM = require('jsdom').JSDOM;
 
 // Mock module registration
-Module = {}
+Module = {};
 Module.definitions = {};
 Module.register = function(name, moduleDefinition) {
 
@@ -24,7 +26,7 @@ Log.info = function() {};
 // Make momentjs functions available
 moment = require('moment');
 
-describe("MMM-RBB-Weather", () => {
+describe('MMM-RBB-Weather', () => {
 
     // Tested
     let module;
@@ -48,9 +50,9 @@ describe("MMM-RBB-Weather", () => {
         sinon.restore();
     });
 
-    describe("getScripts", () => {
+    describe('getScripts', () => {
 
-        it("should return an array", () => {
+        it('should return an array', () => {
 
             // Act
             let scripts = module.getScripts();
@@ -60,9 +62,9 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("getStyles", () => {
+    describe('getStyles', () => {
 
-        it("should return an array", () => {
+        it('should return an array', () => {
 
             // Act
             let styles = module.getStyles();
@@ -72,33 +74,33 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("getTranslations", () => {
+    describe('getTranslations', () => {
 
-        it("should return an array", () => {
+        it('should return an array', () => {
 
             // Act
             let translations = module.getTranslations();
 
             // Assert
-            assert.deepEqual(translations, Object(translations));
+            assert.deepStrictEqual(translations, Object(translations));
         });
     });
 
-    describe("start", () => {
+    describe('start', () => {
 
-        it("should set moment locale", () => {
+        it('should set moment locale', () => {
 
             // Act
             module.start();
 
             // Assert
-            assert.equal(moment.locale(), module.config.language);
+            assert.deepStrictEqual(moment.locale(), module.config.language);
         });
     });
 
-    describe("notificationReceived", () => {
+    describe('notificationReceived', () => {
 
-        it("should load data when module dom is created", () => {
+        it('should load data when module dom is created', () => {
 
             // Arrange
             module.loadData = sinon.fake();
@@ -110,7 +112,7 @@ describe("MMM-RBB-Weather", () => {
             assert.ok(module.loadData.calledOnce);
         });
 
-        it("should do nothing when notification is unknown", () => {
+        it('should do nothing when notification is unknown', () => {
 
             // Arrange
             module.loadData = sinon.fake();
@@ -123,22 +125,22 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("socketNotificationReceived", () => {
+    describe('socketNotificationReceived', () => {
 
-        it("should set weather data and update dom when data was loaded", () => {
+        it('should set weather data and update dom when data was loaded', () => {
 
             // Arrange
             module.updateDom = sinon.fake();
 
             // Act
-            module.socketNotificationReceived('DATA_LOADED', { test: "data" });
+            module.socketNotificationReceived('DATA_LOADED', { test: 'data' });
 
             // Assert
-            assert.deepEqual(module.weatherData, { test: "data" });
+            assert.deepStrictEqual(module.weatherData, { test: 'data' });
             assert.ok(module.updateDom.calledOnce);
         });
 
-        it("should to nothing when notification is unknown", () => {
+        it('should to nothing when notification is unknown', () => {
 
             // Arrange
             module.updateDom = sinon.fake();
@@ -151,9 +153,9 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("getDom", () => {
+    describe('getDom', () => {
 
-        it("should show info if no data is available", () => {
+        it('should show info if no data is available', () => {
 
             // Arrange
             module.translate = sinon.fake((key) => {
@@ -164,21 +166,21 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            assert.equal(dom.outerHTML, '<div class="white">TEXT_NODATA</div>');
+            assert.deepStrictEqual(dom.outerHTML, '<div class="white">TEXT_NODATA</div>');
         });
 
-        it("should return dom with weather data", () => {
+        it('should return dom with weather data', () => {
 
             // Arrange
             module.config.showWindspeed = true;
             module.weatherData = {
-                "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
-                "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
+                '0': { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' },
+                '1': { 'id': '10385', 'temp': '23;10', 'dd': '360', 'ffkmh': '10', 'nww': '110000', 'wwtext': 'wolkig', 'prr': '13' }
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
-            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
-            module.getRainProbabilityIcon = sinon.fake.returns("fa-tint");
+            module.getTempIcon = sinon.fake.returns('fa-thermometer-half');
+            module.getRainProbabilityIcon = sinon.fake.returns('fa-tint');
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -187,23 +189,37 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
-            assert.equal(dom.outerHTML, expected);
+            let expected =
+                '<div class="white">' +
+                    '<div></div>' +
+                    '<table class="small weather-table">' +
+                        '<tr>' +
+                            '<td class="day">So.</td>' +
+                            '<td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td>' +
+                            '<td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                            '<td>10° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                            '<td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td>' +
+                            '<td>13% <i class="fa fa-fw fa-tint"></i></td>' +
+                        '</tr>' +
+                    '</table>' +
+                '</div>';
+
+            assert.deepStrictEqual(dom.outerHTML, expected);
         });
 
-        it("should use animated icon if set in config", () => {
+        it('should use animated icon if set in config', () => {
 
             // Arrange
             module.config.showWindspeed = true;
             module.config.animateForecastIcon = true;
             module.weatherData = {
-                "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
-                "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
+                '0': { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' },
+                '1': { 'id': '10385', 'temp': '23;10', 'dd': '360', 'ffkmh': '10', 'nww': '110000', 'wwtext': 'wolkig', 'prr': '13' }
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
-            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
-            module.getRainProbabilityIcon = sinon.fake.returns("fa-tint");
+            module.getTempIcon = sinon.fake.returns('fa-thermometer-half');
+            module.getRainProbabilityIcon = sinon.fake.returns('fa-tint');
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -212,22 +228,36 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div class="white"><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/animated/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td><td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td><td>13% <i class="fa fa-fw fa-tint"></i></td></tr></table></div>';
-            assert.equal(dom.outerHTML, expected);
+            let expected =
+                '<div class="white">' +
+                    '<div></div>' +
+                    '<table class="small weather-table">' +
+                    '<tr>' +
+                        '<td class="day">So.</td>' +
+                        '<td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/animated/cloudy-day-1.svg);"></td>' +
+                        '<td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                        '<td>10° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                        '<td class="wind">10 <span>km/h</span> <i class="wi wi-wind from-360-deg fa-fw"></i></td>' +
+                        '<td>13% <i class="fa fa-fw fa-tint"></i></td>' +
+                    '</tr>' +
+                '</table>' +
+            '</div>';
+
+            assert.deepStrictEqual(dom.outerHTML, expected);
         });
 
-        it("should ignore white icons, windspeed and rain probability if set in config", () => {
+        it('should ignore white icons, windspeed and rain probability if set in config', () => {
 
             // Arrange
             module.config.whiteIcons = false;
             module.config.showRainProbability = false;
             module.weatherData = {
-                "0": { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" },
-                "1": { "id": "10385", "temp": "23;10", "dd": "360", "ffkmh": "10", "nww": "110000", "wwtext": "wolkig", "prr": "13" },
+                '0': { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' },
+                '1': { 'id': '10385', 'temp': '23;10', 'dd': '360', 'ffkmh': '10', 'nww': '110000', 'wwtext': 'wolkig', 'prr': '13' }
             };
 
             module.getCurrentDiv = sinon.fake.returns(document.createElement('div'));
-            module.getTempIcon = sinon.fake.returns("fa-thermometer-half");
+            module.getTempIcon = sinon.fake.returns('fa-thermometer-half');
 
             let timeMock = moment('2018-09-02 10:00');
             moment = sinon.fake.returns(timeMock);
@@ -236,114 +266,125 @@ describe("MMM-RBB-Weather", () => {
             let dom = module.getDom();
 
             // Assert
-            let expected = '<div><div></div><table class="small weather-table"><tr><td class="day">So.</td><td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td><td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td><td>10° <i class="fa fa-fw fa-thermometer-half"></i></td></tr></table></div>';
+            let expected =
+                '<div>' +
+                    '<div></div>' +
+                    '<table class="small weather-table">' +
+                        '<tr>' +
+                            '<td class="day">So.</td>' +
+                            '<td class="weather-icon" style="background-image: url(parent/folder/vendor/amcharts/static/cloudy-day-1.svg);"></td>' +
+                            '<td class="title bright">23° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                            '<td>10° <i class="fa fa-fw fa-thermometer-half"></i></td>' +
+                        '</tr>' +
+                    '</table>' +
+                '</div>';
 
-            assert.equal(dom.outerHTML, expected);
+            assert.deepStrictEqual(dom.outerHTML, expected);
         });
     });
 
-    describe("getTempIcon", () => {
+    describe('getTempIcon', () => {
 
-        it("should return 'fa-umbrella-beach' icon if temperature is equal 40", () => {
+        it('should return "fa-umbrella-beach" icon if temperature is equal 40', () => {
 
             // Act
             let icon = module.getTempIcon(40);
 
             // Assert
-            assert.equal(icon, "fa-umbrella-beach");
+            assert.deepStrictEqual(icon, 'fa-umbrella-beach');
         });
 
-        it("should return 'fa-thermometer-full' icon if temperature is equal 32", () => {
+        it('should return "fa-thermometer-full" icon if temperature is equal 32', () => {
 
             // Act
             let icon = module.getTempIcon(32);
 
             // Assert
-            assert.equal(icon, "fa-thermometer-full");
+            assert.deepStrictEqual(icon, 'fa-thermometer-full');
         });
 
-        it("should return 'fa-thermometer-three-quarters' icon if temperature is equal 24", () => {
+        it('should return "fa-thermometer-three-quarters" icon if temperature is equal 24', () => {
 
             // Act
             let icon = module.getTempIcon(24);
 
             // Assert
-            assert.equal(icon, "fa-thermometer-three-quarters");
+            assert.deepStrictEqual(icon, 'fa-thermometer-three-quarters');
         });
 
-        it("should return 'fa-thermometer-half' icon if temperature is equal 16", () => {
+        it('should return "fa-thermometer-half" icon if temperature is equal 16', () => {
 
             // Act
             let icon = module.getTempIcon(16);
 
             // Assert
-            assert.equal(icon, "fa-thermometer-half");
+            assert.deepStrictEqual(icon, 'fa-thermometer-half');
         });
 
-        it("should return 'fa-thermometer-quarter' icon if temperature is equal 8", () => {
+        it('should return "fa-thermometer-quarter" icon if temperature is equal 8', () => {
 
             // Act
             let icon = module.getTempIcon(8);
 
             // Assert
-            assert.equal(icon, "fa-thermometer-quarter");
+            assert.deepStrictEqual(icon, 'fa-thermometer-quarter');
         });
 
-        it("should return 'fa-thermometer-empty' icon if temperature is equal 0", () => {
+        it('should return "fa-thermometer-empty" icon if temperature is equal 0', () => {
 
             // Act
             let icon = module.getTempIcon(0);
 
             // Assert
-            assert.equal(icon, "fa-thermometer-empty");
+            assert.deepStrictEqual(icon, 'fa-thermometer-empty');
         });
 
-        it("should return 'fa-asterisk' icon if temperature is lower than 0", () => {
+        it('should return "fa-asterisk" icon if temperature is lower than 0', () => {
 
             // Act
             let icon = module.getTempIcon(-1);
 
             // Assert
-            assert.equal(icon, "fa-asterisk");
+            assert.deepStrictEqual(icon, 'fa-asterisk');
         });
     });
 
-    describe("getRainProbabilityIcon", () => {
+    describe('getRainProbabilityIcon', () => {
 
-        it("should return 'fa-tint' icon if probability is between low and high", () => {
+        it('should return "fa-tint" icon if probability is between low and high', () => {
 
             // Act
             let icon = module.getRainProbabilityIcon(50);
 
             // Assert
-            assert.equal(icon, "fa-tint");
+            assert.deepStrictEqual(icon, 'fa-tint');
         });
 
-        it("should return 'fa-tint dimmed' icon if probability is under or equal low", () => {
+        it('should return "fa-tint dimmed" icon if probability is under or equal low', () => {
 
             // Act
             let icon = module.getRainProbabilityIcon(15);
 
             // Assert
-            assert.equal(icon, "fa-tint dimmed");
+            assert.deepStrictEqual(icon, 'fa-tint dimmed');
         });
 
-        it("should return 'fa-umbrella' icon if probability is greater or equal high", () => {
+        it('should return "fa-umbrella" icon if probability is greater or equal high', () => {
 
             // Act
             let icon = module.getRainProbabilityIcon(75);
 
             // Assert
-            assert.equal(icon, "fa-umbrella");
+            assert.deepStrictEqual(icon, 'fa-umbrella');
         });
     });
 
-    describe("getCurrentDiv", () => {
+    describe('getCurrentDiv', () => {
 
-        it("should return div with current weather data", () => {
+        it('should return div with current weather data', () => {
 
             // Arrange
-            let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+            let data = { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' };
 
             module.translate = sinon.fake((key) => {
                 return `${key}`;
@@ -353,15 +394,24 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE<i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
-            assert.equal(div.outerHTML, expected);
+            let expected =
+                '<div class="current">' +
+                    '<div class="large bright light">' +
+                        '<img class="weather-icon" src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg">' +
+                        '<span>21°C</span>' +
+                    '</div>' +
+                    '<div class="medium normal">wolkig</div>' +
+                    '<div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE<i class="wi wi-wind from-50-deg fa-fw"></i></div>' +
+                '</div>';
+
+            assert.deepStrictEqual(div.outerHTML, expected);
         });
 
-        it("should use static icon if set in config", () => {
+        it('should use static icon if set in config', () => {
 
             // Arrange
             module.config.animateCurrentIcon = false;
-            let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+            let data = { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' };
 
             module.translate = sinon.fake((key) => {
                 return `${key}`;
@@ -371,112 +421,121 @@ describe("MMM-RBB-Weather", () => {
             let div = module.getCurrentDiv(data);
 
             // Assert
-            let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/static/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div><div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE<i class="wi wi-wind from-50-deg fa-fw"></i></div></div>';
-            assert.equal(div.outerHTML, expected);
+            let expected =
+                '<div class="current">' +
+                    '<div class="large bright light">' +
+                        '<img class="weather-icon" src="parent/folder/vendor/amcharts/static/cloudy-day-1.svg">' +
+                        '<span>21°C</span>' +
+                    '</div>' +
+                    '<div class="medium normal">wolkig</div>' +
+                    '<div class="small dimmed">8 km/h <i class="wi wi-strong-wind"></i> WIND_NE<i class="wi wi-wind from-50-deg fa-fw"></i></div>' +
+                '</div>';
+
+            assert.deepStrictEqual(div.outerHTML, expected);
         });
 
-        it("should ignore current wind speed if set in config", () => {
+        it('should ignore current wind speed if set in config', () => {
 
             // Arrange
             module.config.showCurrentWindspeed = false;
-            let data = { "id": "10385", "temp": "21", "dd": "50", "ffkmh": "8", "nww": "120000", "wwtext": "wolkig" };
+            let data = { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' };
 
             // Act
             let div = module.getCurrentDiv(data);
 
             // Assert
             let expected = '<div class="current"><div class="large bright light"><img class="weather-icon" src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg"><span>21°C</span></div><div class="medium normal">wolkig</div></div>';
-            assert.equal(div.outerHTML, expected);
+            assert.deepStrictEqual(div.outerHTML, expected);
         });
     });
 
-    describe("getWindDirKey", () => {
+    describe('getWindDirKey', () => {
 
-        it("should return 'N' if direction degree is equal 22", () => {
+        it('should return "N" if direction degree is equal 22', () => {
 
             // Act
             let text = module.getWindDirKey(22);
 
             // Assert
-            assert.equal(text, "N");
+            assert.deepStrictEqual(text, 'N');
         });
 
-        it("should return 'NE' if direction degree is equal 67", () => {
+        it('should return "NE" if direction degree is equal 67', () => {
 
             // Act
             let text = module.getWindDirKey(67);
 
             // Assert
-            assert.equal(text, "NE");
+            assert.deepStrictEqual(text, 'NE');
         });
 
-        it("should return 'E' if direction degree is equal 112", () => {
+        it('should return "E" if direction degree is equal 112', () => {
 
             // Act
             let text = module.getWindDirKey(112);
 
             // Assert
-            assert.equal(text, "E");
+            assert.deepStrictEqual(text, 'E');
         });
 
-        it("should return 'SE' if direction degree is equal 157", () => {
+        it('should return "SE" if direction degree is equal 157', () => {
 
             // Act
             let text = module.getWindDirKey(157);
 
             // Assert
-            assert.equal(text, "SE");
+            assert.deepStrictEqual(text, 'SE');
         });
 
-        it("should return 'S' if direction degree is equal 202", () => {
+        it('should return "S" if direction degree is equal 202', () => {
 
             // Act
             let text = module.getWindDirKey(202);
 
             // Assert
-            assert.equal(text, "S");
+            assert.deepStrictEqual(text, 'S');
         });
 
-        it("should return 'SW' if direction degree is equal 247", () => {
+        it('should return "SW" if direction degree is equal 247', () => {
 
             // Act
             let text = module.getWindDirKey(247);
 
             // Assert
-            assert.equal(text, "SW");
+            assert.deepStrictEqual(text, 'SW');
         });
 
-        it("should return 'W' if direction degree is equal 292", () => {
+        it('should return "W" if direction degree is equal 292', () => {
 
             // Act
             let text = module.getWindDirKey(292);
 
             // Assert
-            assert.equal(text, "W");
+            assert.deepStrictEqual(text, 'W');
         });
 
-        it("should return 'NW' if direction degree is equal 337", () => {
+        it('should return "NW" if direction degree is equal 337', () => {
 
             // Act
             let text = module.getWindDirKey(337);
 
             // Assert
-            assert.equal(text, "NW");
+            assert.deepStrictEqual(text, 'NW');
         });
 
-        it("should return 'N' if direction degree is greater than 337", () => {
+        it('should return "N" if direction degree is greater than 337', () => {
 
             // Act
             let text = module.getWindDirKey(338);
 
             // Assert
-            assert.equal(text, "N");
+            assert.deepStrictEqual(text, 'N');
         });
     });
 
-    describe("loadData", () => {
+    describe('loadData', () => {
 
-        it("should send socket notification", () => {
+        it('should send socket notification', () => {
 
             // Arrange
             module.sendSocketNotification = sinon.spy();
@@ -490,7 +549,7 @@ describe("MMM-RBB-Weather", () => {
             assert.ok(module.sendSocketNotification.calledWith('LOAD_DATA', options));
         });
 
-        it("should schedule next refresh", () => {
+        it('should schedule next refresh', () => {
 
             // Arrange
             module.sendSocketNotification = sinon.spy();
@@ -504,7 +563,7 @@ describe("MMM-RBB-Weather", () => {
         });
     });
 
-    describe("scheduleRefresh", () => {
+    describe('scheduleRefresh', () => {
 
         // Fake timer
         let clock;
@@ -517,7 +576,7 @@ describe("MMM-RBB-Weather", () => {
             clock.restore();
         });
 
-        it("should not load data before given update interval is reached", () => {
+        it('should not load data before given update interval is reached', () => {
 
             // Arrange
             module.config.updateInterval = 1;
@@ -532,7 +591,7 @@ describe("MMM-RBB-Weather", () => {
             assert.ok(module.loadData.notCalled);
         });
 
-        it("should load data after given update interval is reached", () => {
+        it('should load data after given update interval is reached', () => {
 
             // Arrange
             module.config.updateInterval = 1;

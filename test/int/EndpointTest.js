@@ -5,12 +5,12 @@ const path = require('path');
 const https = require('https');
 const libxml = require('libxmljs');
 
-describe("Endpoints", function() {
+describe('Endpoints', function() {
 
     this.slow(1000);
     this.timeout(10000);
 
-    describe("availability", () => {
+    describe('availability', () => {
 
         for (let day = 0; day <= 7; day++) {
             it(`should get data for day ${day}`, (done) => {
@@ -22,13 +22,13 @@ describe("Endpoints", function() {
                 https.get(url, (response) => {
 
                     // Assert
-                    assert.equal(response.statusCode, 200);
+                    assert.strictEqual(response.statusCode, 200);
                     done();
                 });
             });
         }
 
-        it("should get no data for day 8", (done) => {
+        it('should get no data for day 8', (done) => {
 
             // Arrange
             let url = `https://www.rbb24.de/include/wetter/data/data_bb_8.xml`;
@@ -37,15 +37,15 @@ describe("Endpoints", function() {
             https.get(url, (response) => {
 
                 // Assert
-                assert.equal(response.statusCode, 404);
+                assert.strictEqual(response.statusCode, 404);
                 done();
             });
         });
     });
 
-    describe("content", () => {
+    describe('content', () => {
 
-        it("should get valid current data", (done) => {
+        it('should get valid current data', (done) => {
 
             // Arrange
             let xsd = fs.readFileSync(path.join(__dirname, 'endpoint_current.xsd'));
@@ -56,7 +56,7 @@ describe("Endpoints", function() {
             // Act
             https.get(url, (response) => {
 
-                let xml = "";
+                let xml = '';
                 response.on('data', (chunk) => {
                     xml += chunk;
                 });
@@ -67,7 +67,7 @@ describe("Endpoints", function() {
                     let xmlDoc = libxml.parseXml(xml);
 
                     // Assert
-                    assert.equal(xmlDoc.validate(xsdDoc), true);
+                    assert.strictEqual(xmlDoc.validate(xsdDoc), true);
                     done();
                 });
             });
@@ -85,7 +85,7 @@ describe("Endpoints", function() {
                 // Act
                 https.get(url, (response) => {
 
-                    let xml = "";
+                    let xml = '';
                     response.on('data', (chunk) => {
                         xml += chunk;
                     });
@@ -96,7 +96,7 @@ describe("Endpoints", function() {
                         let xmlDoc = libxml.parseXml(xml);
 
                         // Assert
-                        assert.equal(xmlDoc.validate(xsdDoc), true);
+                        assert.strictEqual(xmlDoc.validate(xsdDoc), true);
                         done();
                     });
                 });
