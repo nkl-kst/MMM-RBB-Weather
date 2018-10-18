@@ -5,12 +5,12 @@
  * MIT Licensed.
  */
 
-Module.register("MMM-RBB-Weather", {
+Module.register('MMM-RBB-Weather', {
 
     defaults: {
 
         // Data
-        id: "18228265", // Berlin
+        id: '18228265', // Berlin
         days: 4, // Including current, 0 = only current data
 
         // Times
@@ -25,34 +25,34 @@ Module.register("MMM-RBB-Weather", {
         // Styling
         animateCurrentIcon: true,
         animateForecastIcon: false,
-        tableClass: "small",
-        whiteIcons: true,
+        tableClass: 'small',
+        whiteIcons: true
     },
 
-	requiresVersion: "2.1.0", // Required version of MagicMirror
+    requiresVersion: '2.1.0', // Required version of MagicMirror
 
     // Instancevariable
     weatherData: null,
 
     getScripts: function() {
         return [
-            "moment.js",
-            "IconMapper.js"
+            'moment.js',
+            'IconMapper.js'
         ];
     },
 
-    getStyles: function () {
+    getStyles: function() {
         return [
-            "weather-icons.css",
-            "weather-icons-wind.css",
-            "MMM-RBB-Weather.css"
+            'weather-icons.css',
+            'weather-icons-wind.css',
+            'MMM-RBB-Weather.css'
         ];
     },
 
     getTranslations: function() {
         return {
-            de: "translations/de.json",
-            en: "translations/en.json",
+            de: 'translations/de.json',
+            en: 'translations/en.json'
         };
     },
 
@@ -61,26 +61,26 @@ Module.register("MMM-RBB-Weather", {
 
         // Set locale
         moment.locale(this.config.language);
-	},
+    },
 
     notificationReceived: function(notification, payload, sender) {
 
         // DOM ready
-		if (notification === 'MODULE_DOM_CREATED') {
+        if (notification === 'MODULE_DOM_CREATED') {
 
             // Initial data load
             this.loadData();
-		}
+        }
     },
 
-	socketNotificationReceived: function(notification, payload) {
+    socketNotificationReceived: function(notification, payload) {
 
-		// Data loaded with node helper
-		if (notification === 'DATA_LOADED') {
+        // Data loaded with node helper
+        if (notification === 'DATA_LOADED') {
             this.weatherData = payload;
             this.updateDom(this.config.animationSpeed * 1000);
-		}
-	},
+        }
+    },
 
     /**
      * getDom - Build and returns the whole module dom, including current data and forecast
@@ -93,7 +93,7 @@ Module.register("MMM-RBB-Weather", {
         // Dom wrapper
         let wrapper = document.createElement('div');
         if (this.config.whiteIcons) {
-            wrapper.className = "white";
+            wrapper.className = 'white';
         }
 
         // No data
@@ -104,7 +104,7 @@ Module.register("MMM-RBB-Weather", {
 
         // Table with data (without current data)
         let table = document.createElement('table');
-        table.className = this.config.tableClass + " weather-table";
+        table.className = this.config.tableClass + ' weather-table';
 
         // Current weather
         let currentData = this.weatherData[0];
@@ -115,7 +115,7 @@ Module.register("MMM-RBB-Weather", {
         for (let [day, data] of Object.entries(this.weatherData)) {
 
             // Don't create table row for current data
-            if (day == 0) {
+            if (day === '0') {
                 continue;
             }
 
@@ -163,8 +163,8 @@ Module.register("MMM-RBB-Weather", {
             // Wind
             if (this.config.showWindspeed) {
                 let windCol = document.createElement('td');
-                windCol.innerHTML = `${data.ffkmh} <span>km/h</span> `
-                    + `<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
+                windCol.innerHTML = `${data.ffkmh} <span>km/h</span> ` +
+                    `<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
                 windCol.className = 'wind';
                 row.appendChild(windCol);
             }
@@ -196,14 +196,13 @@ Module.register("MMM-RBB-Weather", {
      */
     getTempIcon: function(temp) {
 
-        if (temp >= 40) return "fa-umbrella-beach";
-        if (temp >= 32) return "fa-thermometer-full";
-        if (temp >= 24) return "fa-thermometer-three-quarters";
-        if (temp >= 16) return "fa-thermometer-half";
-        if (temp >=  8) return "fa-thermometer-quarter";
-        if (temp >=  0) return "fa-thermometer-empty";
-                        // TODO: Use "fa-snowflake" when Font Awesome 5 is available
-                        return "fa-asterisk";
+        if (temp >= 40) return 'fa-umbrella-beach';
+        if (temp >= 32) return 'fa-thermometer-full';
+        if (temp >= 24) return 'fa-thermometer-three-quarters';
+        if (temp >= 16) return 'fa-thermometer-half';
+        if (temp >= 8) return 'fa-thermometer-quarter';
+        if (temp >= 0) return 'fa-thermometer-empty'; // TODO: Use "fa-snowflake" when Font Awesome 5 is available
+        return 'fa-asterisk';
     },
 
     /**
@@ -218,14 +217,14 @@ Module.register("MMM-RBB-Weather", {
 
         if (prob <= 15) {
             // TODO: Use "fa-tint-slash" when Font Awesome 5 is available
-            return "fa-tint dimmed";
+            return 'fa-tint dimmed';
         }
 
         if (prob >= 70) {
-            return "fa-umbrella";
+            return 'fa-umbrella';
         }
 
-        return "fa-tint";
+        return 'fa-tint';
     },
 
     /**
@@ -238,15 +237,15 @@ Module.register("MMM-RBB-Weather", {
 
         // Wrapper
         let wrapper = document.createElement('div');
-        wrapper.className = "current";
+        wrapper.className = 'current';
 
         // Data wrapper
         let dataDiv = document.createElement('div');
-        dataDiv.className = "large bright light";
+        dataDiv.className = 'large bright light';
 
         // Icon
         let iconImg = document.createElement('img');
-        iconImg.className = "weather-icon";
+        iconImg.className = 'weather-icon';
 
         // Icon path
         let iconFolder = this.config.animateCurrentIcon ? 'animated' : 'static';
@@ -266,21 +265,21 @@ Module.register("MMM-RBB-Weather", {
 
         // Current header text
         let textDiv = document.createElement('div');
-        textDiv.className = "medium normal";
+        textDiv.className = 'medium normal';
         textDiv.innerHTML = data.wwtext;
         wrapper.appendChild(textDiv);
 
         // Wind
         if (this.config.showCurrentWindspeed) {
             let wind = document.createElement('div');
-            wind.className = "small dimmed";
+            wind.className = 'small dimmed';
 
             // Wind direction text
             let windDirKey = this.getWindDirKey(data.dd);
             let windDirText = this.translate(`WIND_${windDirKey}`);
 
-            wind.innerHTML = `${data.ffkmh} km/h <i class='wi wi-strong-wind'></i> `
-                + `${windDirText}<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
+            wind.innerHTML = `${data.ffkmh} km/h <i class='wi wi-strong-wind'></i> ` +
+                `${windDirText}<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
             wrapper.appendChild(wind);
         }
 
@@ -295,15 +294,15 @@ Module.register("MMM-RBB-Weather", {
      */
     getWindDirKey(deg) {
 
-        if (deg <=  22) return  "N";
-        if (deg <=  67) return "NE";
-        if (deg <= 112) return  "E";
-        if (deg <= 157) return "SE";
-        if (deg <= 202) return  "S";
-        if (deg <= 247) return "SW";
-        if (deg <= 292) return  "W";
-        if (deg <= 337) return "NW";
-                        return  "N";
+        if (deg <= 22) return 'N';
+        if (deg <= 67) return 'NE';
+        if (deg <= 112) return 'E';
+        if (deg <= 157) return 'SE';
+        if (deg <= 202) return 'S';
+        if (deg <= 247) return 'SW';
+        if (deg <= 292) return 'W';
+        if (deg <= 337) return 'NW';
+        return 'N';
     },
 
     /**
@@ -312,7 +311,7 @@ Module.register("MMM-RBB-Weather", {
      * payload and schedules the next refresh.
      */
     loadData: function() {
-        Log.info("Send socket notification to load data in node_helper ...");
+        Log.info('Send socket notification to load data in node_helper ...');
 
         // Load data via node helper
         let dataConfig = { id: this.config.id, days: this.config.days };
@@ -331,5 +330,5 @@ Module.register("MMM-RBB-Weather", {
         setTimeout(() => {
             this.loadData();
         }, this.config.updateInterval * 1000);
-    },
+    }
 });
