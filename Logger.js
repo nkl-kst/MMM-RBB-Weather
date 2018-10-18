@@ -30,5 +30,5 @@ module.exports = {
 
     error: function(message) {
         this._printLog('error', message);
-    },
+    }
 };

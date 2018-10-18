@@ -6,8 +6,8 @@
  */
 
 const Logger = require('./Logger');
-const NodeHelper = require("node_helper");
-const https = require("https");
+const NodeHelper = require('node_helper');
+const https = require('https');
 const Promise = require('bluebird');
 const xmlParser = require('fast-xml-parser');
 
@@ -59,7 +59,7 @@ module.exports = NodeHelper.create({
             self.cache = data;
 
             // Send data to module
-            Logger.log("Data received, send to module ...");
+            Logger.log('Data received, send to module ...');
             self.sendSocketNotification('DATA_LOADED', data);
 
         } catch (error) {
@@ -67,7 +67,7 @@ module.exports = NodeHelper.create({
 
             // Return cached data
             if (self.cache) {
-                Logger.info("Send cached data to module ...")
+                Logger.info('Send cached data to module ...');
                 self.sendSocketNotification('DATA_LOADED', self.cache);
             }
         }
@@ -88,7 +88,7 @@ module.exports = NodeHelper.create({
             // Request RBB xml data for this day
             let url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
             https.get(url, (response) => {
-                let xml = "";
+                let xml = '';
 
                 // Concat data chunk
                 response.on('data', (chunk) => {
@@ -127,8 +127,8 @@ module.exports = NodeHelper.create({
 
         // XML parse options
         let options = {
-           attributeNamePrefix: "",
-           ignoreAttributes: false,
+            attributeNamePrefix: '',
+            ignoreAttributes: false
         };
 
         // Parse XML data to json
@@ -141,16 +141,16 @@ module.exports = NodeHelper.create({
         // All citys are in the same XML file for one day, loop through them to find
         // the city data with correct ID
         let citys = parsedData.data.city;
-        for (let [dataIndex, city] of Object.entries(citys)) {
+        for (let city of Object.values(citys)) {
 
             // Only current data has possible letters in IDs, remove for forecast
             let id = this.config.id;
             if (day !== 0) {
-                id = this.config.id.replace("a", "");
+                id = this.config.id.replace('a', '');
             }
 
             // Find correct city
-            if (city.id == id) {
+            if (city.id === id) {
                 return city;
             }
         }
@@ -158,5 +158,5 @@ module.exports = NodeHelper.create({
         // No city found
         Logger.warn(`No city found with id "${this.config.id}".`);
         return {};
-    },
+    }
 });
