@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nkl-kast/MMM-RBB-Weather.git"
+    "url": "git+https://github.com/nkl-kst/MMM-RBB-Weather.git"
   },
   "main": "MMM-RBB-Weather.js",
   "scripts": {
