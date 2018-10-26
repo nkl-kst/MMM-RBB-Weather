@@ -60,6 +60,6 @@ table.weather-table td.wind > span {
  */
 
 div.white img.weather-icon,
-table.weather-table td.weather-icon  {
+div.white td.weather-icon  {
     filter: brightness(0) invert(1);
 }
