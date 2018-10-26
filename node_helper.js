@@ -81,7 +81,7 @@ module.exports = NodeHelper.create({
      * @return {Promise}     Promise resolved with xml parsed as object
      */
     fetchDayData: function(day) {
-        Logger.log(`Fetch data for day "${day} ..."`);
+        Logger.log(`Fetch data for day "${day}" ...`);
 
         return new Promise((resolve, reject) => {
 
