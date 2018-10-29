@@ -76,7 +76,7 @@ describe('MMM-RBB-Weather', () => {
 
     describe('getTranslations', () => {
 
-        it('should return an array', () => {
+        it('should return an object', () => {
 
             // Act
             let translations = module.getTranslations();
