@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [1.1.1] - 2018-10-29
+
+### Updated
+- eslint-plugin-node@^8.0.0
+
+
 ## [1.1.0] - 2018-10-26
 
 - New minor version with new features (e.g. animated icons), bugfixes etc.
