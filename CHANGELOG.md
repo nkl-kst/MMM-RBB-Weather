@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Updated
 - eslint-plugin-node@^8.0.0
+- jsdom@^13.0.0
 - Use Font Awesome 5 icons if MagicMirror version is higher than 2.5.0
 
 
