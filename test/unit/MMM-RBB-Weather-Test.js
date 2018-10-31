@@ -44,6 +44,9 @@ describe('MMM-RBB-Weather', () => {
 
         // Fake DOM
         document = new JSDOM(`<!DOCTYPE html>`).window.document;
+
+        // Fake MagicMirror Version
+        version = '2.6.0';
     });
 
     afterEach(() => {
@@ -76,7 +79,7 @@ describe('MMM-RBB-Weather', () => {
 
     describe('getTranslations', () => {
 
-        it('should return an array', () => {
+        it('should return an object', () => {
 
             // Act
             let translations = module.getTranslations();
@@ -339,7 +342,19 @@ describe('MMM-RBB-Weather', () => {
             assert.deepStrictEqual(icon, 'fa-thermometer-empty');
         });
 
-        it('should return "fa-asterisk" icon if temperature is lower than 0', () => {
+        it('should return "fa-snowflake" icon if temperature is lower than 0', () => {
+
+            // Act
+            let icon = module.getTempIcon(-1);
+
+            // Assert
+            assert.deepStrictEqual(icon, 'fa-snowflake');
+        });
+
+        it('should return "fa-asterisk" icon if temperature is lower than 0 and version is lower or equal 2.5.0', () => {
+
+            // Arrange
+            version = '2.5.0';
 
             // Act
             let icon = module.getTempIcon(-1);
@@ -360,7 +375,19 @@ describe('MMM-RBB-Weather', () => {
             assert.deepStrictEqual(icon, 'fa-tint');
         });
 
-        it('should return "fa-tint dimmed" icon if probability is under or equal low', () => {
+        it('should return "fa-tint-slash" icon if probability is under or equal low', () => {
+
+            // Act
+            let icon = module.getRainProbabilityIcon(15);
+
+            // Assert
+            assert.deepStrictEqual(icon, 'fa-tint-slash');
+        });
+
+        it('should return "fa-tint dimmed" icon if probability is under or equal low and version is lower or equal 2.5.0', () => {
+
+            // Arrange
+            version = '2.5.0';
 
             // Act
             let icon = module.getRainProbabilityIcon(15);

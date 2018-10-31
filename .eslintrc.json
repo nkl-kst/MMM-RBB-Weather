@@ -9,7 +9,8 @@
         "IconMapper": true,
         "Module": true,
         "moment": true,
-        "Log": true
+        "Log": true,
+        "version": true
     },
     "rules": {
         "indent": ["error", 4],

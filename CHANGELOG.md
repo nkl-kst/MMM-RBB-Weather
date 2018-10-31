@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [1.1.1] - 2018-10-31
+
+### Added
+- Icon mapping for thunder and additional rain types
+
+### Updated
+- eslint-plugin-node@^8.0.0
+- jsdom@^13.0.0
+- Use Font Awesome 5 icons if MagicMirror version is higher than 2.5.0
+
+
 ## [1.1.0] - 2018-10-26
 
 - New minor version with new features (e.g. animated icons), bugfixes etc.
