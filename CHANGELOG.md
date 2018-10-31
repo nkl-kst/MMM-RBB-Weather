@@ -5,7 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [1.1.1] - 2018-10-29
+## [1.1.1] - 2018-10-31
+
+### Added
+- Icon mapping for thunder and additional rain types
 
 ### Updated
 - eslint-plugin-node@^8.0.0
