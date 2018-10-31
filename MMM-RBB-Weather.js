@@ -201,8 +201,14 @@ Module.register('MMM-RBB-Weather', {
         if (temp >= 24) return 'fa-thermometer-three-quarters';
         if (temp >= 16) return 'fa-thermometer-half';
         if (temp >= 8) return 'fa-thermometer-quarter';
-        if (temp >= 0) return 'fa-thermometer-empty'; // TODO: Use "fa-snowflake" when Font Awesome 5 is available
-        return 'fa-asterisk';
+        if (temp >= 0) return 'fa-thermometer-empty';
+
+        // Font Awesome 5 (with fa-snowflake) is not available in MagicMirror <= 2.5.0
+        if (version.localeCompare('2.5.0', 'en', { numeric: true }) <= 0) {
+            return 'fa-asterisk';
+        }
+
+        return 'fa-snowflake';
     },
 
     /**
@@ -216,8 +222,13 @@ Module.register('MMM-RBB-Weather', {
     getRainProbabilityIcon: function(prob) {
 
         if (prob <= 15) {
-            // TODO: Use "fa-tint-slash" when Font Awesome 5 is available
-            return 'fa-tint dimmed';
+
+            // Font Awesome 5 (with fa-tint-slash) is not available in MagicMirror <= 2.5.0
+            if (version.localeCompare('2.5.0', 'en', { numeric: true }) <= 0) {
+                return 'fa-tint dimmed';
+            }
+
+            return 'fa-tint-slash';
         }
 
         if (prob >= 70) {
