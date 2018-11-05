@@ -33,8 +33,8 @@ describe('MMM-RBB-Weather', () => {
 
     beforeEach(() => {
         // Initialize module
-        decache('../../MMM-RBB-Weather');
-        require('../../MMM-RBB-Weather');
+        decache('../../../MMM-RBB-Weather');
+        require('../../../MMM-RBB-Weather');
         module = Module.definitions['MMM-RBB-Weather'];
 
         // Fake file method

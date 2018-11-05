@@ -26,9 +26,9 @@ describe('node_helper', () => {
     let helper;
 
     beforeEach(() => {
-        decache('../../node_helper');
+        decache('../../../node_helper');
         helper = proxyquire(
-            '../../node_helper',
+            '../../../node_helper',
             { 'node_helper': helperFake, './Logger': LoggerFake, 'https': HttpsFake });
     });
 
