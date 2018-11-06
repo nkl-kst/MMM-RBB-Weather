@@ -12,6 +12,13 @@ Module.register = function(name, moduleDefinition) {
     Module.definitions[name] = moduleDefinition;
 };
 
+// Mock logging
+Log = {};
+Log.info = function() {};
+
+// Make momentjs functions available
+moment = require('moment');
+
 // Register module
 require('../../../MMM-RBB-Weather');
 

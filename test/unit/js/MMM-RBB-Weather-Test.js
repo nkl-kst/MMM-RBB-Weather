@@ -7,13 +7,6 @@ const JSDOM = require('jsdom').JSDOM;
 
 const newModule = require('./JsTestUtils').newModule;
 
-// Mock logging
-Log = {};
-Log.info = function() {};
-
-// Make momentjs functions available
-moment = require('moment');
-
 describe('MMM-RBB-Weather', () => {
 
     // Tested
