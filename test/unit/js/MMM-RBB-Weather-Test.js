@@ -1,9 +1,5 @@
-/* eslint no-global-assign: "off" */
-
 const assert = require('assert');
 const sinon = require('sinon');
-
-const JSDOM = require('jsdom').JSDOM;
 
 const newModule = require('./JsTestUtils').newModule;
 
@@ -15,14 +11,6 @@ describe('MMM-RBB-Weather', () => {
     beforeEach(() => {
 
         module = newModule();
-
-        // Fake file method
-        module.file = sinon.fake((path) => {
-            return `parent/folder/${path}`;
-        });
-
-        // Fake DOM
-        document = new JSDOM(`<!DOCTYPE html>`).window.document;
 
         // Fake MagicMirror Version
         version = '2.6.0';
