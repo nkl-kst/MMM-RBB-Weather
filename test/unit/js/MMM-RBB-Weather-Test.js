@@ -1,23 +1,11 @@
 /* eslint no-global-assign: "off" */
 
-const decache = require('decache');
-
 const assert = require('assert');
 const sinon = require('sinon');
 
 const JSDOM = require('jsdom').JSDOM;
 
-// Mock module registration
-Module = {};
-Module.definitions = {};
-Module.register = function(name, moduleDefinition) {
-
-    moduleDefinition.config = moduleDefinition.defaults;
-    moduleDefinition.config.language = 'de';
-    moduleDefinition.config.updateInterval = 0;
-
-    Module.definitions[name] = moduleDefinition;
-};
+const newModule = require('./JsTestUtils').newModule;
 
 // Mock logging
 Log = {};
@@ -32,10 +20,8 @@ describe('MMM-RBB-Weather', () => {
     let module;
 
     beforeEach(() => {
-        // Initialize module
-        decache('../../../MMM-RBB-Weather');
-        require('../../../MMM-RBB-Weather');
-        module = Module.definitions['MMM-RBB-Weather'];
+
+        module = newModule();
 
         // Fake file method
         module.file = sinon.fake((path) => {
