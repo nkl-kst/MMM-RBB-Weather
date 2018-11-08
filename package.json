@@ -11,7 +11,7 @@
   "main": "MMM-RBB-Weather.js",
   "scripts": {
     "test": "nyc mocha \"test/unit/**/*.js\"",
-    "test-tpl": "nyc mocha \"test/unit/templates/*.js\"",
+    "test-tpl": "mocha \"test/int/templates/*.js\"",
     "test-int": "mocha \"test/int/**/*.js\"",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
