@@ -26,7 +26,7 @@ describe('node_helper', () => {
 
     beforeEach(() => {
         helper = proxyquire(
-            '../../../node_helper',
+            '../../node_helper',
             { 'node_helper': helperFake, './Logger': LoggerFake, 'https': HttpsFake });
     });
 

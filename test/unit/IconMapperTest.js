@@ -1,7 +1,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-require('../../../IconMapper');
+require('../../IconMapper');
 
 describe('IconMapper', () => {
 
