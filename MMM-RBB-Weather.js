@@ -43,6 +43,8 @@ Module.register('MMM-RBB-Weather', {
 
     getStyles: function() {
         return [
+            'font-awesome.css',
+            'font-awesome5.css', // Only available in MagicMirror Version > 2.5.0
             'weather-icons.css',
             'weather-icons-wind.css',
             'MMM-RBB-Weather.css'
