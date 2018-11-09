@@ -1,7 +1,6 @@
 /* eslint no-global-assign: "off" */
 
 const cloneDeep = require('lodash.clonedeep');
-const JSDom = require('jsdom').JSDOM;
 const Sinon = require('sinon');
 
 // Mock module registration
@@ -20,6 +19,9 @@ Module.register = function(name, moduleDefinition) {
 Log = {};
 Log.info = function() {};
 
+// Mock version
+version = '2.6.0';
+
 // Make momentjs functions available
 moment = require('moment');
 
@@ -34,9 +36,6 @@ module.exports.newModule = function() {
     newModule.file = Sinon.fake((path) => {
         return `parent/folder/${path}`;
     });
-
-    // Fake DOM
-    document = new JSDom(`<!DOCTYPE html>`).window.document;
 
     return newModule;
 };

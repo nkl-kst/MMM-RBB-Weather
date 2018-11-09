@@ -83,109 +83,63 @@ Module.register('MMM-RBB-Weather', {
     },
 
     /**
-     * getDom - Build and returns the whole module dom, including current data and forecast
-     * table.
+     * getTemplate - Return the Nunjucks template that should be rendered. If there is no weather
+     * data available yet, the 'nodata' template is returned.
      *
-     * @return {Element} Module dom as div element.
+     * @return {String} Template to render
      */
-    getDom: function() {
+    getTemplate: function() {
 
-        // Dom wrapper
-        let wrapper = document.createElement('div');
-        if (this.config.whiteIcons) {
-            wrapper.className = 'white';
-        }
-
-        // No data
+        // No data available
         if (this.weatherData === null || this.weatherData.length === 0) {
-            wrapper.innerHTML = this.translate('TEXT_NODATA');
-            return wrapper;
+            return 'templates/nodata.njk';
         }
 
-        // Table with data (without current data)
-        let table = document.createElement('table');
-        table.className = this.config.tableClass + ' weather-table';
+        // Default module template
+        return 'templates/module.njk';
+    },
 
-        // Current weather
-        let currentData = this.weatherData[0];
-        let currentDiv = this.getCurrentDiv(currentData);
-        wrapper.appendChild(currentDiv);
+    /**
+     * getTemplateData - Return the data that is included in the rendered Nunjucks remplate. The
+     * whole module instance is returned here, because several functions are called in the template.
+     *
+     * @return {Object} Data to put into templates
+     */
+    getTemplateData: function() {
+        return { module: this };
+    },
 
-        // Fill table with data
-        for (let [day, data] of Object.entries(this.weatherData)) {
+    /**
+     * getDayText - Return the formatted day text for the given day index. This is used for forecast
+     * days, so index 1 represents today, 2 represents tomorrow and so on.
+     *
+     * @param  {Number} dayIndex Day index
+     * @return {String}          Formatted day text
+     */
+    getForecastDayText: function(dayIndex) {
 
-            // Don't create table row for current data
-            if (day === '0') {
-                continue;
-            }
+        let day = moment().add(dayIndex - 1, 'days');
+        let dayText = day.format('ddd'); // TODO: Set format in config
 
-            // Create data row
-            let row = document.createElement('tr');
+        return dayText;
+    },
 
-            // Date
-            let dayCol = document.createElement('td');
-            dayCol.className = 'day';
-            dayCol.innerHTML = moment().add(day - 1, 'days').format('ddd');
-            row.appendChild(dayCol);
+    /**
+     * getIconUrl - Return URL to the animated or static icon mapped to the given RBB icon.
+     *
+     * @param  {String} rbbIcon description
+     * @return {String}         description
+     */
+    getIconUrl: function(animate, rbbIcon) {
 
-            // Icon
-            let iconCol = document.createElement('td');
-            iconCol.className = 'weather-icon';
+        // Icon path
+        let iconFolder = animate ? 'animated' : 'static';
+        let iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
 
-            // Icon path
-            let iconFolder = this.config.animateForecastIcon ? 'animated' : 'static';
-            let iconPath = IconMapper.getIconPath(data.nww, iconFolder);
+        // Set icon url
+        let iconUrl = this.file(iconPath);
 
-            // Set icon url
-            let iconUrl = this.file(iconPath);
-            iconCol.style = `background-image: url('${iconUrl}')`;
-            row.appendChild(iconCol);
-
-            // Split temparatures
-            let maxTemp = data.temp.split(';')[0];
-            let minTemp = data.temp.split(';')[1];
-
-            // Use icons depending on temperature value
-            let maxTempIcon = this.getTempIcon(maxTemp);
-            let minTempIcon = this.getTempIcon(minTemp);
-
-            // Max temparature
-            let maxCol = document.createElement('td');
-            maxCol.className = 'title bright';
-            maxCol.innerHTML = `${maxTemp}° <i class='fa fa-fw ${maxTempIcon}'></i>`;
-            row.appendChild(maxCol);
-
-            // Min temparature
-            let minCol = document.createElement('td');
-            minCol.innerHTML = `${minTemp}° <i class='fa fa-fw ${minTempIcon}'></i>`;
-            row.appendChild(minCol);
-
-            // Wind
-            if (this.config.showWindspeed) {
-                let windCol = document.createElement('td');
-                windCol.innerHTML = `${data.ffkmh} <span>km/h</span> ` +
-                    `<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
-                windCol.className = 'wind';
-                row.appendChild(windCol);
-            }
-
-            // Rain
-            if (this.config.showRainProbability) {
-
-                // Use icons depending on probability
-                let icon = this.getRainProbabilityIcon(data.prr);
-
-                let rainCol = document.createElement('td');
-                rainCol.innerHTML = `${data.prr}% <i class='fa fa-fw ${icon}'></i>`;
-                row.appendChild(rainCol);
-            }
-
-            table.appendChild(row);
-        }
-
-        // Append table to wrapper and return it
-        wrapper.appendChild(table);
-        return wrapper;
+        return iconUrl;
     },
 
     /**
@@ -239,71 +193,12 @@ Module.register('MMM-RBB-Weather', {
     },
 
     /**
-     * getCurrentDiv - Builds and returns the special div for current weather informations.
-     *
-     * @param  {Object}  data Data object fetched from RBB with all weather informations
-     * @return {Element}      Special div for current weather informations
-     */
-    getCurrentDiv: function(data) {
-
-        // Wrapper
-        let wrapper = document.createElement('div');
-        wrapper.className = 'current';
-
-        // Data wrapper
-        let dataDiv = document.createElement('div');
-        dataDiv.className = 'large bright light';
-
-        // Icon
-        let iconImg = document.createElement('img');
-        iconImg.className = 'weather-icon';
-
-        // Icon path
-        let iconFolder = this.config.animateCurrentIcon ? 'animated' : 'static';
-        let iconPath = IconMapper.getIconPath(data.nww, iconFolder);
-
-        // Set icon as image source
-        iconImg.src = this.file(iconPath);
-        dataDiv.appendChild(iconImg);
-
-        // Temparature
-        let tempDiv = document.createElement('span');
-        tempDiv.innerHTML = `${data.temp}°C`;
-        dataDiv.appendChild(tempDiv);
-
-        // Append data div (temp and icon) to wrapper
-        wrapper.appendChild(dataDiv);
-
-        // Current header text
-        let textDiv = document.createElement('div');
-        textDiv.className = 'medium normal';
-        textDiv.innerHTML = data.wwtext;
-        wrapper.appendChild(textDiv);
-
-        // Wind
-        if (this.config.showCurrentWindspeed) {
-            let wind = document.createElement('div');
-            wind.className = 'small dimmed';
-
-            // Wind direction text
-            let windDirKey = this.getWindDirKey(data.dd);
-            let windDirText = this.translate(`WIND_${windDirKey}`);
-
-            wind.innerHTML = `${data.ffkmh} km/h <i class='wi wi-strong-wind'></i> ` +
-                `${windDirText}<i class='wi wi-wind from-${data.dd}-deg fa-fw'>`;
-            wrapper.appendChild(wind);
-        }
-
-        return wrapper;
-    },
-
-    /**
      * getWindDirKey - Get wind direction short key based on wind direction degrees.
      *
      * @param  {Number} deg Wind direction in degrees
      * @return {String}     Wind direction short text
      */
-    getWindDirKey(deg) {
+    getWindDirKey: function(deg) {
 
         if (deg <= 22) return 'N';
         if (deg <= 67) return 'NE';
