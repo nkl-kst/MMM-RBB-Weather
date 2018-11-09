@@ -1,7 +1,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-const newModule = require('./JsTestUtils').newModule;
+const newModule = require('./ModuleTestEnv').newModule;
 
 describe('MMM-RBB-Weather', () => {
 

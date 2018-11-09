@@ -2,7 +2,7 @@ const assert = require('assert');
 
 const parser = require('fast-xml-parser');
 const renderTemplate = require('./NunjucksTestEnv').renderTemplate;
-const newModule = require('../../unit/JsTestUtils').newModule;
+const newModule = require('../../unit/ModuleTestEnv').newModule;
 
 require('../../../IconMapper');
 
