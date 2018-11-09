@@ -1,0 +1,81 @@
+{# Set shortcut variables #}
+{% set config = module.config %}
+{% set weatherData = module.weatherData %}
+
+{# Create current data dom #}
+{% macro currentData(data) %}
+
+    <div class="current">
+        <div class="large bright light">
+
+            {% set iconURL = module.getIconUrl(config.animateCurrentIcon, data.nww) %}
+            <img class="weather-icon" src="{{ iconURL }}" />
+            <span>{{ data.temp }}°C</span>
+
+            <div class="medium normal">{{ data.wwtext }}</div>
+
+            {% if config.showCurrentWindspeed %}
+                <div class="small dimmed">
+                    {% set windDirKey = module.getWindDirKey(data.dd) %}
+                    {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
+                    {{ windDirKey | translate }}
+                    <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{# Create forecast day table row #}
+{% macro forecastTableRow(dayIndex, data) %}
+
+    <tr>
+        <td class="day">{{ module.getForecastDayText(dayIndex) }}</td>
+
+        {% set iconURL = module.getIconUrl(config.animateForecastIcon, data.nww) %}
+        <td class="weather-icon" style="background-image: url('{{ iconURL }}')"></td>
+
+        {% set maxTemp = data.temp.split(';')[0] %}
+        <td class="title bright">
+            {{ maxTemp }}° <i class="fa fa-fw {{ module.getTempIcon(maxTemp) }}"></i>
+        </td>
+
+        {% set minTemp = data.temp.split(';')[1] %}
+        <td class="title bright">
+            {{ minTemp }}° <i class="fa fa-fw {{ module.getTempIcon(minTemp) }}"></i>
+        </td>
+
+        {% if config.showWindspeed %}
+            <td>
+                {{ data.ffkmh }} <span>km/h</span>
+                <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+            </td>
+        {% endif %}
+
+        {% if config.showRainProbability %}
+            {% set icon = module.getRainProbabilityIcon(data.prr) %}
+            <td>
+                {{ data.prr }}% <i class="fa fa-fw {{icon}}"></i>
+            </td>
+        {% endif %}
+    </tr>
+
+{% endmacro %}
+
+{# Create module dom #}
+<div class="{{ 'white' if config.whiteIcons }}">
+
+    {{ currentData(weatherData[0]) }}
+
+    {% set days = weatherData | length %}
+    {% if days > 1 %}
+        <table class="weather-table {{ config.tableClass }}">
+            {% for day in range(1, days) %}
+                {% set data = weatherData[day] %}
+                {{ forecastTableRow(day, data) }}
+            {% endfor %}
+        </table>
+    {% endif %}
+
+</div>
