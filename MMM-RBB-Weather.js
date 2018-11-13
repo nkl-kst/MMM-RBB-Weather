@@ -129,8 +129,9 @@ Module.register('MMM-RBB-Weather', {
     /**
      * getIconUrl - Return URL to the animated or static icon mapped to the given RBB icon.
      *
-     * @param  {String} rbbIcon description
-     * @return {String}         description
+     * @param  {Boolean} animate Use animated icons
+     * @param  {String}  rbbIcon RBB icon to be mapped
+     * @return {String}          URL to mapped icon
      */
     getIconUrl: function(animate, rbbIcon) {
 
