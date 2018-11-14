@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [1.2.0] - Pending release
+## [1.2.0] - 2018-11-14
 
 ### Added
 - Rendering Nunjucks templates for modules HTML ouput
