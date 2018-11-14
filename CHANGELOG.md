@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Use Font Awesome (and Font Awesome 5) CSS files in getStyles()
 - Use Font Awesome 5 icons not before MagicMirror version 2.6.0
+- Forecast table data is now right aligned
 
 ### Updated
 - Test setup with ModuleTestEnv.js and NunjucksTestEnv.js
