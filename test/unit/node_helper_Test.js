@@ -1,4 +1,3 @@
-const decache = require('decache');
 const proxyquire = require('proxyquire').noCallThru();
 
 const assert = require('assert');
@@ -26,7 +25,6 @@ describe('node_helper', () => {
     let helper;
 
     beforeEach(() => {
-        decache('../../node_helper');
         helper = proxyquire(
             '../../node_helper',
             { 'node_helper': helperFake, './Logger': LoggerFake, 'https': HttpsFake });
