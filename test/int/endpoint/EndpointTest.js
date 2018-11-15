@@ -7,6 +7,8 @@ const libxml = require('libxmljs');
 
 describe('Endpoints', function() {
 
+    // Timeout and retries for endpoint connections
+    this.retries(2);
     this.slow(1000);
     this.timeout(10000);
 

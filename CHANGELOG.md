@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [1.2.1] - Pending release
+
+### Changed
+- Retry to connect to endpoint in integration tests up to two times
+
+
 ## [1.2.0] - 2018-11-14
 
 ### Added
@@ -25,6 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - getDom() and getCurrentDiv() module functions (use Nunjucks template instead)
 - decache@^4.4.0 and jsdom@^13.0.0 dependencies
+
 
 ## [1.1.1] - 2018-10-31
 
