@@ -21,7 +21,12 @@ fs.symlinkSync(path.join(__dirname, '..', '..'), MM_MODULE_PATH, 'dir');
 fs.copyFileSync(TEST_CONFIG_PATH, path.join(MM_CONFIG_PATH));
 
 // Initialize Magic Mirror
-const app = new Application({ path: require('electron'), cwd: MM_APP_PATH, args: ['.'] });
+let electronPath = path.resolve('node_modules', '.bin', 'electron');
+if (process.platform === 'win32') {
+    electronPath += '.cmd';
+}
+
+const app = new Application({ path: electronPath, cwd: MM_APP_PATH, args: ['.'] });
 
 // Functions to handle the app
 function startApp() {
