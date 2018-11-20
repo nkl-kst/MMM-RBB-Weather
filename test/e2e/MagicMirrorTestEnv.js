@@ -12,7 +12,9 @@ const MM_CONFIG_PATH = path.join(MM_APP_PATH, 'config', 'config.js');
 const TEST_CONFIG_PATH = path.join('test', 'e2e', 'TestConfig.js');
 
 // Symlink module into MagicMirror app
-fs.unlinkSync(MM_MODULE_PATH);
+if (fs.existsSync(MM_MODULE_PATH)) {
+    fs.unlinkSync(MM_MODULE_PATH);
+};
 fs.symlinkSync(path.join(__dirname, '..', '..'), MM_MODULE_PATH, 'dir');
 
 // Copy config path into MagicMirror app
