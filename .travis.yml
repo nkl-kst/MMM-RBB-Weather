@@ -4,6 +4,7 @@ node_js:
 script:
  - npm test
  - npm run test-int
+ - npm run test-e2e
 after_success:
  - npm run coveralls
 cache:
