@@ -6,7 +6,7 @@ describe('Module', function() {
     // Retries and timeouts
     this.retries(2);
     this.slow(15000);
-    this.timeout(30000);
+    this.timeout(60000);
 
     // App browser (Electron client)
     let browser;
