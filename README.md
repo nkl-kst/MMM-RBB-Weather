@@ -35,6 +35,28 @@ npm install --only=prod
 
 After adding this module to your config (see below) restart your MagicMirror.
 
+## Update the module
+
+Go to modules folder
+
+```
+cd modules/MMM-RBB-Weather
+```
+
+Pull changes from Github
+
+```
+git pull
+```
+
+Install new dependencies
+
+```
+npm install --only=prod
+```
+
+Since this repository ignores the automatically generated ``package-lock.json``, pulling changes should always work. If not, try to reset your module with ``git reset --hard`` before pulling new changes.
+
 ## Using the module
 
 To use this module, add the following configuration block to the modules array in the `config/config.js` file:
