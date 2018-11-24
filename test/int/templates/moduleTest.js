@@ -108,7 +108,7 @@ describe('module.njk', () => {
     it('should render max forecast temperature', () => {
 
         // Assert
-        assert(output.includes('23° <i class="fa fa-fw fa-thermometer-half"></i>'));
+        assert(output.includes('23° <i class="fa fa-fw fa-thermometer-three-quarters"></i>'));
     });
 
     it('should render min forecast temperature', () => {

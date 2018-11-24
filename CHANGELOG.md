@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Retry to connect to endpoint in integration tests up to two times
+- Reduced range of temperature icons from 8 to 7 degrees
 
 
 ## [1.2.0] - 2018-11-14

@@ -153,11 +153,11 @@ Module.register('MMM-RBB-Weather', {
      */
     getTempIcon: function(temp) {
 
-        if (temp >= 40) return 'fa-umbrella-beach';
-        if (temp >= 32) return 'fa-thermometer-full';
-        if (temp >= 24) return 'fa-thermometer-three-quarters';
-        if (temp >= 16) return 'fa-thermometer-half';
-        if (temp >= 8) return 'fa-thermometer-quarter';
+        if (temp >= 35) return 'fa-umbrella-beach';
+        if (temp >= 28) return 'fa-thermometer-full';
+        if (temp >= 21) return 'fa-thermometer-three-quarters';
+        if (temp >= 14) return 'fa-thermometer-half';
+        if (temp >= 7) return 'fa-thermometer-quarter';
         if (temp >= 0) return 'fa-thermometer-empty';
 
         // Font Awesome 5 (with fa-snowflake) is not available in MagicMirror < 2.6.0
