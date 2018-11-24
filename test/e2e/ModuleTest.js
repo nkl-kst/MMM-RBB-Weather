@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { startApp, stopApp, getBrowser } = require('./MagicMirrorTestEnv');
+const { setConfig, startApp, stopApp, getBrowser } = require('./MagicMirrorTestEnv');
 
 describe('Module', function() {
 
@@ -12,6 +12,9 @@ describe('Module', function() {
     let browser;
 
     before(async () => {
+
+        // Set config as environment variable
+        setConfig('TestConfig.js');
 
         // Start Magic Mirror app
         await startApp();
