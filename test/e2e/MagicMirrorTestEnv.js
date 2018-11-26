@@ -30,7 +30,7 @@ const app = new Application({ path: electronPath, args: ['.'] });
 
 // Functions to handle the app
 function setConfig(cfg) {
-    process.env.MM_CONFIG_FILE = `modules/MMM-RBB-WEATHER/test/e2e/${cfg}`;
+    process.env.MM_CONFIG_FILE = `modules/MMM-RBB-Weather/test/e2e/${cfg}`;
 }
 
 function startApp() {
