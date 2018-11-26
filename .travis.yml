@@ -11,6 +11,8 @@ script:
  - npm run test-e2e
 after_success:
  - npm run coveralls
+before_cache:
+ - rm -rf $HOME/build/nkl-kst/MagicMirror/modules/MMM-RBB-Weather
 cache:
  directories:
   - node_modules
