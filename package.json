@@ -13,6 +13,7 @@
     "test": "nyc mocha \"test/unit/**/*.js\"",
     "test-tpl": "mocha \"test/int/templates/*.js\"",
     "test-int": "mocha \"test/int/**/*.js\"",
+    "test-e2e": "mocha \"test/e2e/**/*.js\"",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
@@ -34,7 +35,9 @@
     "nunjucks": "^3.0.1",
     "nyc": "^13.1.0",
     "proxyquire": "^2.1.0",
-    "sinon": "^7.0.0"
+    "shelljs": "^0.8.3",
+    "sinon": "^7.0.0",
+    "spectron": "^5.0.0"
   },
   "nyc": {
     "reporter": [

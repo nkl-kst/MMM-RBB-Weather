@@ -1,11 +1,19 @@
 language: node_js
 node_js:
  - "node"
+before_script:
+ - "export DISPLAY=:99.0"
+ - "sh -e /etc/init.d/xvfb start"
+ - sleep 5
 script:
  - npm test
  - npm run test-int
+ - npm run test-e2e
 after_success:
  - npm run coveralls
+before_cache:
+ - rm -rf $HOME/build/nkl-kst/MagicMirror/modules/MMM-RBB-Weather
 cache:
  directories:
   - node_modules
+  - $HOME/build/nkl-kst/MagicMirror
