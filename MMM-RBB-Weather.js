@@ -29,7 +29,8 @@ Module.register('MMM-RBB-Weather', {
         whiteIcons: true
     },
 
-    requiresVersion: '2.1.0', // Required version of MagicMirror
+    // Requires Nunjucks support added in Magic Mirror 2.2.0
+    requiresVersion: '2.2.0',
 
     // Instancevariable
     weatherData: null,
@@ -44,7 +45,7 @@ Module.register('MMM-RBB-Weather', {
     getStyles: function() {
         return [
             'font-awesome.css',
-            'font-awesome5.css', // Only available in MagicMirror Version > 2.5.0
+            'font-awesome5.css', // Only available in MagicMirror > 2.5.0
             'weather-icons.css',
             'weather-icons-wind.css',
             'MMM-RBB-Weather.css'
