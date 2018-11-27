@@ -5,27 +5,30 @@ describe('Module', function() {
 
     // Retries and timeouts
     this.retries(2);
-    this.slow(15000);
-    this.timeout(60000);
+    this.slow(10000);
+    this.timeout(30000);
 
     // App browser (Electron client)
     let browser;
 
-    before(async () => {
+    before(() => {
 
         // Set config as environment variable
         setConfig('TestConfig.js');
 
         // Start Magic Mirror app
-        await startApp();
-
-        // Wait for module data
-        browser = getBrowser();
-        return browser.waitForExist('div.MMM-RBB-Weather div.current');
+        return startApp();
     });
 
     after(() => {
         return stopApp();
+    });
+
+    beforeEach(async () => {
+
+        // Wait for module data
+        browser = getBrowser();
+        return browser.waitForExist('div.MMM-RBB-Weather div.current');
     });
 
     it('should display current data', async () => {
