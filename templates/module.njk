@@ -11,18 +11,18 @@
             {% set iconURL = module.getIconUrl(config.animateCurrentIcon, data.nww) %}
             <img class="weather-icon" src="{{ iconURL }}" />
             <span>{{ data.temp }}°C</span>
-
-            <div class="medium normal">{{ data.wwtext }}</div>
-
-            {% if config.showCurrentWindspeed %}
-                <div class="small dimmed">
-                    {% set windDirKey = module.getWindDirKey(data.dd) %}
-                    {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
-                    {{ windDirKey | translate }}
-                    <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
-                </div>
-            {% endif %}
         </div>
+
+        <div class="medium normal">{{ data.wwtext }}</div>
+
+        {% if config.showCurrentWindspeed %}
+            <div class="small dimmed">
+                {% set windDirKey = module.getWindDirKey(data.dd) %}
+                {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
+                {{ windDirKey | translate }}
+                <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+            </div>
+        {% endif %}
     </div>
 
 {% endmacro %}
