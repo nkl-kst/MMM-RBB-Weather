@@ -9,15 +9,15 @@
  * #####   Current data  #####
  */
 
-div.current {
+.current {
     margin-bottom: 10px;
 }
 
-div.current img.weather-icon {
+.current .weather-icon {
+    left: 10px;
+    margin-top: -40px;
     position: relative;
     top: 20px;
-    margin-top: -40px;
-    left: 10px;
     width: 100px;
 }
 
@@ -26,36 +26,33 @@ div.current img.weather-icon {
  * #####   Table data   #####
  */
 
-table.weather-table td {
+.weather-table td {
     height: 1.5em;
-}
-
-table.weather-table td:not(:last-child) {
-    padding-right: 0.6em;
-}
-
-table.weather-table td {
     text-align: right;
 }
 
-table.weather-table td.day {
+.weather-table td:not(:last-child) {
+    padding-right: 0.6em;
+}
+
+.weather-table .day {
     text-align: center;
 }
 
-table.weather-table td.weather-icon {
+.weather-table .weather-icon {
     background-position: 0.2em;
-    background-size: 2em;
     background-repeat: no-repeat;
+    background-size: 2em;
     width: 2.2em;
 }
 
-table.weather-table td.wind {
+.weather-table .wind {
     padding-top: 0.2em;
 }
 
-table.weather-table td.wind > span {
-     font-size: 0.5em;
-     font-style: italic;
+.weather-table .wind > span {
+    font-size: 0.5em;
+    font-style: italic;
 }
 
 
@@ -63,7 +60,6 @@ table.weather-table td.wind > span {
  * #####   White icons   #####
  */
 
-div.white img.weather-icon,
-div.white td.weather-icon  {
+.white .weather-icon {
     filter: brightness(0) invert(1);
 }
