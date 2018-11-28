@@ -206,6 +206,15 @@ describe('MMM-RBB-Weather', () => {
             // Assert
             assert.strictEqual(url, 'parent/folder/vendor/amcharts/static/cloudy-day-1.svg');
         });
+
+        it('should return RBB URL fallback if no mapping is found', () => {
+
+            // Act
+            let url = module.getIconUrl(true, 'no_mapping');
+
+            // Assert
+            assert.strictEqual(url, 'https://www.rbb24.de/basis/grafik/icons/wetter/svg/no_mapping.svg');
+        });
     });
 
     describe('getTempIcon', () => {

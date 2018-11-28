@@ -8,13 +8,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.0.0] - Pending release
 
 ### Added
+- Use RBB fallback icons if no Amchart mapping was found
 - e2e tests
 
 ### Changed
 - **Magic Mirror 2.2.0 is now required to run this module (Nunjucks support required)**
-- Retry to connect to endpoint in integration tests up to two times
 - Reduced range of temperature icons from 8 to 7 degrees
 - Moved current text and windspeed out of the temperature div
+- Retry to connect to endpoint in integration tests up to two times
 
 
 ## [1.2.0] - 2018-11-14

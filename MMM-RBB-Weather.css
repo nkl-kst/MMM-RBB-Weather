@@ -21,6 +21,13 @@
     width: 100px;
 }
 
+/* RBB icons need slightly different positioning */
+.current .weather-icon[src*='www.rbb24.de'] {
+    left: -10px;
+    position: relative;
+    top: 25px;
+}
+
 
 /*
  * #####   Table data   #####

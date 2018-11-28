@@ -140,10 +140,13 @@ Module.register('MMM-RBB-Weather', {
         let iconFolder = animate ? 'animated' : 'static';
         let iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
 
-        // Set icon url
-        let iconUrl = this.file(iconPath);
+        // Fallback to RBB icons if no mapping was found
+        if (!iconPath) {
+            return `https://www.rbb24.de/basis/grafik/icons/wetter/svg/${rbbIcon}.svg`;
+        }
 
-        return iconUrl;
+        // Return icon url
+        return this.file(iconPath);
     },
 
     /**
