@@ -29,7 +29,8 @@ Module.register('MMM-RBB-Weather', {
         whiteIcons: true
     },
 
-    requiresVersion: '2.1.0', // Required version of MagicMirror
+    // Requires Nunjucks support added in Magic Mirror 2.2.0
+    requiresVersion: '2.2.0',
 
     // Instancevariable
     weatherData: null,
@@ -44,7 +45,7 @@ Module.register('MMM-RBB-Weather', {
     getStyles: function() {
         return [
             'font-awesome.css',
-            'font-awesome5.css', // Only available in MagicMirror Version > 2.5.0
+            'font-awesome5.css', // Only available in MagicMirror > 2.5.0
             'weather-icons.css',
             'weather-icons-wind.css',
             'MMM-RBB-Weather.css'
@@ -139,10 +140,13 @@ Module.register('MMM-RBB-Weather', {
         let iconFolder = animate ? 'animated' : 'static';
         let iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
 
-        // Set icon url
-        let iconUrl = this.file(iconPath);
+        // Fallback to RBB icons if no mapping was found
+        if (!iconPath) {
+            return `https://www.rbb24.de/basis/grafik/icons/wetter/svg/${rbbIcon}.svg`;
+        }
 
-        return iconUrl;
+        // Return icon url
+        return this.file(iconPath);
     },
 
     /**
@@ -153,11 +157,11 @@ Module.register('MMM-RBB-Weather', {
      */
     getTempIcon: function(temp) {
 
-        if (temp >= 40) return 'fa-umbrella-beach';
-        if (temp >= 32) return 'fa-thermometer-full';
-        if (temp >= 24) return 'fa-thermometer-three-quarters';
-        if (temp >= 16) return 'fa-thermometer-half';
-        if (temp >= 8) return 'fa-thermometer-quarter';
+        if (temp >= 35) return 'fa-umbrella-beach';
+        if (temp >= 28) return 'fa-thermometer-full';
+        if (temp >= 21) return 'fa-thermometer-three-quarters';
+        if (temp >= 14) return 'fa-thermometer-half';
+        if (temp >= 7) return 'fa-thermometer-quarter';
         if (temp >= 0) return 'fa-thermometer-empty';
 
         // Font Awesome 5 (with fa-snowflake) is not available in MagicMirror < 2.6.0

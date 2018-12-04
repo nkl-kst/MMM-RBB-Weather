@@ -206,50 +206,59 @@ describe('MMM-RBB-Weather', () => {
             // Assert
             assert.strictEqual(url, 'parent/folder/vendor/amcharts/static/cloudy-day-1.svg');
         });
+
+        it('should return RBB URL fallback if no mapping is found', () => {
+
+            // Act
+            let url = module.getIconUrl(true, 'no_mapping');
+
+            // Assert
+            assert.strictEqual(url, 'https://www.rbb24.de/basis/grafik/icons/wetter/svg/no_mapping.svg');
+        });
     });
 
     describe('getTempIcon', () => {
 
-        it('should return "fa-umbrella-beach" icon if temperature is equal 40', () => {
+        it('should return "fa-umbrella-beach" icon if temperature is equal 35', () => {
 
             // Act
-            let icon = module.getTempIcon(40);
+            let icon = module.getTempIcon(35);
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-umbrella-beach');
         });
 
-        it('should return "fa-thermometer-full" icon if temperature is equal 32', () => {
+        it('should return "fa-thermometer-full" icon if temperature is equal 28', () => {
 
             // Act
-            let icon = module.getTempIcon(32);
+            let icon = module.getTempIcon(28);
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-thermometer-full');
         });
 
-        it('should return "fa-thermometer-three-quarters" icon if temperature is equal 24', () => {
+        it('should return "fa-thermometer-three-quarters" icon if temperature is equal 21', () => {
 
             // Act
-            let icon = module.getTempIcon(24);
+            let icon = module.getTempIcon(21);
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-thermometer-three-quarters');
         });
 
-        it('should return "fa-thermometer-half" icon if temperature is equal 16', () => {
+        it('should return "fa-thermometer-half" icon if temperature is equal 14', () => {
 
             // Act
-            let icon = module.getTempIcon(16);
+            let icon = module.getTempIcon(14);
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-thermometer-half');
         });
 
-        it('should return "fa-thermometer-quarter" icon if temperature is equal 8', () => {
+        it('should return "fa-thermometer-quarter" icon if temperature is equal 7', () => {
 
             // Act
-            let icon = module.getTempIcon(8);
+            let icon = module.getTempIcon(7);
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-thermometer-quarter');

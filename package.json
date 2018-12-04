@@ -1,6 +1,6 @@
 {
   "name": "MMM-RBB-Weather",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "MagicMirror module to display RBB weather data.",
   "author": "Nikolai Keist",
   "license": "MIT",
@@ -10,9 +10,11 @@
   },
   "main": "MMM-RBB-Weather.js",
   "scripts": {
-    "test": "nyc mocha \"test/unit/**/*.js\"",
-    "test-tpl": "mocha \"test/int/templates/*.js\"",
-    "test-int": "mocha \"test/int/**/*.js\"",
+    "test": "nyc mocha test/unit --recursive",
+    "test-tpl": "mocha test/int/templates --recursive",
+    "test-int": "mocha test/int --recursive",
+    "test-e2e": "mocha test/e2e --recursive",
+    "eslint": "eslint --ignore-pattern coverage/ .",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
@@ -34,7 +36,9 @@
     "nunjucks": "^3.0.1",
     "nyc": "^13.1.0",
     "proxyquire": "^2.1.0",
-    "sinon": "^7.0.0"
+    "shelljs": "^0.8.3",
+    "sinon": "^7.0.0",
+    "spectron": "^5.0.0"
   },
   "nyc": {
     "reporter": [
