@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [2.0.0] - Pending release
+## [2.0.0] - 2018-12-04
 
 ### Added
 - Use RBB fallback icons if no Amchart mapping was found
