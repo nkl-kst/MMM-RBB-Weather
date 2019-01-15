@@ -92,6 +92,10 @@ All options are optional so the module works out of the box.
 | `tableClass`           | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
 | `whiteIcons`           | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 
+## Known issues
+
+The animated icons consume a high amount of memory, resulting in an Electron crash and therefore a black MagicMirror screen. If you experience this issue, please use static icons instead (as described in [Configuration options](#configuration-options)). Refer to [issue #16](https://github.com/nkl-kst/MMM-RBB-Weather/issues/16) for more information.
+
 ## Problems
 
 If you have any problems or questions, feel free to open an issue. There are many possible improvements for this module so please let me know if you miss something.
