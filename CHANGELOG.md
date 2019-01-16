@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [2.0.1] - Pending release
+
+### Fixed
+- Use Font Awesome 5 with correct "fas" class
+
+
 ## [2.0.0] - 2018-12-04
 
 ### Added
