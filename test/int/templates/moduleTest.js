@@ -108,13 +108,13 @@ describe('module.njk', () => {
     it('should render max forecast temperature', () => {
 
         // Assert
-        assert(output.includes('23° <i class="fa fa-fw fa-thermometer-three-quarters"></i>'));
+        assert(output.includes('23° <i class="fas fa-fw fa-thermometer-three-quarters"></i>'));
     });
 
     it('should render min forecast temperature', () => {
 
         // Assert
-        assert(output.includes('10° <i class="fa fa-fw fa-thermometer-quarter"></i>'));
+        assert(output.includes('10° <i class="fas fa-fw fa-thermometer-quarter"></i>'));
     });
 
     it('should render forecast wind speed', () => {
@@ -132,6 +132,6 @@ describe('module.njk', () => {
     it('should render forecast rain probability', () => {
 
         // Assert
-        assert(output.includes('13% <i class="fa fa-fw fa-tint-slash"></i>'));
+        assert(output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
     });
 });
