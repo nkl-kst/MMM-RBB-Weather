@@ -26,6 +26,7 @@ Module.register('MMM-RBB-Weather', {
         // Styling
         animateCurrentIcon: true,
         animateForecastIcon: false,
+        dayFormat: 'ddd',
         tableClass: 'small',
         whiteIcons: true
     },
@@ -123,7 +124,7 @@ Module.register('MMM-RBB-Weather', {
     getForecastDayText: function(dayIndex) {
 
         let day = moment().add(dayIndex - 1, 'days');
-        let dayText = day.format('ddd'); // TODO: Set format in config
+        let dayText = day.format(this.config.dayFormat);
 
         return dayText;
     },
