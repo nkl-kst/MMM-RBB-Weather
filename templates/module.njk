@@ -13,7 +13,9 @@
             <span>{{ data.temp }}°C</span>
         </div>
 
-        <div class="medium normal">{{ data.wwtext }}</div>
+        {% if config.showCurrentText %}
+            <div class="medium normal">{{ data.wwtext }}</div>
+        {% endif %}
 
         {% if config.showCurrentWindspeed %}
             <div class="small dimmed">

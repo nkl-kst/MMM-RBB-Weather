@@ -84,6 +84,7 @@ All options are optional so the module works out of the box.
 | `days`                 | Days shown in forecast table. Set this to `0` to display only current weather. Data for seven days are available (including today), so `7` is the maximum here. <br><br>**Type:** `Number`<br>**Default:** `4`
 | `animationSpeed`       | Duration of content refresh animation in seconds.<br><br>**Type:** `Number`<br>**Default:** `1`
 | `updateInterval`       | Time between loading new weather data in seconds.<br><br>**Type:** `Number`<br>**Default:** `600` (10 minutes)
+| `showCurrentText`      | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showCurrentWindspeed` | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showRainProbability`  | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`

@@ -18,6 +18,7 @@ Module.register('MMM-RBB-Weather', {
         updateInterval: 600, // 10 min.
 
         // Show / hide flags
+        showCurrentText: true,
         showCurrentWindspeed: true,
         showRainProbability: true,
         showWindspeed: false,

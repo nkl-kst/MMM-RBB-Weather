@@ -1,8 +1,8 @@
 const assert = require('assert');
 
 const parser = require('fast-xml-parser');
-const renderTemplate = require('./NunjucksTestEnv').renderTemplate;
-const newModule = require('../../unit/ModuleTestEnv').newModule;
+const { renderTemplate } = require('./NunjucksTestEnv');
+const { newModule } = require('../../unit/ModuleTestEnv');
 
 require('../../../IconMapper');
 
@@ -19,119 +19,215 @@ describe('module.njk', () => {
     // Template data
     let module;
 
-    before(async () => {
+    context('with all flag options enabled', () => {
 
-        // Initialise module
-        module = newModule();
+        before(async () => {
 
-        // Set module data
-        module.config.showWindspeed = true;
-        module.weatherData = defaultWeatherData;
+            // Initialise module
+            module = newModule();
 
-        // Mock day function
-        module.getForecastDayText = function(dayIndex) {
-            return dayIndex;
-        };
+            // Set module data
+            module.config.showWindspeed = true;
+            module.weatherData = defaultWeatherData;
 
-        // Render template output
-        output = await renderTemplate('module.njk', { module: module });
+            // Mock day function
+            module.getForecastDayText = function(dayIndex) {
+                return dayIndex;
+            };
+
+            // Render template output
+            output = await renderTemplate('module.njk', { module: module });
+        });
+
+        it('should render valid html', () => {
+
+            // Assert
+            assert.strictEqual(parser.validate(output), true);
+        });
+
+        it('should render white icon class', () => {
+
+            // Assert
+            assert(output.includes('<div class="white">'));
+        });
+
+        it('should render animated current weather icon', () => {
+
+            // Assert
+            assert(output.includes('<img class="weather-icon" ' +
+                'src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg" />'));
+        });
+
+        it('should render current temperature', () => {
+
+            // Assert
+            assert(output.includes('<span>21°C</span>'));
+        });
+
+        it('should render current weather text', () => {
+
+            // Assert
+            assert(output.includes('<div class="medium normal">wolkig</div>'));
+        });
+
+        it('should render current windspeed with wind icon', () => {
+
+            // Assert
+            assert(output.includes('8 km/h <i class="wi wi-strong-wind"></i>'));
+        });
+
+        it('should render translated wind direction text', () => {
+
+            // Assert
+            assert(output.includes('translated: NE'));
+        });
+
+        it('should render wind direction icon', () => {
+
+            // Assert
+            assert(output.includes('<i class="wi wi-wind from-50-deg fa-fw">'));
+        });
+
+        it('should render table class', () => {
+
+            // Assert
+            assert(output.includes('<table class="weather-table small">'));
+        });
+
+        it('should render forecast day', () => {
+
+            // Assert
+            assert(output.includes('<td class="day">1</td>'));
+        });
+
+        it('should render forecast weather icon', () => {
+
+            // Assert
+            assert(output.includes('<td class="weather-icon" ' +
+                'style="background-image: url(\'parent/folder/vendor/amcharts/static/cloudy-day-1.svg\')"></td>'));
+        });
+
+        it('should render max forecast temperature', () => {
+
+            // Assert
+            assert(output.includes('23° <i class="fas fa-fw fa-thermometer-three-quarters"></i>'));
+        });
+
+        it('should render min forecast temperature', () => {
+
+            // Assert
+            assert(output.includes('10° <i class="fas fa-fw fa-thermometer-quarter"></i>'));
+        });
+
+        it('should render forecast wind speed', () => {
+
+            // Assert
+            assert(output.includes('10 <span>km/h</span>'));
+        });
+
+        it('should render forecast wind icon', () => {
+
+            // Assert
+            assert(output.includes('<i class="wi wi-wind from-360-deg fa-fw"></i>'));
+        });
+
+        it('should render forecast rain probability', () => {
+
+            // Assert
+            assert(output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
+        });
+
     });
 
-    it('should render valid html', () => {
+    context('with all flag options disabled', () => {
 
-        // Assert
-        assert.strictEqual(parser.validate(output), true);
-    });
+        before(async () => {
 
-    it('should render white icon class', () => {
+            // Initialise module
+            module = newModule();
 
-        // Assert
-        assert(output.includes('<div class="white">'));
-    });
+            // Set module data
+            module.config.showCurrentText = false;
+            module.config.showCurrentWindspeed = false;
+            module.config.showRainProbability = false;
+            module.config.animateCurrentIcon = false;
+            module.config.whiteIcons = false;
+            module.weatherData = defaultWeatherData;
 
-    it('should render current weather icon', () => {
+            // Mock day function
+            module.getForecastDayText = function(dayIndex) {
+                return dayIndex;
+            };
 
-        // Assert
-        assert(output.includes('<img class="weather-icon" ' +
-            'src="parent/folder/vendor/amcharts/animated/cloudy-day-1.svg" />'));
-    });
+            // Render template output
+            output = await renderTemplate('module.njk', { module: module });
+        });
 
-    it('should render current temperature', () => {
+        it('should render valid html', () => {
 
-        // Assert
-        assert(output.includes('<span>21°C</span>'));
-    });
+            // Assert
+            assert.strictEqual(parser.validate(output), true);
+        });
 
-    it('should render current weather text', () => {
+        it('should not render white icon class', () => {
 
-        // Assert
-        assert(output.includes('<div class="medium normal">wolkig</div>'));
-    });
+            // Assert
+            assert(!output.includes('<div class="white">'));
+        });
 
-    it('should render current windspeed with wind icon', () => {
+        it('should render static current weather icon', () => {
 
-        // Assert
-        assert(output.includes('8 km/h <i class="wi wi-strong-wind"></i>'));
-    });
+            // Assert
+            assert(output.includes('<img class="weather-icon" ' +
+                'src="parent/folder/vendor/amcharts/static/cloudy-day-1.svg" />'));
+        });
 
-    it('should render translated wind direction text', () => {
+        it('should render current temperature', () => {
 
-        // Assert
-        assert(output.includes('translated: NE'));
-    });
+            // Assert
+            assert(output.includes('<span>21°C</span>'));
+        });
 
-    it('should render wind direction icon', () => {
+        it('should not render current weather text', () => {
 
-        // Assert
-        assert(output.includes('<i class="wi wi-wind from-50-deg fa-fw">'));
-    });
+            // Assert
+            assert(!output.includes('<div class="medium normal">wolkig</div>'));
+        });
 
-    it('should render table class', () => {
+        it('should not render current windspeed with wind icon', () => {
 
-        // Assert
-        assert(output.includes('<table class="weather-table small">'));
-    });
+            // Assert
+            assert(!output.includes('8 km/h <i class="wi wi-strong-wind"></i>'));
+        });
 
-    it('should render forecast day', () => {
+        it('should not render translated wind direction text', () => {
 
-        // Assert
-        assert(output.includes('<td class="day">1</td>'));
-    });
+            // Assert
+            assert(!output.includes('translated: NE'));
+        });
 
-    it('should render forecast weather icon', () => {
+        it('should not render wind direction icon', () => {
 
-        // Assert
-        assert(output.includes('<td class="weather-icon" ' +
-            'style="background-image: url(\'parent/folder/vendor/amcharts/static/cloudy-day-1.svg\')"></td>'));
-    });
+            // Assert
+            assert(!output.includes('<i class="wi wi-wind from-50-deg fa-fw">'));
+        });
 
-    it('should render max forecast temperature', () => {
+        it('should not render forecast wind speed', () => {
 
-        // Assert
-        assert(output.includes('23° <i class="fas fa-fw fa-thermometer-three-quarters"></i>'));
-    });
+            // Assert
+            assert(!output.includes('10 <span>km/h</span>'));
+        });
 
-    it('should render min forecast temperature', () => {
+        it('should not render forecast wind icon', () => {
 
-        // Assert
-        assert(output.includes('10° <i class="fas fa-fw fa-thermometer-quarter"></i>'));
-    });
+            // Assert
+            assert(!output.includes('<i class="wi wi-wind from-360-deg fa-fw"></i>'));
+        });
 
-    it('should render forecast wind speed', () => {
+        it('should not render forecast rain probability', () => {
 
-        // Assert
-        assert(output.includes('10 <span>km/h</span>'));
-    });
-
-    it('should render forecast wind icon', () => {
-
-        // Assert
-        assert(output.includes('<i class="wi wi-wind from-360-deg fa-fw"></i>'));
-    });
-
-    it('should render forecast rain probability', () => {
-
-        // Assert
-        assert(output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
+            // Assert
+            assert(!output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
+        });
     });
 });
