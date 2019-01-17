@@ -182,12 +182,6 @@ describe('module.njk', () => {
                 'src="parent/folder/vendor/amcharts/static/cloudy-day-1.svg" />'));
         });
 
-        it('should render current temperature', () => {
-
-            // Assert
-            assert(output.includes('<span>21°C</span>'));
-        });
-
         it('should not render current weather text', () => {
 
             // Assert
