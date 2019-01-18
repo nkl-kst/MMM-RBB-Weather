@@ -2,10 +2,11 @@
 
 [![Build Status](https://travis-ci.com/nkl-kst/MMM-RBB-Weather.svg?branch=master)](https://travis-ci.com/nkl-kst/MMM-RBB-Weather)
 [![Coverage Status](https://coveralls.io/repos/github/nkl-kst/MMM-RBB-Weather/badge.svg)](https://coveralls.io/github/nkl-kst/MMM-RBB-Weather)
+[![Greenkeeper](https://badges.greenkeeper.io/nkl-kst/MMM-RBB-Weather.svg)](https://greenkeeper.io/)
 [![dependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather)
 [![devDependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/dev-status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather/badge.svg?targetFile=package.json)](https://snyk.io/test/github/nkl-kst/MMM-RBB-Weather?targetFile=package.json)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit) [![Greenkeeper badge](https://badges.greenkeeper.io/nkl-kst/MMM-RBB-Weather.svg)](https://greenkeeper.io/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit)
 
 This is a module for the awesome [MagicMirror²](https://github.com/MichMich/MagicMirror/). It displays local weather data for cities in Berlin and Brandenburg (Germany) based on [RBB weather data](https://www.rbb24.de/wetter/wetterkarte/).
 
