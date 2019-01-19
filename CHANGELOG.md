@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Added icon mapping for RBB icon 333001 (thunder)
+- Fixed current icon position when module is placed left
 
 
 ## [2.0.1] - 2019-01-16

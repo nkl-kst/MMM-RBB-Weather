@@ -16,6 +16,7 @@
 .current .weather-icon {
     left: 10px;
     margin-top: -40px;
+    margin-left: -40px;
     position: relative;
     top: 20px;
     width: 100px;
