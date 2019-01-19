@@ -90,6 +90,7 @@ All options are optional so the module works out of the box.
 | `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `animateCurrentIcon`   | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `animateForecastIcon`  | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+| `dayFormat`            | Day format in forecast table, see [Moment.js formats](https://momentjs.com/docs/#/displaying/format/) for details.<br><br>**Type:** `String`<br>**Default:** `ddd`
 | `tableClass`           | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
 | `whiteIcons`           | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 
