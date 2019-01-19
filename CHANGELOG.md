@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added option to show/hide current weather text
 - Added option to set day format in forecast table
+- Added option to break current weather text if it is too large
 
 ### Fixed
 - Added icon mapping for RBB icon 333001 (thunder)

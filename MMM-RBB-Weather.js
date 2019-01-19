@@ -27,6 +27,7 @@ Module.register('MMM-RBB-Weather', {
         animateCurrentIcon: true,
         animateForecastIcon: false,
         dayFormat: 'ddd',
+        splitCurrentTextGreater: 30,
         tableClass: 'small',
         whiteIcons: true
     },
@@ -112,6 +113,27 @@ Module.register('MMM-RBB-Weather', {
      */
     getTemplateData: function() {
         return { module: this };
+    },
+
+    /**
+     * getCurrentText - Return the formatted current weather text. This is
+     * splitted with a line break if the text contains a colon and length is
+     * greater then config.splitCurrentTextGreater.
+     *
+     * @param  {String} text Current weather text
+     * @return {String}      Formatted text
+     */
+    getCurrentText: function(text) {
+
+        // Check if text should be splitted
+        let noSplit = this.config.splitCurrentTextGreater === 0;
+        let textToSmall = text <= this.config.splitCurrentTextGreater;
+        if (noSplit || textToSmall) {
+            return text;
+        }
+
+        // Split and break at colons
+        return text.replace(/,\s*/, '<br/>');
     },
 
     /**
