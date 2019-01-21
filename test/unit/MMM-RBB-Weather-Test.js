@@ -173,50 +173,49 @@ describe('MMM-RBB-Weather', () => {
 
     describe('getCurrentText', () => {
 
+        it('should return a splitted text', () => {
+
+            // Arrange
+            module.config.splitCurrentTextGreater = 10;
+
+            // Act
+            let text = module.getCurrentText('should, split');
+
+            // Assert
+            assert.strictEqual(text, 'should<br/>split');
+        });
+
+        it('should return nothing if text is undefined', () => {
+
+            // Act
+            let text = module.getCurrentText(undefined);
+
+            // Assert
+            assert.strictEqual(text, undefined);
+        });
+
         it('should return same text if splitting is disabled', () => {
 
             // Arrange
             module.config.splitCurrentTextGreater = 0;
 
             // Act
-            let text = module.getCurrentText('too small');
+            let text = module.getCurrentText('not splitted text');
 
             // Assert
-            assert.strictEqual(text, 'too small');
+            assert.strictEqual(text, 'not splitted text');
         });
 
-        it('should return same text if it is too small to split', () => {
-
-            // Act
-            let text = module.getCurrentText('too small');
-
-            // Assert
-            assert.strictEqual(text, 'too small');
-        });
-
-        it('should return same text if it is long enough but has no colon', () => {
+        it('should return same text if text is too small', () => {
 
             // Arrange
-            let text = 'this text is long enough but has no colon so it is not splitted';
+            module.config.splitCurrentTextGreater = 10;
 
             // Act
-            let notSplittedText = module.getCurrentText(text);
+            let text = module.getCurrentText('too, small');
 
             // Assert
-            assert.strictEqual(notSplittedText, text);
-        });
-
-        it('should return splitted text if it is long enough', () => {
-
-            // Arrange
-            let text = 'this text is long enough and has a colon, so it is splitted there';
-            let expected = 'this text is long enough and has a colon<br/>so it is splitted there';
-
-            // Act
-            let splittedText = module.getCurrentText(text);
-
-            // Assert
-            assert.strictEqual(splittedText, expected);
+            assert.strictEqual(text, 'too, small');
         });
     });
 

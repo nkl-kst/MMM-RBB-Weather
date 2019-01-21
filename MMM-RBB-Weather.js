@@ -124,11 +124,15 @@ Module.register('MMM-RBB-Weather', {
      * @return {String}      Formatted text
      */
     getCurrentText: function(text) {
+        let splitValue = this.config.splitCurrentTextGreater;
 
-        // Check if text should be splitted
-        let noSplit = this.config.splitCurrentTextGreater === 0;
-        let textToSmall = text <= this.config.splitCurrentTextGreater;
-        if (noSplit || textToSmall) {
+        // Check if text and flag are given
+        if (!text || splitValue === 0) {
+            return text;
+        }
+
+        // Check if text is long enough to split
+        if (text.length <= splitValue) {
             return text;
         }
 
