@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [2.1.0-beta] - Pending release
+## [2.1.0] - 2019-01-26
 
 ### Added
 - Added option to show/hide current weather text
