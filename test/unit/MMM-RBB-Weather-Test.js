@@ -1,7 +1,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-const newModule = require('./ModuleTestEnv').newModule;
+const { newModule } = require('./ModuleTestEnv');
 
 describe('MMM-RBB-Weather', () => {
 
@@ -168,6 +168,54 @@ describe('MMM-RBB-Weather', () => {
 
             // Assert
             assert.deepStrictEqual(data.module, module);
+        });
+    });
+
+    describe('getCurrentText', () => {
+
+        it('should return a splitted text', () => {
+
+            // Arrange
+            module.config.splitCurrentTextGreater = 10;
+
+            // Act
+            let text = module.getCurrentText('should, split');
+
+            // Assert
+            assert.strictEqual(text, 'should<br/>split');
+        });
+
+        it('should return nothing if text is undefined', () => {
+
+            // Act
+            let text = module.getCurrentText(undefined);
+
+            // Assert
+            assert.strictEqual(text, undefined);
+        });
+
+        it('should return same text if splitting is disabled', () => {
+
+            // Arrange
+            module.config.splitCurrentTextGreater = 0;
+
+            // Act
+            let text = module.getCurrentText('not splitted text');
+
+            // Assert
+            assert.strictEqual(text, 'not splitted text');
+        });
+
+        it('should return same text if text is too small', () => {
+
+            // Arrange
+            module.config.splitCurrentTextGreater = 10;
+
+            // Act
+            let text = module.getCurrentText('too, small');
+
+            // Assert
+            assert.strictEqual(text, 'too, small');
         });
     });
 

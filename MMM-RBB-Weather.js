@@ -18,6 +18,7 @@ Module.register('MMM-RBB-Weather', {
         updateInterval: 600, // 10 min.
 
         // Show / hide flags
+        showCurrentText: true,
         showCurrentWindspeed: true,
         showRainProbability: true,
         showWindspeed: false,
@@ -25,6 +26,8 @@ Module.register('MMM-RBB-Weather', {
         // Styling
         animateCurrentIcon: true,
         animateForecastIcon: false,
+        dayFormat: 'ddd',
+        splitCurrentTextGreater: 30,
         tableClass: 'small',
         whiteIcons: true
     },
@@ -113,6 +116,31 @@ Module.register('MMM-RBB-Weather', {
     },
 
     /**
+     * getCurrentText - Return the formatted current weather text. This is
+     * splitted with a line break if the text contains a colon and length is
+     * greater then config.splitCurrentTextGreater.
+     *
+     * @param  {String} text Current weather text
+     * @return {String}      Formatted text
+     */
+    getCurrentText: function(text) {
+        let splitValue = this.config.splitCurrentTextGreater;
+
+        // Check if text and flag are given
+        if (!text || splitValue === 0) {
+            return text;
+        }
+
+        // Check if text is long enough to split
+        if (text.length <= splitValue) {
+            return text;
+        }
+
+        // Split and break at colons
+        return text.replace(/,\s*/, '<br/>');
+    },
+
+    /**
      * getDayText - Return the formatted day text for the given day index. This is used for forecast
      * days, so index 1 represents today, 2 represents tomorrow and so on.
      *
@@ -122,7 +150,7 @@ Module.register('MMM-RBB-Weather', {
     getForecastDayText: function(dayIndex) {
 
         let day = moment().add(dayIndex - 1, 'days');
-        let dayText = day.format('ddd'); // TODO: Set format in config
+        let dayText = day.format(this.config.dayFormat);
 
         return dayText;
     },

@@ -1,6 +1,8 @@
 language: node_js
 node_js:
- - "node"
+ #- "node"
+ # Node 11.7.0 breaks code coverage
+- "11.6.0"
 before_script:
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"

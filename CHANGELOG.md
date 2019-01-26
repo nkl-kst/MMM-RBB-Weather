@@ -5,6 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [2.1.0] - 2019-01-26
+
+### Added
+- Added option to show/hide current weather text
+- Added option to set day format in forecast table
+- Added option to break current weather text if it is too large
+
+### Fixed
+- Added icon mapping for RBB icon 333001 (thunder)
+- Fixed current icon position when module is placed left
+
+
 ## [2.0.1] - 2019-01-16
 
 ### Fixed
