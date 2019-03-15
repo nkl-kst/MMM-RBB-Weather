@@ -77,6 +77,10 @@ describe('node_helper', () => {
 
     describe('loadData', () => {
 
+        beforeEach(() => {
+            Date.now = sinon.fake.returns(1552681264508);
+        });
+
         it('should send socket notification with fetched data', async () => {
 
             // Arrange
@@ -88,27 +92,34 @@ describe('node_helper', () => {
             helper.fetchDayData = sinon.fake.returns(resolvedPromise);
             helper.sendSocketNotification = sinon.fake();
 
+            let expected = {
+                data: [{ test: 'data' }],
+                time: 1552681264508
+            };
+
             // Act
             await helper.loadData();
 
             // Assert
-            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', [{ test: 'data' }]));
+            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', expected));
         });
 
         it('should send socket notification with cached data when error occures', async () => {
 
             // Arrange
             helper.config = { days: 0 };
-            helper.cache = 'cached';
+            helper.cache = { data: 'cached', time: 1552681264508 };
 
             helper.fetchDayData = sinon.fake.throws('test');
             helper.sendSocketNotification = sinon.fake();
+
+            let expected = { data: 'cached', time: 1552681264508, cached: true };
 
             // Act
             await helper.loadData({ days: 0 });
 
             // Assert
-            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', 'cached'));
+            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', expected));
         });
 
         it('should do nothing when error occurs and no cache is available', async () => {

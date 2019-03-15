@@ -55,18 +55,22 @@ module.exports = NodeHelper.create({
                 return self.fetchDayData(day);
             });
 
-            // Cache data
-            self.cache = data;
+            // Cache new data
+            self.cache = {};
+            self.cache.data = data;
+            self.cache.time = Date.now();
 
             // Send data to module
             Logger.log('Data received, send to module ...');
-            self.sendSocketNotification('DATA_LOADED', data);
+            self.sendSocketNotification('DATA_LOADED', self.cache);
 
         } catch (error) {
             Logger.warn(`Error while fetching data: "${error.message}"`);
 
             // Return cached data
             if (self.cache) {
+                self.cache.cached = true;
+
                 Logger.info('Send cached data to module ...');
                 self.sendSocketNotification('DATA_LOADED', self.cache);
             }
