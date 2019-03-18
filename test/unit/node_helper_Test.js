@@ -113,7 +113,7 @@ describe('node_helper', () => {
             helper.fetchDayData = sinon.fake.throws('test');
             helper.sendSocketNotification = sinon.fake();
 
-            let expected = { data: 'cached', time: 1552681264508, cached: true };
+            let expected = { data: 'cached', time: 1552681264508 };
 
             // Act
             await helper.loadData({ days: 0 });

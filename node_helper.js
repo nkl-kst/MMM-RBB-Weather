@@ -69,8 +69,6 @@ module.exports = NodeHelper.create({
 
             // Return cached data
             if (self.cache) {
-                self.cache.cached = true;
-
                 Logger.info('Send cached data to module ...');
                 self.sendSocketNotification('DATA_LOADED', self.cache);
             }

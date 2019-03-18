@@ -103,10 +103,11 @@ describe('MMM-RBB-Weather', () => {
             module.updateDom = sinon.fake();
 
             // Act
-            module.socketNotificationReceived('DATA_LOADED', { test: 'data' });
+            module.socketNotificationReceived('DATA_LOADED', { data: 'data', time: 1552681264508 });
 
             // Assert
-            assert.deepStrictEqual(module.weatherData, { test: 'data' });
+            assert.deepStrictEqual(module.weatherData, 'data');
+            assert.deepStrictEqual(module.updatedAt, 1552681264508);
             assert.ok(module.updateDom.calledOnce);
         });
 

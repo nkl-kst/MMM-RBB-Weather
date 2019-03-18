@@ -37,6 +37,7 @@ Module.register('MMM-RBB-Weather', {
 
     // Instancevariable
     weatherData: null,
+    updatedAt: null,
 
     getScripts: function() {
         return [
@@ -83,7 +84,10 @@ Module.register('MMM-RBB-Weather', {
 
         // Data loaded with node helper
         if (notification === 'DATA_LOADED') {
-            this.weatherData = payload;
+            this.weatherData = payload.data;
+            this.updatedAt = payload.time;
+
+            // Update module
             this.updateDom(this.config.animationSpeed * 1000);
         }
     },
