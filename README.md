@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/nkl-kst/MMM-RBB-Weather.svg?branch=master)](https://travis-ci.com/nkl-kst/MMM-RBB-Weather)
 [![Coverage Status](https://coveralls.io/repos/github/nkl-kst/MMM-RBB-Weather/badge.svg)](https://coveralls.io/github/nkl-kst/MMM-RBB-Weather)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a8567d7917169f2cb1be/maintainability)](https://codeclimate.com/github/nkl-kst/MMM-RBB-Weather/maintainability)
 [![Greenkeeper](https://badges.greenkeeper.io/nkl-kst/MMM-RBB-Weather.svg)](https://greenkeeper.io/)
 [![dependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather)
 [![devDependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/dev-status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather?type=dev)
