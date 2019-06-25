@@ -23,22 +23,22 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
-    "eslint": "^5.7.0",
+    "eslint": "^6.0.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "libxmljs": "^0.19.5",
     "lodash.clonedeep": "^4.5.0",
-    "mocha": "^5.2.0",
+    "mocha": "^6.1.4",
     "moment": "^2.22.2",
     "nunjucks": "^3.0.1",
-    "nyc": "^13.1.0",
+    "nyc": "^14.1.1",
     "proxyquire": "^2.1.0",
     "shelljs": "^0.8.3",
     "sinon": "^7.0.0",
-    "spectron": "^5.0.0"
+    "spectron": "^7.0.0"
   },
   "nyc": {
     "reporter": [
