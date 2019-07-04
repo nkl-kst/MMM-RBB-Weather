@@ -15,11 +15,14 @@
     "test-int": "mocha test/int --recursive",
     "test-e2e": "mocha test/e2e --recursive",
     "eslint": "eslint --ignore-pattern coverage/ .",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "bluebird": "^3.5.2",
-    "fast-xml-parser": "^3.12.5"
+    "fast-xml-parser": "^3.12.5",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
@@ -53,5 +56,6 @@
     ],
     "cache": true,
     "all": true
-  }
+  },
+  "snyk": true
 }
