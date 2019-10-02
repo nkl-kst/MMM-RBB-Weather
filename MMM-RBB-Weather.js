@@ -21,6 +21,7 @@ Module.register('MMM-RBB-Weather', {
         showCurrentText: true,
         showCurrentWindspeed: true,
         showRainProbability: true,
+        showUpdateTime: false,
         showWindspeed: false,
 
         // Styling
@@ -248,6 +249,15 @@ Module.register('MMM-RBB-Weather', {
         if (deg <= 292) return 'W';
         if (deg <= 337) return 'NW';
         return 'N';
+    },
+
+    /**
+     * getFormattedUpdatedTime - Get the human readable update time.
+     *
+     * @return {String} Formatted update time
+     */
+    getFormattedUpdateTime: function() {
+        return moment(this.updatedAt).format('DD.MM. HH:mm');
     },
 
     /**

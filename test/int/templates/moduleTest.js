@@ -28,7 +28,9 @@ describe('module.njk', () => {
 
             // Set module data
             module.config.showWindspeed = true;
+            module.config.showUpdateTime = true;
             module.weatherData = defaultWeatherData;
+            module.updatedAt = 1567411200000;
 
             // Mock day function
             module.getForecastDayText = function(dayIndex) {
@@ -137,6 +139,12 @@ describe('module.njk', () => {
             assert(output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
         });
 
+        it('should render the update time', () => {
+
+            // Assert
+            assert(output.includes('translated: TEXT_UPDATED:'));
+            assert(output.includes('02.09. 10:00'));
+        });
     });
 
     context('with all flag options disabled', () => {
@@ -222,6 +230,12 @@ describe('module.njk', () => {
 
             // Assert
             assert(!output.includes('13% <i class="fas fa-fw fa-tint-slash"></i>'));
+        });
+
+        it('should not render the update time', () => {
+
+            // Assert
+            assert(!output.includes('translated: TEXT_UPDATED'));
         });
     });
 });

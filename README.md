@@ -87,6 +87,7 @@ All options are optional so the module works out of the box.
 | `showCurrentText`      | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showCurrentWindspeed` | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showRainProbability`  | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showUpdateTime`       | Flag to display last data update time.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `animateCurrentIcon`   | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `animateForecastIcon`  | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`

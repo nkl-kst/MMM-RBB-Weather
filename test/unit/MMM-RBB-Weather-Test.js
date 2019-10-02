@@ -470,6 +470,21 @@ describe('MMM-RBB-Weather', () => {
         });
     });
 
+    describe('getFormattedUpdateTime', () => {
+
+        it('should return formatted update time', () => {
+
+            // Arrange
+            module.updatedAt = 1567411200000;
+
+            // Act
+            let time = module.getFormattedUpdateTime();
+
+            // Assert
+            assert.deepStrictEqual('02.09. 10:00', time);
+        });
+    });
+
     describe('loadData', () => {
 
         it('should send socket notification', () => {
