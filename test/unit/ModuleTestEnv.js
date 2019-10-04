@@ -30,7 +30,7 @@ require('../../../MMM-RBB-Weather');
 
 // Export new module with function mocks/fakes
 module.exports.newModule = function() {
-    let newModule = cloneDeep(Module.definitions['MMM-RBB-Weather']);
+    const newModule = cloneDeep(Module.definitions['MMM-RBB-Weather']);
 
     // Fake file method
     newModule.file = Sinon.fake((path) => {

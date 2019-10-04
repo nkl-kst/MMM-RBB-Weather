@@ -129,7 +129,7 @@ Module.register('MMM-RBB-Weather', {
      * @return {String}      Formatted text
      */
     getCurrentText: function(text) {
-        let splitValue = this.config.splitCurrentTextGreater;
+        const splitValue = this.config.splitCurrentTextGreater;
 
         // Check if text and flag are given
         if (!text || splitValue === 0) {
@@ -154,8 +154,8 @@ Module.register('MMM-RBB-Weather', {
      */
     getForecastDayText: function(dayIndex) {
 
-        let day = moment().add(dayIndex - 1, 'days');
-        let dayText = day.format(this.config.dayFormat);
+        const day = moment().add(dayIndex - 1, 'days');
+        const dayText = day.format(this.config.dayFormat);
 
         return dayText;
     },
@@ -170,8 +170,8 @@ Module.register('MMM-RBB-Weather', {
     getIconUrl: function(animate, rbbIcon) {
 
         // Icon path
-        let iconFolder = animate ? 'animated' : 'static';
-        let iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
+        const iconFolder = animate ? 'animated' : 'static';
+        const iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
 
         // Fallback to RBB icons if no mapping was found
         if (!iconPath) {
@@ -269,7 +269,7 @@ Module.register('MMM-RBB-Weather', {
         Log.info('Send socket notification to load data in node_helper ...');
 
         // Load data via node helper
-        let dataConfig = { id: this.config.id, days: this.config.days };
+        const dataConfig = { id: this.config.id, days: this.config.days };
         this.sendSocketNotification('LOAD_DATA', dataConfig);
 
         // Schedule next refresh

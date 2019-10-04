@@ -34,7 +34,7 @@ describe('Module', function() {
     it('should display current data', async () => {
 
         // Act
-        let html = await browser.getHTML('div.MMM-RBB-Weather div.current');
+        const html = await browser.getHTML('div.MMM-RBB-Weather div.current');
 
         // Assert
         assert(html.includes('<div class="current">'));
@@ -43,7 +43,7 @@ describe('Module', function() {
     it('should display forecast data', async () => {
 
         // Act
-        let html = await browser.getHTML('div.MMM-RBB-Weather table.weather-table');
+        const html = await browser.getHTML('div.MMM-RBB-Weather table.weather-table');
 
         // Assert
         assert(html.includes('<table class="weather-table small">'));

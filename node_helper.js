@@ -40,16 +40,16 @@ module.exports = NodeHelper.create({
         Logger.log(`Load data for ID "${this.config.id}" and "${this.config.days}" days ...`);
 
         // Build days array for promise mapping
-        let daysArray = [];
+        const daysArray = [];
         for (let day = 0; day <= this.config.days; day++) {
             daysArray.push(day);
         }
 
-        let self = this;
+        const self = this;
         try {
 
             // Load data concurrently, data is an array of all days results
-            let data = await Promise.map(daysArray, (day) => {
+            const data = await Promise.map(daysArray, (day) => {
 
                 // Fetch data for this day
                 return self.fetchDayData(day);
@@ -88,7 +88,7 @@ module.exports = NodeHelper.create({
         return new Promise((resolve, reject) => {
 
             // Request RBB xml data for this day
-            let url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
+            const url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
             https.get(url, (response) => {
                 let xml = '';
 
@@ -109,7 +109,7 @@ module.exports = NodeHelper.create({
 
                 // Response complete, parse full xml
                 response.on('end', () => {
-                    let data = this.parseData(xml, day);
+                    const data = this.parseData(xml, day);
                     resolve(data);
                 });
             });
@@ -128,13 +128,13 @@ module.exports = NodeHelper.create({
     parseData: function(xml, day) {
 
         // XML parse options
-        let options = {
+        const options = {
             attributeNamePrefix: '',
             ignoreAttributes: false
         };
 
         // Parse XML data to json
-        let parsedData = xmlParser.parse(xml, options);
+        const parsedData = xmlParser.parse(xml, options);
         if (parsedData === undefined || parsedData.data === undefined) {
             Logger.warn(`Error while parsing XML data. XML: "${xml}"`);
             return {};
@@ -142,8 +142,8 @@ module.exports = NodeHelper.create({
 
         // All citys are in the same XML file for one day, loop through them to find
         // the city data with correct ID
-        let citys = parsedData.data.city;
-        for (let city of Object.values(citys)) {
+        const citys = parsedData.data.city;
+        for (const city of Object.values(citys)) {
 
             // Only current data has possible letters in IDs, remove for forecast
             let id = this.config.id;

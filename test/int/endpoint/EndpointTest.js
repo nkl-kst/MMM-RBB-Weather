@@ -18,7 +18,7 @@ describe('Endpoints', function() {
             it(`should get data for day ${day}`, (done) => {
 
                 // Arrange
-                let url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
+                const url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
 
                 // Act
                 https.get(url, (response) => {
@@ -33,7 +33,7 @@ describe('Endpoints', function() {
         it('should get no data for day 8', (done) => {
 
             // Arrange
-            let url = `https://www.rbb24.de/include/wetter/data/data_bb_8.xml`;
+            const url = 'https://www.rbb24.de/include/wetter/data/data_bb_8.xml';
 
             // Act
             https.get(url, (response) => {
@@ -50,10 +50,10 @@ describe('Endpoints', function() {
         it('should get valid current data', (done) => {
 
             // Arrange
-            let xsd = fs.readFileSync(path.join(__dirname, 'endpoint_current.xsd'));
-            let xsdDoc = libxml.parseXml(xsd);
+            const xsd = fs.readFileSync(path.join(__dirname, 'endpoint_current.xsd'));
+            const xsdDoc = libxml.parseXml(xsd);
 
-            let url = `https://www.rbb24.de/include/wetter/data/data_bb_0.xml`;
+            const url = 'https://www.rbb24.de/include/wetter/data/data_bb_0.xml';
 
             // Act
             https.get(url, (response) => {
@@ -66,7 +66,7 @@ describe('Endpoints', function() {
                 response.on('end', () => {
 
                     // Parse XML
-                    let xmlDoc = libxml.parseXml(xml);
+                    const xmlDoc = libxml.parseXml(xml);
 
                     // Assert
                     assert.strictEqual(xmlDoc.validate(xsdDoc), true);
@@ -79,10 +79,10 @@ describe('Endpoints', function() {
             it(`should get valid forecast data for day ${day}`, (done) => {
 
                 // Arrange
-                let xsd = fs.readFileSync(path.join(__dirname, 'endpoint_forecast.xsd'));
-                let xsdDoc = libxml.parseXml(xsd);
+                const xsd = fs.readFileSync(path.join(__dirname, 'endpoint_forecast.xsd'));
+                const xsdDoc = libxml.parseXml(xsd);
 
-                let url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
+                const url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
 
                 // Act
                 https.get(url, (response) => {
@@ -95,7 +95,7 @@ describe('Endpoints', function() {
                     response.on('end', () => {
 
                         // Parse XML
-                        let xmlDoc = libxml.parseXml(xml);
+                        const xmlDoc = libxml.parseXml(xml);
 
                         // Assert
                         assert.strictEqual(xmlDoc.validate(xsdDoc), true);

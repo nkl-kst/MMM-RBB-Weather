@@ -8,7 +8,7 @@
 module.exports = {
 
     _printLog(level, message) {
-        let now = new Date();
+        const now = new Date();
         console[level](`MMM-RBB-Weather[${now.toLocaleString()}]: ${message}`);
     },
 

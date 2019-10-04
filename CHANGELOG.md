@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Optionally show update time
 
+### Updated
+- eslint packages (dev-dependencies) and resulting new linting errors/warnings
+
 
 ## [2.1.0] - 2019-01-26
 

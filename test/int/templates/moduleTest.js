@@ -7,8 +7,8 @@ const { newModule } = require('../../unit/ModuleTestEnv');
 require('../../../IconMapper');
 
 const defaultWeatherData = {
-    '0': { 'id': '10385', 'temp': '21', 'dd': '50', 'ffkmh': '8', 'nww': '120000', 'wwtext': 'wolkig' },
-    '1': { 'id': '10385', 'temp': '23;10', 'dd': '360', 'ffkmh': '10', 'nww': '110000', 'wwtext': 'wolkig', 'prr': '13' }
+    0: { id: '10385', temp: '21', dd: '50', ffkmh: '8', nww: '120000', wwtext: 'wolkig' },
+    1: { id: '10385', temp: '23;10', dd: '360', ffkmh: '10', nww: '110000', wwtext: 'wolkig', prr: '13' }
 };
 
 describe('module.njk', () => {
