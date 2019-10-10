@@ -101,6 +101,7 @@ describe('MMM-RBB-Weather', () => {
 
             // Arrange
             module.updateDom = sinon.fake();
+            module.triggerModules = sinon.fake();
 
             // Act
             module.socketNotificationReceived('DATA_LOADED', { data: 'data', time: 1552681264508 });
@@ -108,7 +109,9 @@ describe('MMM-RBB-Weather', () => {
             // Assert
             assert.deepStrictEqual(module.weatherData, 'data');
             assert.deepStrictEqual(module.updatedAt, 1552681264508);
+
             assert.ok(module.updateDom.calledOnce);
+            assert.ok(module.triggerModules.calledOnce);
         });
 
         it('should to nothing when notification is unknown', () => {
@@ -556,6 +559,134 @@ describe('MMM-RBB-Weather', () => {
 
             // Assert
             assert.ok(module.loadData.calledOnce);
+        });
+    });
+
+    describe('triggerModules', () => {
+
+        // Mocked triggered module
+        const modul = {
+            show: sinon.fake(),
+            hide: sinon.fake()
+        };
+
+        beforeEach(() => {
+            MM.getModules = sinon.fake.returns({
+                withClass: function() { return [modul]; }
+            });
+        });
+
+        it('should do nothing when no data is available', () => {
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(MM.getModules.notCalled);
+        });
+
+        it('should skip triggers when day data is not available', () => {
+
+            // Arrange
+            module.weatherData = [];
+            module.config.triggers = [{ day: 0 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(MM.getModules.notCalled);
+        });
+
+        it('should hide module if data value is lower than trigger data', () => {
+
+            // Arrange
+            module.weatherData = [{ field: 1 }];
+            module.config.triggers = [{ day: 0, field: 'field', value: 2 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.hide.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should hide module if data value is lower than trigger data (maxtemp)', () => {
+
+            // Arrange
+            module.weatherData = [{ temp: '2;1' }];
+            module.config.triggers = [{ day: 0, field: 'maxtemp', value: 3 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.hide.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should hide module if data value is lower than trigger data (mintemp)', () => {
+
+            // Arrange
+            module.weatherData = [{ temp: '3;1' }];
+            module.config.triggers = [{ day: 0, field: 'mintemp', value: 2 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.hide.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should hide module if data value is equal trigger data', () => {
+
+            // Arrange
+            module.weatherData = [{ field: 1 }];
+            module.config.triggers = [{ day: 0, field: 'field', value: 1 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.hide.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should hide module if data value is higher than trigger data and hide mode is used', () => {
+
+            // Arrange
+            module.weatherData = [{ field: 2 }];
+            module.config.triggers = [{ day: 0, field: 'field', value: 1, hide: true }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.hide.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should show module if data value is higher than trigger data', () => {
+
+            // Arrange
+            module.weatherData = [{ field: 2 }];
+            module.config.triggers = [{ day: 0, field: 'field', value: 1 }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.show.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
+        });
+
+        it('should show module if data value is lower than trigger data and hide mode is used', () => {
+
+            // Arrange
+            module.weatherData = [{ field: 1 }];
+            module.config.triggers = [{ day: 0, field: 'field', value: 2, hide: true }];
+
+            // Act
+            module.triggerModules();
+
+            // Assert
+            assert.ok(modul.show.calledWith(1000, { lockString: 'MMM-RBB-Weather' }));
         });
     });
 });

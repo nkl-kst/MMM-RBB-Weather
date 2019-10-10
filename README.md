@@ -97,6 +97,27 @@ All options are optional so the module works out of the box.
 | `splitCurrentTextGreater` | Split current weather text if it is larger than this value. Set it to `0` to disable splitting.<br><br>**Type:** `Number`<br>**Default:** `30`
 | `tableClass`           | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
 | `whiteIcons`           | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `triggers`             | Array of triggers to show/hide other modules based on weather data.<br><br>**Type:** `Array` of trigger objects<br>**Default:** `[]`
+
+### Triggers
+
+You can define triggers to show or hide other modules based on weather data. A trigger object is defined by the following keys:
+
+| Key                    | Description
+|----------------------- |-----------
+| `day`                  | Day to check `field` for fulfilled trigger condition. Day `0` holds current values, day `1` represents today, day `2` is tomorrow and so on until day `7`.<br><br>**Type:** `Number`
+| `field`                | Field to check `value` for fulfilled trigger condition. Possible fields are:<br><br><ul><li>`temp` - Temperature (only for day `0`)</li><li>`maxtemp` - Maximum temperature (only for days `1` to `7`)</li><li>`mintemp` - Minimum temperature (only for days `1` to `7`)</li><li>`ffkmh` - Windspeed</li><li>`prr` - Rain possibility (only for days `1` to `7`)</li></ul><br>**Type:** `String`
+| `value`                | Show module if field data is higher than this value.<br><br>**Type:** `Number`<br>
+| `module`               | Name of the module you want to show/hide. Modules are determined by their class name, so you could define a class in module configs to trigger more than one module.<br><br>**Type:** `String`<br>
+| `hide`                 | Use this option to hide a module instead of showing it if trigger conditions are fulfilled.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+
+This example trigger hides the clock module if todays rain possiblity is higher than 50 percent, otherwise the clock module is shown:
+
+```
+triggers: [
+    { day: 1, field: 'prr', value: 50, module: 'clock', hide: true }
+]
+```
 
 ## Known issues
 
