@@ -1,10 +1,10 @@
 language: node_js
 node_js:
- #- "node"
- # Node 11.7.0 breaks code coverage
-- "11.6.0"
+ - "node"
 services:
  - xvfb
+before_script:
+ - export TZ=Europe/Berlin
 script:
  - npm test
  - npm run test-int

@@ -27,7 +27,7 @@ describe('node_helper', () => {
     beforeEach(() => {
         helper = proxyquire(
             '../../node_helper',
-            { 'node_helper': helperFake, './Logger': LoggerFake, 'https': HttpsFake });
+            { node_helper: helperFake, './Logger': LoggerFake, https: HttpsFake });
     });
 
     afterEach(() => {
@@ -77,38 +77,49 @@ describe('node_helper', () => {
 
     describe('loadData', () => {
 
+        beforeEach(() => {
+            Date.now = sinon.fake.returns(1552681264508);
+        });
+
         it('should send socket notification with fetched data', async () => {
 
             // Arrange
             helper.config = { days: 0 };
 
-            let resolvedPromise = new Promise((resolve) => {
+            const resolvedPromise = new Promise((resolve) => {
                 resolve({ test: 'data' });
             });
             helper.fetchDayData = sinon.fake.returns(resolvedPromise);
             helper.sendSocketNotification = sinon.fake();
 
+            const expected = {
+                data: [{ test: 'data' }],
+                time: 1552681264508
+            };
+
             // Act
             await helper.loadData();
 
             // Assert
-            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', [{ test: 'data' }]));
+            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', expected));
         });
 
         it('should send socket notification with cached data when error occures', async () => {
 
             // Arrange
             helper.config = { days: 0 };
-            helper.cache = 'cached';
+            helper.cache = { data: 'cached', time: 1552681264508 };
 
             helper.fetchDayData = sinon.fake.throws('test');
             helper.sendSocketNotification = sinon.fake();
+
+            const expected = { data: 'cached', time: 1552681264508 };
 
             // Act
             await helper.loadData({ days: 0 });
 
             // Assert
-            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', 'cached'));
+            assert.ok(helper.sendSocketNotification.calledWith('DATA_LOADED', expected));
         });
 
         it('should do nothing when error occurs and no cache is available', async () => {
@@ -145,7 +156,7 @@ describe('node_helper', () => {
         it('should define listener for all events', async () => {
 
             // Arrange
-            let responseFake = {
+            const responseFake = {
                 on: sinon.fake((event, callback) => {
                     if (event === 'end') {
                         callback(); // Need this call for resolving the promise
@@ -172,7 +183,7 @@ describe('node_helper', () => {
         it('should chunk xml data and parse on end of response', async () => {
 
             // Arrange
-            let responseFake = {
+            const responseFake = {
                 on: function(event, callback) {
                     if (event === 'data') {
                         callback('chunk');
@@ -190,7 +201,7 @@ describe('node_helper', () => {
             helper.parseData = sinon.fake((xml) => { return xml + ' parsed'; });
 
             // Act
-            let data = await helper.fetchDayData();
+            const data = await helper.fetchDayData();
 
             // Assert
             assert.strictEqual(data, 'chunk parsed');
@@ -199,7 +210,7 @@ describe('node_helper', () => {
         it('should reject on error', async () => {
 
             // Arrange
-            let responseFake = {
+            const responseFake = {
                 on: function(event, callback) {
                     if (event === 'error') {
                         callback(new Error('error message'));
@@ -220,7 +231,7 @@ describe('node_helper', () => {
         it('should reject on timeout', async () => {
 
             // Arrange
-            let responseFake = {
+            const responseFake = {
                 on: function(event, callback) {
                     if (event === 'timeout') {
                         callback(new Error('timeout message'));
@@ -245,10 +256,10 @@ describe('node_helper', () => {
 
             // Arrange
             helper.config = { id: '2a' };
-            let xml = '<data><city id="1" test="other"/><city id="2" test="data"/></data>';
+            const xml = '<data><city id="1" test="other"/><city id="2" test="data"/></data>';
 
             // Act
-            let data = helper.parseData(xml, 1);
+            const data = helper.parseData(xml, 1);
 
             // Assert
             assert.deepStrictEqual(data, { id: '2', test: 'data' });
@@ -257,10 +268,10 @@ describe('node_helper', () => {
         it('should return nothing if xml parsing fails', () => {
 
             // Arrange
-            let xml = 'no valid xml';
+            const xml = 'no valid xml';
 
             // Act
-            let data = helper.parseData(xml, 0);
+            const data = helper.parseData(xml, 0);
 
             // Assert
             assert.deepStrictEqual(data, {});
@@ -270,10 +281,10 @@ describe('node_helper', () => {
 
             // Arrange
             helper.config = { id: 'no matching id' };
-            let xml = '<data><city id="1" test="other"/><city id="2" test="data"/></data>';
+            const xml = '<data><city id="1" test="other"/><city id="2" test="data"/></data>';
 
             // Act
-            let data = helper.parseData(xml, 0);
+            const data = helper.parseData(xml, 0);
 
             // Assert
             assert.deepStrictEqual(data, {});

@@ -21,6 +21,7 @@ Module.register('MMM-RBB-Weather', {
         showCurrentText: true,
         showCurrentWindspeed: true,
         showRainProbability: true,
+        showUpdateTime: false,
         showWindspeed: false,
 
         // Styling
@@ -29,7 +30,12 @@ Module.register('MMM-RBB-Weather', {
         dayFormat: 'ddd',
         splitCurrentTextGreater: 30,
         tableClass: 'small',
-        whiteIcons: true
+        whiteIcons: true,
+
+        // Trigger other modules
+        triggers: [
+            // eg. { day: 1, field: 'prr', value: 50, module: 'clock', hide: true }
+        ]
     },
 
     // Requires Nunjucks support added in Magic Mirror 2.2.0
@@ -37,6 +43,7 @@ Module.register('MMM-RBB-Weather', {
 
     // Instancevariable
     weatherData: null,
+    updatedAt: null,
 
     getScripts: function() {
         return [
@@ -83,8 +90,14 @@ Module.register('MMM-RBB-Weather', {
 
         // Data loaded with node helper
         if (notification === 'DATA_LOADED') {
-            this.weatherData = payload;
+            this.weatherData = payload.data;
+            this.updatedAt = payload.time;
+
+            // Update module
             this.updateDom(this.config.animationSpeed * 1000);
+
+            // Trigger other modules
+            this.triggerModules();
         }
     },
 
@@ -124,7 +137,7 @@ Module.register('MMM-RBB-Weather', {
      * @return {String}      Formatted text
      */
     getCurrentText: function(text) {
-        let splitValue = this.config.splitCurrentTextGreater;
+        const splitValue = this.config.splitCurrentTextGreater;
 
         // Check if text and flag are given
         if (!text || splitValue === 0) {
@@ -149,8 +162,8 @@ Module.register('MMM-RBB-Weather', {
      */
     getForecastDayText: function(dayIndex) {
 
-        let day = moment().add(dayIndex - 1, 'days');
-        let dayText = day.format(this.config.dayFormat);
+        const day = moment().add(dayIndex - 1, 'days');
+        const dayText = day.format(this.config.dayFormat);
 
         return dayText;
     },
@@ -165,8 +178,8 @@ Module.register('MMM-RBB-Weather', {
     getIconUrl: function(animate, rbbIcon) {
 
         // Icon path
-        let iconFolder = animate ? 'animated' : 'static';
-        let iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
+        const iconFolder = animate ? 'animated' : 'static';
+        const iconPath = IconMapper.getIconPath(rbbIcon, iconFolder);
 
         // Fallback to RBB icons if no mapping was found
         if (!iconPath) {
@@ -247,6 +260,15 @@ Module.register('MMM-RBB-Weather', {
     },
 
     /**
+     * getFormattedUpdatedTime - Get the human readable update time.
+     *
+     * @return {String} Formatted update time
+     */
+    getFormattedUpdateTime: function() {
+        return moment(this.updatedAt).format('DD.MM. HH:mm');
+    },
+
+    /**
      * loadData - Load weather data via node_helper. This functions sends a socket notification with
      * LOAD_DATA as notification name and the place id (config.id) and day count (config.days) as
      * payload and schedules the next refresh.
@@ -255,7 +277,7 @@ Module.register('MMM-RBB-Weather', {
         Log.info('Send socket notification to load data in node_helper ...');
 
         // Load data via node helper
-        let dataConfig = { id: this.config.id, days: this.config.days };
+        const dataConfig = { id: this.config.id, days: this.config.days };
         this.sendSocketNotification('LOAD_DATA', dataConfig);
 
         // Schedule next refresh
@@ -271,5 +293,53 @@ Module.register('MMM-RBB-Weather', {
         setTimeout(() => {
             this.loadData();
         }, this.config.updateInterval * 1000);
+    },
+
+    /**
+     * triggerModules - Trigger other modules based on weather data values.
+     * Hides the defined module(s) if the data field is lower or equal than the
+     * defined trigger value, otherwise shows the module. This behaviour is
+     * switched if the hide-Property is used in triggers.
+     */
+    triggerModules: function() {
+
+        // Do nothing if no data is available
+        if (this.weatherData === null) return;
+
+        // Iterate over defined triggers
+        for (const trigger of this.config.triggers) {
+
+            // Check if weather data is available for needed day
+            const data = this.weatherData[trigger.day];
+            if (!data) continue;
+
+            // Get module(s) by class
+            const modules = MM.getModules().withClass(trigger.module);
+            for (const modul of modules) {
+                Log.info(`Trigger module '${modul.name}' ...`);
+
+                // Show/hide options
+                const lockOptions = { lockString: this.name };
+                const speed = this.config.animationSpeed * 1000;
+
+                // Get weather data to check
+                let dataValue = data[trigger.field];
+                if (trigger.field === 'maxtemp') {
+                    dataValue = data.temp.split(';')[0];
+                }
+                if (trigger.field === 'mintemp') {
+                    dataValue = data.temp.split(';')[1];
+                }
+
+                // Check trigger condition: Hide module if data value is lower
+                // or equal than trigger value or if the trigger uses hide mode,
+                // but not both (xor)
+                if ((dataValue <= trigger.value) !== (trigger.hide === true)) {
+                    modul.hide(speed, lockOptions);
+                } else {
+                    modul.show(speed, lockOptions);
+                }
+            }
+        }
     }
 });

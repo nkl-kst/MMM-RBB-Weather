@@ -8,6 +8,7 @@ Module = {};
 Module.definitions = {};
 Module.register = function(name, moduleDefinition) {
 
+    moduleDefinition.name = name;
     moduleDefinition.config = moduleDefinition.defaults;
     moduleDefinition.config.language = 'de';
     moduleDefinition.config.updateInterval = 0;
@@ -18,6 +19,9 @@ Module.register = function(name, moduleDefinition) {
 // Mock logging
 Log = {};
 Log.info = function() {};
+
+// Mock MM (MagicMirror class)
+MM = {};
 
 // Mock version
 version = '2.6.0';
@@ -30,7 +34,7 @@ require('../../../MMM-RBB-Weather');
 
 // Export new module with function mocks/fakes
 module.exports.newModule = function() {
-    let newModule = cloneDeep(Module.definitions['MMM-RBB-Weather']);
+    const newModule = cloneDeep(Module.definitions['MMM-RBB-Weather']);
 
     // Fake file method
     newModule.file = Sinon.fake((path) => {

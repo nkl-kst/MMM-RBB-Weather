@@ -80,4 +80,10 @@
         </table>
     {% endif %}
 
+    {% if config.showUpdateTime %}
+        <div class="xsmall dimmed">
+            {{ 'TEXT_UPDATED' | translate }}:
+            {{ module.getFormattedUpdateTime() }}
+        </div>
+    {% endif %}
 </div>

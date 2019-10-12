@@ -14,7 +14,7 @@ describe('IconMapper', () => {
         it("should return 'day' path if RBB name is '100000'", () => {
 
             // Act
-            let path = IconMapper.getIconPath('100000', 'subfolder');
+            const path = IconMapper.getIconPath('100000', 'subfolder');
 
             // Assert
             assert.strictEqual(path, 'vendor/amcharts/subfolder/day.svg');
@@ -26,7 +26,7 @@ describe('IconMapper', () => {
             IconMapper._log = sinon.fake();
 
             // Act
-            let path = IconMapper.getIconPath('notmapped', 'subfolder');
+            const path = IconMapper.getIconPath('notmapped', 'subfolder');
 
             // Assert
             assert.strictEqual(path, undefined);

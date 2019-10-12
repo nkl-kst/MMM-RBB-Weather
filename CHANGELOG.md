@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [2.2.0] - 2019-10-12
+
+### Added
+- Optionally show update time
+- Define triggers to show/hide other modules based on weather data
+
+### Updated
+- eslint packages (dev-dependencies) and resulting new linting errors/warnings
+
+
 ## [2.1.0] - 2019-01-26
 
 ### Added

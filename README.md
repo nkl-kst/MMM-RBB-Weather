@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/nkl-kst/MMM-RBB-Weather.svg?branch=master)](https://travis-ci.com/nkl-kst/MMM-RBB-Weather)
 [![Coverage Status](https://coveralls.io/repos/github/nkl-kst/MMM-RBB-Weather/badge.svg)](https://coveralls.io/github/nkl-kst/MMM-RBB-Weather)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a8567d7917169f2cb1be/maintainability)](https://codeclimate.com/github/nkl-kst/MMM-RBB-Weather/maintainability)
 [![Greenkeeper](https://badges.greenkeeper.io/nkl-kst/MMM-RBB-Weather.svg)](https://greenkeeper.io/)
 [![dependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather)
 [![devDependencies Status](https://david-dm.org/nkl-kst/MMM-RBB-Weather/dev-status.svg)](https://david-dm.org/nkl-kst/MMM-RBB-Weather?type=dev)
@@ -88,6 +89,7 @@ All options are optional so the module works out of the box.
 | `showCurrentText`      | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showCurrentWindspeed` | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `showRainProbability`  | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showUpdateTime`       | Flag to display last data update time.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
 | `animateCurrentIcon`   | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
 | `animateForecastIcon`  | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
@@ -95,6 +97,27 @@ All options are optional so the module works out of the box.
 | `splitCurrentTextGreater` | Split current weather text if it is larger than this value. Set it to `0` to disable splitting.<br><br>**Type:** `Number`<br>**Default:** `30`
 | `tableClass`           | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
 | `whiteIcons`           | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `triggers`             | Array of triggers to show/hide other modules based on weather data.<br><br>**Type:** `Array` of trigger objects<br>**Default:** `[]`
+
+### Triggers
+
+You can define triggers to show or hide other modules based on weather data. A trigger object is defined by the following keys:
+
+| Key                    | Description
+|----------------------- |-----------
+| `day`                  | Day to check `field` for fulfilled trigger condition. Day `0` holds current values, day `1` represents today, day `2` is tomorrow and so on until day `7`.<br><br>**Type:** `Number`
+| `field`                | Field to check `value` for fulfilled trigger condition. Possible fields are:<br><br><ul><li>`temp` - Temperature (only for day `0`)</li><li>`maxtemp` - Maximum temperature (only for days `1` to `7`)</li><li>`mintemp` - Minimum temperature (only for days `1` to `7`)</li><li>`ffkmh` - Windspeed</li><li>`prr` - Rain possibility (only for days `1` to `7`)</li></ul><br>**Type:** `String`
+| `value`                | Show module if field data is higher than this value.<br><br>**Type:** `Number`<br>
+| `module`               | Name of the module you want to show/hide. Modules are determined by their class name, so you could define a class in module configs to trigger more than one module.<br><br>**Type:** `String`<br>
+| `hide`                 | Use this option to hide a module instead of showing it if trigger conditions are fulfilled.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+
+This example trigger hides the clock module if todays rain possiblity is higher than 50 percent, otherwise the clock module is shown:
+
+```
+triggers: [
+    { day: 1, field: 'prr', value: 50, module: 'clock', hide: true }
+]
+```
 
 ## Known issues
 
