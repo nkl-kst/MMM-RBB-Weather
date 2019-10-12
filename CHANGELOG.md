@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [2.2.0-dev] - Pending
+## [2.2.0] - 2019-10-12
 
 ### Added
 - Optionally show update time
