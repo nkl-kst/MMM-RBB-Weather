@@ -82,7 +82,7 @@ All options are optional so the module works out of the box.
 
 | Option                 | Description
 |----------------------- |-----------
-| `id`                   | City ID for data, see [table below](#city-ids)<br><br>**Type:** `String`<br>**Default:** `18228265` (Berlin)
+| `id`                   | City ID for data, see [table below](#city-ids)<br><br>**Type:** `String`<br>**Default:** `10381` (Berlin-Steglitz)
 | `days`                 | Days shown in forecast table. Set this to `0` to display only current weather. Data for seven days are available (including today), so `7` is the maximum here. <br><br>**Type:** `Number`<br>**Default:** `4`
 | `animationSpeed`       | Duration of content refresh animation in seconds.<br><br>**Type:** `Number`<br>**Default:** `1`
 | `updateInterval`       | Time between loading new weather data in seconds.<br><br>**Type:** `Number`<br>**Default:** `600` (10 minutes)
@@ -121,7 +121,11 @@ triggers: [
 
 ## Known issues
 
+### MagicMirror crashs after several hours
 The animated icons consume a high amount of memory, resulting in an Electron crash and therefore a black MagicMirror screen. If you experience this issue, please use static icons instead (as described in [Configuration options](#configuration-options)). Refer to [issue #16](https://github.com/nkl-kst/MMM-RBB-Weather/issues/16) for more information.
+
+### Suddenly no data
+There were some changes in the weather data in October 2020, primarly city IDs have changed. Please refer to the [table below](#city-ids) and get your city ID.
 
 ## Problems
 
@@ -152,77 +156,65 @@ Use one of these city IDs in your config.
 | City                      | ID
 |---------------------------|----------
 | *Berlin*                  | <span/>
-| Berlin                    | `18228265`
-| Adlershof                 | `10385a`
-| Alexanderplatz            | `10389`
-| Frohnau                   | `10382a`
-| Marzahn                   | `10385`
-| Spandau                   | `10382`
+| Adlershof                 | `6510388`
+| Marzahn                   | `3010387`
 | Steglitz                  | `10381`
 | Tempelhof                 | `10384`
 | *Brandenburg*             | <span/>
-| Angermünde                | `18230230`
-| Bad Belzig                | `18229487`
-| Baruth/Mark               | `18230080`
-| Beelitz                   | `18229472`
-| Beeskow                   | `18229143`
-| Bernau                    | `18228278`
-| Brandenburg an der Havel  | `18228266`
-| Brüssow                   | `18230250`
-| Calau                     | `18229056`
-| Cottbus                   | `18228271`
-| Dahme/Mark                | `18230095`
-| Döbern                    | `18229988`
-| Eberswalde                | `18228294`
-| Eisenhüttenstadt          | `18229162`
-| Elsterwerda               | `18228547`
-| Erkner                    | `18229163`
-| Finsterwalde              | `18228558`
-| Forst (Lausitz)           | `18230011`
-| Frankfurt (Oder)          | `18228272`
-| Fürstenberg/Havel         | `18228959`
-| Fürstenwalde/Spree        | `18229182`
-| Gransee                   | `18228963`
-| Guben                     | `18230026`
-| Halbe                     | `18228401`
-| Herzberg (Elster)         | `18228577`
-| Joachimstahl              | `18228313`
-| Jüterbog                  | `18230130`
-| Ketzin                    | `18228716`
-| Kyritz                    | `18229352`
-| Lauchhammer               | `18229094`
-| Lenzen (Elbe)             | `18229847`
-| Liebenwalde               | `18228997`
-| Lieberose                 | `18228434`
-| Lübben (Spreewald)        | `18228438`
-| Luckau                    | `18228447`
-| Luckenwalde               | `18230140`
-| Ludwigsfelde              | `18230147`
-| Meyenburg                 | `18229860`
-| Nauen                     | `18228740`
-| Neuruppin                 | `18229380`
-| Oranienburg               | `18229023`
-| Ortrand                   | `18229107`
-| Perleberg                 | `18229869`
-| Potsdam                   | `18228273`
-| Prenzlau                  | `18230337`
-| Pritzwalk                 | `18229917`
-| Rathenow                  | `18228756`
-| Rheinsberg                | `18229398`
-| Rhinow                    | `18228761`
-| Schönefeld                | `18228481`
-| Schwedt/Oder              | `18230366`
-| Seelow                    | `18228926`
-| Senftenberg               | `18229131`
-| Spremberg                 | `18230063`
-| Strausberg                | `18228931`
-| Templin                   | `18230375`
-| Treuenbrietzen            | `18229671`
-| Wittenberge               | `18229970`
-| Wittstock/Dosse           | `18229432`
-| Wriezen                   | `18228940`
-| Ziesar                    | `18229718`
-
+| Altdöbern                 | `6510496`
+| Angermünde                | `10291`
+| Bad Liebenwerda           | `6510482`
+| Baruth/Mark               | `10376`
+| Bernau                    | `3210383`
+| Bestensee                 | `6510375`
+| Brandenburg an der Havel  | `6510371`
+| Coschen                   | `3010496`
+| Cottbus                   | `10496a`
+| Dahme/Mark                | `6510477`
+| Doberlug/Kirchhain        | `10490`
+| Eberswalde                | `6510290`
+| Eisenhüttenstadt          | `3010398`
+| Forst (Lausitz)           | `3210497`
+| Frankfurt (Oder)          | `6510399`
+| Fürstenberg/Havel         | `10277`
+| Fürstenwalde/Spree        | `6510395`
+| Gransee                   | `3010278a`
+| Guben                     | `6510497`
+| Guteborn                  | `6510491`
+| Herzberg (Elster)         | `10476`
+| Jüterbog                  | `3010476`
+| Ketzin                    | `3210380`
+| Klettewitz                | `3010493a`
+| Kyritz                    | `10267`
+| Lenzen (Elbe)             | `3010255`
+| Liebenwalde               | `3110278`
+| Lieberose                 | `10496b`
+| Lindneberg                | `10393`
+| Lübben (Spreewald)        | `3010376`
+| Luckenwalde               | `6510376b`
+| Ludwigsfelde              | `6510377`
+| Manschnow                 | `10396a`
+| Nauen                     | `6510373`
+| Neuruppin                 | `10271`
+| Oranienburg               | `6510374`
+| Ortrand                   | `3210488`
+| Perleberg                 | `6510263`
+| Potsdam                   | `10379`
+| Prenzlau                  | `10289`
+| Pritzwalk                 | `3010266`
+| Rathenow                  | `3210370`
+| Schönefeld                | `10385`
+| Seelow                    | `10396b`
+| Senftenberg               | `3010493b`
+| Stechlin                  | `3010277`
+| Strausberg                | `3210393`
+| Templin                   | `6510287`
+| Treuenbrietzen            | `6510376a`
+| Welzow                    | `6510492`
+| Wiesenburg                | `10368`
+| Wittstock/Dosse           | `3010273`
+| Zehdenick                 | `3010278b`
+| Ziesar                    | `3010366`
 
 ## License: MIT
 

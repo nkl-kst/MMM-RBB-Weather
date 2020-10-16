@@ -10,7 +10,7 @@ Module.register('MMM-RBB-Weather', {
     defaults: {
 
         // Data
-        id: '18228265', // Berlin
+        id: '10381', // Berlin-Steglitz
         days: 4, // Including current, 0 = only current data
 
         // Times
