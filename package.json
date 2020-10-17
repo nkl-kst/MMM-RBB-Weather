@@ -18,8 +18,8 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
-    "bluebird": "^3.5.2",
-    "fast-xml-parser": "^3.12.5"
+    "bluebird": "^3.7.2",
+    "fast-xml-parser": "^3.17.4"
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
