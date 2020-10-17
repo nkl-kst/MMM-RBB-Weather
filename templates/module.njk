@@ -19,10 +19,13 @@
 
         {% if config.showCurrentWindspeed %}
             <div class="small dimmed">
-                {% set windDirKey = module.getWindDirKey(data.dd) %}
                 {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
-                {{ windDirKey | translate }}
-                <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+
+                {% set windDirKey = module.getWindDirKey(data.dd) %}
+                {% if windDirKey %}
+                    {{ windDirKey | translate }}
+                    <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -51,7 +54,10 @@
         {% if config.showWindspeed %}
             <td>
                 {{ data.ffkmh }} <span>km/h</span>
-                <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+
+                {% if module.getWindDirKey(data.dd) %}
+                    <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+                {% endif %}
             </td>
         {% endif %}
 

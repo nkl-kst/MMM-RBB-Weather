@@ -186,15 +186,6 @@ describe('MMM-RBB-Weather', () => {
             assert.strictEqual(text, undefined);
         });
 
-        it('should return nothing if text is a dash', () => {
-
-            // Act
-            const text = module.getCurrentText('-');
-
-            // Assert
-            assert.strictEqual(text, undefined);
-        });
-
         it('should return a splitted text', () => {
 
             // Arrange

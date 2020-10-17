@@ -140,7 +140,7 @@ Module.register('MMM-RBB-Weather', {
         const splitValue = this.config.splitCurrentTextGreater;
 
         // No text available
-        if (!text || text === '-') {
+        if (!text) {
             return undefined;
         }
 
