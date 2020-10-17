@@ -130,7 +130,7 @@ Module.register('MMM-RBB-Weather', {
 
     /**
      * getCurrentText - Return the formatted current weather text. This is
-     * splitted with a line break if the text contains a colon and length is
+     * split with a line break if the text contains a colon and length is
      * greater then config.splitCurrentTextGreater.
      *
      * @param  {String} text Current weather text
@@ -139,8 +139,13 @@ Module.register('MMM-RBB-Weather', {
     getCurrentText: function(text) {
         const splitValue = this.config.splitCurrentTextGreater;
 
+        // No text available
+        if (!text || text === '-') {
+            return undefined;
+        }
+
         // Check if text and flag are given
-        if (!text || splitValue === 0) {
+        if (splitValue === 0) {
             return text;
         }
 
@@ -163,9 +168,7 @@ Module.register('MMM-RBB-Weather', {
     getForecastDayText: function(dayIndex) {
 
         const day = moment().add(dayIndex - 1, 'days');
-        const dayText = day.format(this.config.dayFormat);
-
-        return dayText;
+        return day.format(this.config.dayFormat);
     },
 
     /**
@@ -176,6 +179,11 @@ Module.register('MMM-RBB-Weather', {
      * @return {String}          URL to mapped icon
      */
     getIconUrl: function(animate, rbbIcon) {
+
+        // No current icon available
+        if (!rbbIcon || isNaN(rbbIcon)) {
+            return undefined;
+        }
 
         // Icon path
         const iconFolder = animate ? 'animated' : 'static';
@@ -243,11 +251,15 @@ Module.register('MMM-RBB-Weather', {
     /**
      * getWindDirKey - Get wind direction short key based on wind direction degrees.
      *
-     * @param  {Number} deg Wind direction in degrees
+     * @param  {String} deg Wind direction in degrees
      * @return {String}     Wind direction short text
      */
     getWindDirKey: function(deg) {
 
+        // No wind direction available
+        if (!deg || isNaN(deg)) {
+            return undefined;
+        }
         if (deg <= 22) return 'N';
         if (deg <= 67) return 'NE';
         if (deg <= 112) return 'E';
