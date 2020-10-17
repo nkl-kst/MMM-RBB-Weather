@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Updated
 - Updated city IDs to new XML source data
+- Updated all dependencies including dev
 
 ### Fixed
 - Respect empty weather data fields in XML source data
