@@ -9,7 +9,7 @@
           <complexType>
 
             <!-- city attributes -->
-            <attribute name="id" use="required" type="integer" />
+            <attribute name="id" use="required" type="string" />
             <attribute name="temp" use="required">
               <simpleType>
                 <restriction base="string">
