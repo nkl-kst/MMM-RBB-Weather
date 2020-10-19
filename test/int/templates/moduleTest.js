@@ -238,4 +238,65 @@ describe('module.njk', () => {
             assert(!output.includes('translated: TEXT_UPDATED'));
         });
     });
+
+    context('with empty weather data fields', () => {
+
+        before(async () => {
+
+            // Initialise module
+            module = newModule();
+
+            // Set module data;
+            module.config.showWindspeed = true;
+            module.weatherData = {
+                0: { id: '10385', temp: '21', dd: '-', ffkmh: '-', nww: '-', wwtext: '-' },
+                1: { id: '10385', temp: '23;10', dd: '-', ffkmh: '-', nww: '-', wwtext: '-', prr: '13' }
+            };
+            module.updatedAt = 1567411200000;
+
+            // Mock day function
+            module.getForecastDayText = function(dayIndex) {
+                return dayIndex;
+            };
+
+            // Render template output
+            output = await renderTemplate('module.njk', { module: module });
+        });
+
+        it('should render valid html', () => {
+
+            // Assert
+            assert.strictEqual(parser.validate(output), true);
+        });
+
+        it('should not show current icon', () => {
+
+            // Assert
+            assert(output.includes('<img class="weather-icon" src="" />'));
+        });
+
+        it('should show empty current text', () => {
+
+            // Assert
+            assert(output.includes('<div class="medium normal">-</div>'));
+        });
+
+        it('should show empty current wind speed', () => {
+
+            // Assert
+            assert(output.includes('- km/h <i class="wi wi-strong-wind"></i>'));
+        });
+
+        it('should show empty forecast wind speed', () => {
+
+            // Assert
+            assert(output.includes('- <span>km/h</span>'));
+        });
+
+        it('should not show current and forecast wind direction', () => {
+
+            // Assert
+            assert(!output.includes('<i class="wi wi-wind from-'));
+        });
+    });
 });

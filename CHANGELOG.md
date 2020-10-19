@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
+## [2.3.0] - 2020-10-19
+
+### Updated
+- Updated city IDs to new XML source data
+- Updated all dependencies including dev
+
+### Fixed
+- Respect empty weather data fields in XML source data
+
+
 ## [2.2.0] - 2019-10-12
 
 ### Added

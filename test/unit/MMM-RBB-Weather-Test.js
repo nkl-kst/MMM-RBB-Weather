@@ -177,6 +177,15 @@ describe('MMM-RBB-Weather', () => {
 
     describe('getCurrentText', () => {
 
+        it('should return nothing if text is undefined', () => {
+
+            // Act
+            const text = module.getCurrentText(undefined);
+
+            // Assert
+            assert.strictEqual(text, undefined);
+        });
+
         it('should return a splitted text', () => {
 
             // Arrange
@@ -187,15 +196,6 @@ describe('MMM-RBB-Weather', () => {
 
             // Assert
             assert.strictEqual(text, 'should<br/>split');
-        });
-
-        it('should return nothing if text is undefined', () => {
-
-            // Act
-            const text = module.getCurrentText(undefined);
-
-            // Assert
-            assert.strictEqual(text, undefined);
         });
 
         it('should return same text if splitting is disabled', () => {
@@ -241,6 +241,30 @@ describe('MMM-RBB-Weather', () => {
 
     describe('getIconUrl', () => {
 
+        it('should return nothing if icon is not available', () => {
+
+            // Act
+            const url = module.getIconUrl(true, undefined);
+
+            assert.strictEqual(url, undefined);
+        });
+
+        it('should return nothing if icon is empty', () => {
+
+            // Act
+            const url = module.getIconUrl(true, '');
+
+            assert.strictEqual(url, undefined);
+        });
+
+        it('should return nothing if icon is not a number', () => {
+
+            // Act
+            const url = module.getIconUrl(true, 'not a number');
+
+            assert.strictEqual(url, undefined);
+        });
+
         it('should return animated icon URL if animation is set', () => {
 
             // Act
@@ -262,10 +286,10 @@ describe('MMM-RBB-Weather', () => {
         it('should return RBB URL fallback if no mapping is found', () => {
 
             // Act
-            const url = module.getIconUrl(true, 'no_mapping');
+            const url = module.getIconUrl(true, '0');
 
             // Assert
-            assert.strictEqual(url, 'https://www.rbb24.de/basis/grafik/icons/wetter/svg/no_mapping.svg');
+            assert.strictEqual(url, 'https://www.rbb24.de/basis/grafik/icons/wetter/svg/0.svg');
         });
     });
 
@@ -390,6 +414,33 @@ describe('MMM-RBB-Weather', () => {
     });
 
     describe('getWindDirKey', () => {
+
+        it('should return nothing if direction degree is not available', () => {
+
+            // Act
+            const text = module.getWindDirKey(undefined);
+
+            // Assert
+            assert.deepStrictEqual(text, undefined);
+        });
+
+        it('should return nothing if direction degree is empty', () => {
+
+            // Act
+            const text = module.getWindDirKey('');
+
+            // Assert
+            assert.deepStrictEqual(text, undefined);
+        });
+
+        it('should return nothing if direction degree is not a number', () => {
+
+            // Act
+            const text = module.getWindDirKey('not a number');
+
+            // Assert
+            assert.deepStrictEqual(text, undefined);
+        });
 
         it('should return "N" if direction degree is equal 22', () => {
 
