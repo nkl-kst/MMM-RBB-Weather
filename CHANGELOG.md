@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ---
 
-## [2.3.0-dev] - Pending
+## [2.3.0] - 2020-10-19
 
 ### Updated
 - Updated city IDs to new XML source data

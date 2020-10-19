@@ -1,6 +1,6 @@
 {
   "name": "MMM-RBB-Weather",
-  "version": "2.3.0-dev",
+  "version": "2.3.0",
   "description": "MagicMirror module to display RBB weather data.",
   "author": "Nikolai Keist",
   "license": "MIT",
