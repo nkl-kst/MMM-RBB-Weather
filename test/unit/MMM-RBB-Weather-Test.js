@@ -12,8 +12,6 @@ describe('MMM-RBB-Weather', () => {
 
         module = newModule();
 
-        // Fake MagicMirror Version
-        version = '2.6.0';
     });
 
     afterEach(() => {
@@ -358,17 +356,6 @@ describe('MMM-RBB-Weather', () => {
             assert.deepStrictEqual(icon, 'fa-snowflake');
         });
 
-        it('should return "fa-asterisk" icon if temperature is lower than 0 and version is lower than 2.6.0', () => {
-
-            // Arrange
-            version = '2.5.99';
-
-            // Act
-            const icon = module.getTempIcon(-1);
-
-            // Assert
-            assert.deepStrictEqual(icon, 'fa-asterisk');
-        });
     });
 
     describe('getRainProbabilityIcon', () => {
@@ -389,18 +376,6 @@ describe('MMM-RBB-Weather', () => {
 
             // Assert
             assert.deepStrictEqual(icon, 'fa-tint-slash');
-        });
-
-        it('should return "fa-tint dimmed" icon if probability is under or equal low and version is lower than 2.6.0', () => {
-
-            // Arrange
-            version = '2.5.99';
-
-            // Act
-            const icon = module.getRainProbabilityIcon(15);
-
-            // Assert
-            assert.deepStrictEqual(icon, 'fa-tint dimmed');
         });
 
         it('should return "fa-umbrella" icon if probability is greater or equal high', () => {
