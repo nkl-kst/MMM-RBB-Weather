@@ -213,11 +213,6 @@ Module.register('MMM-RBB-Weather', {
         if (temp >= 7) return 'fa-thermometer-quarter';
         if (temp >= 0) return 'fa-thermometer-empty';
 
-        // Font Awesome 5 (with fa-snowflake) is not available in MagicMirror < 2.6.0
-        if (version.localeCompare('2.6.0', 'en', { numeric: true }) < 0) {
-            return 'fa-asterisk';
-        }
-
         return 'fa-snowflake';
     },
 
@@ -232,12 +227,6 @@ Module.register('MMM-RBB-Weather', {
     getRainProbabilityIcon: function(prob) {
 
         if (prob <= 15) {
-
-            // Font Awesome 5 (with fa-tint-slash) is not available in MagicMirror < 2.6.0
-            if (version.localeCompare('2.6.0', 'en', { numeric: true }) < 0) {
-                return 'fa-tint dimmed';
-            }
-
             return 'fa-tint-slash';
         }
 
