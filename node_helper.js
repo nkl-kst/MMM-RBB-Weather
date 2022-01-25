@@ -88,7 +88,7 @@ module.exports = NodeHelper.create({
         return new Promise((resolve, reject) => {
 
             // Request RBB xml data for this day
-            const url = `https://www.rbb24.de/include/wetter/data/data_bb_${day}.xml`;
+            const url = `https://www.rbb24.de/include/wetter-hr/data/data_bb_${day}.xml`;
             https.get(url, (response) => {
                 let xml = '';
 
