@@ -5,30 +5,37 @@
 {# Create current data dom #}
 {% macro currentData(data) %}
 
-    <div class="current">
-        <div class="large bright light">
-
-            {% set iconURL = module.getIconUrl(config.animateCurrentIcon, data.nww) %}
-            <img class="weather-icon" src="{{ iconURL }}" />
-            <span>{{ data.temp }}°C</span>
-        </div>
-
-        {% if config.showCurrentText %}
-            <div class="medium normal">{{ module.getCurrentText(data.wwtext) | safe }}</div>
-        {% endif %}
-
-        {% if config.showCurrentWindspeed %}
-            <div class="small dimmed">
-                {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
-
-                {% set windDirKey = module.getWindDirKey(data.dd) %}
-                {% if windDirKey %}
-                    {{ windDirKey | translate }}
-                    <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+    {% if config.showCurrentIcon or config.showCurrentTemperature or config.showCurrentText or config.showCurrentWindspeed %}
+        <div class="current">
+            {% if config.showCurrentIcon or config.showCurrentTemperature %}
+                <div class="large bright light">
+                    {% if config.showCurrentIcon %}
+                        {% set iconURL = module.getIconUrl(config.animateCurrentIcon, data.nww) %}
+                        <img class="weather-icon" src="{{ iconURL }}" />
+                    {% endif %}
+                    {% if config.showCurrentTemperature %}
+                        <span>{{ data.temp }}°C</span>
+                    {% endif %}
+                </div>
+    
+                {% if config.showCurrentText %}
+                    <div class="medium normal">{{ module.getCurrentText(data.wwtext) | safe }}</div>
                 {% endif %}
-            </div>
-        {% endif %}
-    </div>
+    
+                {% if config.showCurrentWindspeed %}
+                    <div class="small dimmed">
+                        {{ data.ffkmh }} km/h <i class="wi wi-strong-wind"></i>
+    
+                        {% set windDirKey = module.getWindDirKey(data.dd) %}
+                        {% if windDirKey %}
+                            {{ windDirKey | translate }}
+                            <i class="wi wi-wind from-{{data.dd}}-deg fa-fw"></i>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
 
 {% endmacro %}
 

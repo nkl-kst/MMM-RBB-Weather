@@ -20,6 +20,8 @@ Module.register('MMM-RBB-Weather', {
         // Show / hide flags
         showCurrentText: true,
         showCurrentWindspeed: true,
+        showCurrentIcon: true,
+        showCurrentTemperature: true,
         showRainProbability: true,
         showUpdateTime: false,
         showWindspeed: false,

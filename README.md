@@ -80,24 +80,26 @@ var config = {
 
 All options are optional so the module works out of the box.
 
-| Option                 | Description
-|----------------------- |-----------
-| `id`                   | City ID for data, see [table below](#city-ids)<br><br>**Type:** `String`<br>**Default:** `10381` (Berlin-Steglitz)
-| `days`                 | Days shown in forecast table. Set this to `0` to display only current weather. Data for seven days are available (including today), so `7` is the maximum here. <br><br>**Type:** `Number`<br>**Default:** `4`
-| `animationSpeed`       | Duration of content refresh animation in seconds.<br><br>**Type:** `Number`<br>**Default:** `1`
-| `updateInterval`       | Time between loading new weather data in seconds.<br><br>**Type:** `Number`<br>**Default:** `600` (10 minutes)
-| `showCurrentText`      | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `showCurrentWindspeed` | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `showRainProbability`  | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `showUpdateTime`       | Flag to display last data update time.<br><br>**Type:** `Boolean`<br>**Default:** `false`
-| `showWindspeed`        | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
-| `animateCurrentIcon`   | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `animateForecastIcon`  | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
-| `dayFormat`            | Day format in forecast table, see [Moment.js formats](https://momentjs.com/docs/#/displaying/format/) for details.<br><br>**Type:** `String`<br>**Default:** `ddd`
+| Option                    | Description
+|-------------------------- |-----------
+| `id`                      | City ID for data, see [table below](#city-ids)<br><br>**Type:** `String`<br>**Default:** `10381` (Berlin-Steglitz)
+| `days`                    | Days shown in forecast table. Set this to `0` to display only current weather. Data for seven days are available (including today), so `7` is the maximum here. <br><br>**Type:** `Number`<br>**Default:** `4`
+| `animationSpeed`          | Duration of content refresh animation in seconds.<br><br>**Type:** `Number`<br>**Default:** `1`
+| `updateInterval`          | Time between loading new weather data in seconds.<br><br>**Type:** `Number`<br>**Default:** `600` (10 minutes)
+| `showCurrentText`         | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showCurrentWindspeed`    | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showCurrentTemperature`  | Flag to display current weather text.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showCurrentIcon`         | Flag to display current windspeed information.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showRainProbability`     | Flag to display rain probability in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `showUpdateTime`          | Flag to display last data update time.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+| `showWindspeed`           | Flag to display windspeed in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+| `animateCurrentIcon`      | Flag to animate icon for current data.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `animateForecastIcon`     | Flag to animate icons in forecast table.<br><br>**Type:** `Boolean`<br>**Default:** `false`
+| `dayFormat`               | Day format in forecast table, see [Moment.js formats](https://momentjs.com/docs/#/displaying/format/) for details.<br><br>**Type:** `String`<br>**Default:** `ddd`
 | `splitCurrentTextGreater` | Split current weather text if it is larger than this value. Set it to `0` to disable splitting.<br><br>**Type:** `Number`<br>**Default:** `30`
-| `tableClass`           | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
-| `whiteIcons`           | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
-| `triggers`             | Array of triggers to show/hide other modules based on weather data.<br><br>**Type:** `Array` of trigger objects<br>**Default:** `[]`
+| `tableClass`              | Classes added to forecast table. Could be used for additional styling, sizing etc.<br><br>**Type:** `String`<br>**Default:** `small`
+| `whiteIcons`              | Flag to convert weather icons to simple white icons.<br><br>**Type:** `Boolean`<br>**Default:** `true`
+| `triggers`                | Array of triggers to show/hide other modules based on weather data.<br><br>**Type:** `Array` of trigger objects<br>**Default:** `[]`
 
 ### Triggers
 
