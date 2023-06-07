@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
-    "fast-xml-parser": "^3.17.4"
+    "fast-xml-parser": "^4.2.4"
   },
   "devDependencies": {
     "coveralls": "^3.1.0",
